@@ -35,6 +35,7 @@ export function AnimatedSplashScreen({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isAppReady) {
+      console.log("READY");
       setTimeout(() => {
         Animated.timing(animation, {
           toValue: 0,
@@ -59,16 +60,31 @@ export function AnimatedSplashScreen({ children }: { children: ReactNode }) {
 
   return (
     <View className="flex h-full w-full">
-      {isSplashAnimationComplete && <SafeAreaView className="bg-night" />}
+      {/* {isSplashAnimationComplete && <SafeAreaView className="bg-night" />} */}
       {isAppReady && children}
       {!isSplashAnimationComplete && (
-        <Animated.View style={{ opacity: animation }}>
+        <Animated.View
+          style={{
+            opacity: animation,
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
+            zIndex: 100,
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <View
             style={{
               alignItems: "center",
               justifyContent: "center",
               flex: 1,
-              zIndex: 1,
+              zIndex: 100,
               position: "absolute",
               top: 0,
               left: 0,
@@ -91,15 +107,15 @@ export function AnimatedSplashScreen({ children }: { children: ReactNode }) {
             />
           </View>
 
-          <Image
+          <Animated.Image
             style={{
               width: "100%",
               height: "100%",
               resizeMode: Constants.expoConfig?.splash?.resizeMode || "cover",
+              opacity: animation,
             }}
             source={require("@/assets/images/splash.png")}
             onLoadEnd={onImageLoaded}
-            fadeDuration={0}
           />
         </Animated.View>
       )}

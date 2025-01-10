@@ -1,18 +1,14 @@
 import { Stack } from "expo-router";
 import AnimatedAppLoader from "../components/SplashScreen";
-import Index from ".";
 import "@/global.css";
+import { useState } from "react";
+import { Text } from "react-native";
+import Index from ".";
 
 export default function RootLayout() {
   return (
     <AnimatedAppLoader>
-      <Stack
-        screenOptions={{
-          headerTransparent: true,
-          headerShown: false,
-          contentStyle: { backgroundColor: "#151515" },
-        }}
-      />
+      <Index />
     </AnimatedAppLoader>
   );
 }
