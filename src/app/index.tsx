@@ -1,33 +1,117 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
-import Info from "./info";
-import SignIn from "./sign-in";
-import SignUp from "./sign-up";
-
-const Stack = createStackNavigator();
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from "react-native";
+import Slider from "../components/Slider";
+import Animated, {
+  Easing,
+  FadeIn,
+  FadeInLeft,
+  FadeOut,
+  FadeOutLeft,
+  SlideInLeft,
+  SlideInRight,
+  SlideOutLeft,
+  SlideOutRight,
+} from "react-native-reanimated";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Index() {
-  //check if logged in then isplay a certain stack or not
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [choice, setChoice] = useState<string>();
   return (
-    <View className="flex bg-night text-platinum h-full">
-      {!isLoggedIn ? (
-        <Stack.Navigator
-          screenOptions={{
-            headerTransparent: true,
-            headerShown: false,
-          }}
+    <Animated.View
+      entering={FadeIn.duration(1000).delay(5300)}
+      className="flex bg-night h-full w-full items-center justify-center"
+    >
+      {!choice ? (
+        <Animated.View
+          key={"Info"}
+          className="h-fit flex"
+          entering={SlideInLeft}
+          exiting={SlideOutLeft}
         >
-          <Stack.Screen name="info" component={Info} />
-          <Stack.Screen name="sign-in" component={SignIn} />
-          <Stack.Screen name="sign-up" component={SignUp} />
-        </Stack.Navigator>
+          <Image
+            className="flex h-56"
+            resizeMode="contain"
+            source={require("@/assets/images/velox.png")}
+          />
+          <View className="-translate-y-10 mx-auto">
+            <Text className="text-2xl text-platinum text-center font-bold w-90">
+              An app that helps improve your
+            </Text>
+            <Text className="text-2xl text-pale_azure text-center font-bold ">
+              mental math skills
+            </Text>
+          </View>
+        </Animated.View>
+      ) : choice === "Login" ? (
+        <Animated.View
+          key={"Login"}
+          className="h-full flex"
+          entering={SlideInRight.withInitialValues({ originX: 400 })}
+          exiting={SlideOutRight}
+        >
+          <Image
+            className="flex h-36"
+            resizeMode="contain"
+            source={require("@/assets/images/login.png")}
+          />
+        </Animated.View>
       ) : (
-        <Text className="text-white m-auto">LOGGED IN</Text>
+        <Animated.View
+          key={"SignUp"}
+          className="h-full flex"
+          entering={SlideInLeft.withInitialValues({ originX: -400 })}
+          exiting={SlideOutLeft}
+          onTouchStart={Keyboard.dismiss}
+        >
+          <Image
+            className="flex h-32"
+            resizeMode="contain"
+            source={require("@/assets/images/signup.png")}
+          />
+          <View className="flex flex-col">
+            <KeyboardAvoidingView
+              className="h-fit"
+              behavior={Platform.OS === "ios" ? "padding" : undefined}
+            >
+              <Text className="text-2xl text-platinum font-bold text-center">
+                Email
+              </Text>
+              <TextInput
+                className="h-12 w-60 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center"
+                placeholder="Email"
+                keyboardType="email-address"
+              />
+            </KeyboardAvoidingView>
+          </View>
+        </Animated.View>
       )}
-    </View>
+      {choice && (
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          className="absolute top-16 left-4"
+        >
+          <TouchableOpacity onPress={() => setChoice("")}>
+            <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          </TouchableOpacity>
+        </Animated.View>
+      )}
+      <View className="absolute bottom-12 z-50">
+        <Slider
+          options={["Login", "Sign Up"]}
+          selected={choice}
+          setOption={setChoice}
+        />
+      </View>
+    </Animated.View>
   );
 }
