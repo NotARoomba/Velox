@@ -13,7 +13,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { SliderProps } from "../utils/Types";
+import { SliderProps } from "../utils/types";
 
 export default function Slider({ options, setOption, selected }: SliderProps) {
   const pos = useSharedValue(0);

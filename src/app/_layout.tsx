@@ -3,7 +3,7 @@ import AnimatedAppLoader from "../components/SplashScreen";
 import "@/global.css";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import Index from ".";
+import Auth from "./auth";
 import { Stack } from "expo-router";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../utils/supabase";
@@ -17,6 +17,7 @@ export default function RootLayout() {
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("Session changed");
       setSession(session);
     });
   }, []);
@@ -27,13 +28,13 @@ export default function RootLayout() {
           <Stack
             screenOptions={{
               headerTransparent: false,
-              headerShown: true,
+              headerShown: false,
             }}
           >
             <Stack.Screen name="(tabs)" />
           </Stack>
         ) : (
-          <Index />
+          <Auth />
         )}
       </View>
     </AnimatedAppLoader>

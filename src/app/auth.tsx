@@ -9,6 +9,7 @@ import {
   Platform,
   Keyboard,
   Alert,
+  AppState,
 } from "react-native";
 import Slider from "../components/Slider";
 import Animated, {
@@ -24,22 +25,61 @@ import Animated, {
 } from "react-native-reanimated";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { supabase } from "../utils/supabase";
+import prompt from "@powerdesigninc/react-native-prompt";
+import { router } from "expo-router";
 
-export default function Index() {
+AppState.addEventListener("change", (state) => {
+  if (state === "active") {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
+  }
+});
+
+export default function Auth() {
   const [choice, setChoice] = useState<string>();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
+  async function verifyEmail(code: string) {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.verifyOtp({
+      token: code,
       email: email,
-      password: password,
+      type: "email",
     });
 
     if (error) Alert.alert(error.message);
+    setLoading(false);
+  }
+
+  async function signInWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email,
+      options: {
+        shouldCreateUser: false,
+      },
+    });
+    if (error) {
+      Alert.alert(error.message);
+      return setLoading(false);
+    }
+    prompt("Verification Code", "Enter the code sent to your email", [
+      {
+        style: "default",
+        text: "Verify",
+        onPress: (code) => {
+          if (code) verifyEmail(code);
+          else Alert.alert("Please enter a code!");
+        },
+      },
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+    ]);
     setLoading(false);
   }
 
@@ -48,10 +88,10 @@ export default function Index() {
     const {
       data: { session },
       error,
-    } = await supabase.auth.signUp({
+    } = await supabase.auth.signInWithOtp({
       email: email,
-      password: password,
       options: {
+        shouldCreateUser: true,
         data: {
           username: username,
           created_at: new Date().toISOString().toLocaleString(),
@@ -60,11 +100,27 @@ export default function Index() {
       },
     });
 
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
+    if (error) {
+      Alert.alert(error.message);
+      return setLoading(false);
+    }
+    prompt("Verification Code", "Enter the code sent to your email", [
+      {
+        style: "default",
+        text: "Verify",
+        onPress: (code) => {
+          if (code) verifyEmail(code);
+          else Alert.alert("Please enter a code!");
+        },
+      },
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+    ]);
     setLoading(false);
   }
+
   return (
     <Animated.View
       entering={FadeIn.duration(1000).delay(5300)}
@@ -114,32 +170,20 @@ export default function Index() {
               <TextInput
                 className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
                 placeholder="email@address.com"
+                placeholderTextColor={"#737373"}
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 enterKeyHint="done"
               />
             </KeyboardAvoidingView>
-            <KeyboardAvoidingView
-              className="h-fit"
-              behavior={Platform.OS === "ios" ? "padding" : undefined}
-            >
-              <Text className="text-2xl text-platinum font-bold text-center">
-                Password
-              </Text>
-              <TextInput
-                className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
-                placeholder="Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry
-                enterKeyHint="done"
-              />
-            </KeyboardAvoidingView>
             <TouchableOpacity
-              className="h-12 w-2/3 bg-celtic_blue rounded-2xl mx-auto mt-8 flex items-center justify-center"
+              disabled={loading}
+              className="h-12 w-2/3 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
               onPress={signInWithEmail}
             >
-              <Text className="text-platinum text-center font-bold">Login</Text>
+              <Text className="text-platinum text-center font-bold">
+                {loading ? "Loading..." : "Login"}
+              </Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -167,6 +211,7 @@ export default function Index() {
               <TextInput
                 className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
                 placeholder="Username"
+                placeholderTextColor={"#737373"}
                 value={username}
                 onChangeText={(text) => setUsername(text)}
                 enterKeyHint="done"
@@ -182,34 +227,20 @@ export default function Index() {
               <TextInput
                 className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
                 placeholder="email@address.com"
+                placeholderTextColor={"#737373"}
                 keyboardType="email-address"
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 enterKeyHint="done"
               />
             </KeyboardAvoidingView>
-            <KeyboardAvoidingView
-              className="h-fit"
-              behavior={Platform.OS === "ios" ? "padding" : undefined}
-            >
-              <Text className="text-2xl text-platinum font-bold text-center">
-                Password
-              </Text>
-              <TextInput
-                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
-                secureTextEntry
-                placeholder="Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                enterKeyHint="done"
-              />
-            </KeyboardAvoidingView>
             <TouchableOpacity
-              className="h-12 w-2/3 bg-celtic_blue rounded-2xl mx-auto mt-8 flex items-center justify-center"
-              onPress={signInWithEmail}
+              disabled={loading}
+              className="h-12 w-1/2 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
+              onPress={signUpWithEmail}
             >
               <Text className="text-platinum text-center font-bold">
-                Sign Up
+                {loading ? "Loading..." : "Sign Up"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -219,20 +250,23 @@ export default function Index() {
         <Animated.View
           entering={FadeIn}
           exiting={FadeOut}
-          className="absolute top-16 left-4"
+          className="absolute top-4 left-4"
         >
           <TouchableOpacity onPress={() => setChoice("")}>
             <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
           </TouchableOpacity>
         </Animated.View>
       )}
-      <View className="absolute bottom-12 z-50">
+      <KeyboardAvoidingView
+        behavior={undefined}
+        className="absolute bottom-4 z-50"
+      >
         <Slider
           options={["Login", "Sign Up"]}
           selected={choice}
           setOption={setChoice}
         />
-      </View>
+      </KeyboardAvoidingView>
     </Animated.View>
   );
 }
