@@ -54,15 +54,30 @@ export default function Index() {
       ) : choice === "Login" ? (
         <Animated.View
           key={"Login"}
-          className="h-full flex"
+          className="h-full flex w-full"
           entering={SlideInRight.withInitialValues({ originX: 400 })}
           exiting={SlideOutRight}
         >
           <Image
-            className="flex h-36"
+            className="flex h-36 mt-32"
             resizeMode="contain"
             source={require("@/assets/images/login.png")}
           />
+          <View className="flex flex-col gap-y-4 w-full">
+            <KeyboardAvoidingView
+              className="h-fit"
+              behavior={Platform.OS === "ios" ? "padding" : undefined}
+            >
+              <Text className="text-2xl text-platinum font-bold text-center">
+                Username or Email
+              </Text>
+              <TextInput
+                className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+                // placeholder="Username"
+                enterKeyHint="done"
+              />
+            </KeyboardAvoidingView>
+          </View>
         </Animated.View>
       ) : (
         <Animated.View
@@ -70,14 +85,27 @@ export default function Index() {
           className="h-full flex"
           entering={SlideInLeft.withInitialValues({ originX: -400 })}
           exiting={SlideOutLeft}
-          onTouchStart={Keyboard.dismiss}
+          // onTouchStart={Keyboard.dismiss}
         >
           <Image
-            className="flex h-32"
+            className="flex h-32 mt-32"
             resizeMode="contain"
             source={require("@/assets/images/signup.png")}
           />
-          <View className="flex flex-col">
+          <View className="flex flex-col gap-y-4">
+            <KeyboardAvoidingView
+              className="h-fit"
+              behavior={Platform.OS === "ios" ? "padding" : undefined}
+            >
+              <Text className="text-2xl text-platinum font-bold text-center">
+                Username
+              </Text>
+              <TextInput
+                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+                // placeholder="Username"
+                enterKeyHint="done"
+              />
+            </KeyboardAvoidingView>
             <KeyboardAvoidingView
               className="h-fit"
               behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -86,9 +114,10 @@ export default function Index() {
                 Email
               </Text>
               <TextInput
-                className="h-12 w-60 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center"
-                placeholder="Email"
+                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+                // placeholder="Email"
                 keyboardType="email-address"
+                enterKeyHint="done"
               />
             </KeyboardAvoidingView>
           </View>
