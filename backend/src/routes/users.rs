@@ -1,5 +1,8 @@
+use std::sync::Arc;
+
 use axum::extract::Path;
-use axum::Json;
+use axum::routing::{ get, post };
+use axum::{ Json, Router };
 use axum::{ extract, response::IntoResponse };
 use mongodb::bson::doc;
 use serde_json::json;
@@ -15,7 +18,9 @@ pub async fn get_user(
     if user_email.len() == 0 {
         return Json(json!({"status": StatusCodes::InvalidNumber}));
     }
-    let user = collections.users.find_one(doc! { "email": user_email }).await.unwrap_or(None);
+    let user = collections.users
+        .find_one(doc! { "email": user_email.clone() }).await
+        .unwrap_or(None);
     match user {
         Some(user) => Json(json!({"status": StatusCodes::Success, "user": user})),
         None => {

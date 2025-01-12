@@ -1,12 +1,7 @@
-use futures::{ StreamExt, TryStreamExt };
-use mongodb::bson::doc;
-use mongodb::change_stream::event::OperationType;
-use mongodb::options::{ FullDocumentBeforeChangeType, FullDocumentType };
-use mongodb::{ Client, Collection, IndexModel };
-use tokio::task;
+use mongodb::{ Client, Collection };
 use tracing::info;
 use std::env;
-use crate::types::{ User };
+use crate::types::User;
 
 #[derive(Debug, Clone)]
 pub struct Collections {

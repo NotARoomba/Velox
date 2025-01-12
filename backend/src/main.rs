@@ -1,8 +1,5 @@
 use std::{ env, sync::Arc };
 use axum::{ extract::Request, routing::get, Router, ServiceExt };
-use lettre::message::header::ContentType;
-use lettre::transport::smtp::authentication::Credentials;
-use lettre::{ Message, SmtpTransport, Transport };
 use tokio::net::TcpListener;
 use tracing::info;
 use dotenv::dotenv;
