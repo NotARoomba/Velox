@@ -59,7 +59,7 @@ export function AnimatedSplashScreen({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <View className="flex h-full w-full">
+    <View className="flex bg-transparent h-full w-full">
       {isSplashAnimationComplete && (
         <SafeAreaView className="bg-night text-platinum" />
       )}

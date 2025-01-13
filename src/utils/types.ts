@@ -12,3 +12,15 @@ export interface SliderProps {
   setOption: (v: string) => void;
   selected?: string | null;
 }
+
+export enum Games {
+  MATCH = 'match',
+  PI = 'pi',
+  APPROXIMATION = 'approximation',
+}
+
+export enum Difficulty {
+  EASY = 'Easy',
+  MEDIUM = 'Medium',
+  HARD = 'Hard',
+}

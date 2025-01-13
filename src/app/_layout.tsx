@@ -7,36 +7,35 @@ import Auth from "./auth";
 import { Stack } from "expo-router";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../utils/supabase";
+import { SessionProvider } from "../hooks/useSession";
+import Letters from "../components/Letters";
 
 export default function RootLayout() {
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("Session changed");
-      setSession(session);
-    });
-  }, []);
   return (
     <AnimatedAppLoader>
-      <View className="flex bg-night text-platinum h-full">
-        {session && session.user ? (
+      <SessionProvider>
+        <View className="h-full bg-tranparent">
           <Stack
             screenOptions={{
+              contentStyle: {
+                backgroundColor: "transparent",
+              },
               headerTransparent: false,
               headerShown: false,
             }}
           >
-            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="index" />
+            <Stack.Screen name={"auth"} />
+            <Stack.Screen name={"profile"} />
+            <Stack.Screen name={"play"} />
+            <Stack.Screen name={"difficulty"} />
+            <Stack.Screen name={"games/pi"} />
+            <Stack.Screen name={"games/approximation"} />
+            <Stack.Screen name={"games/match"} />
           </Stack>
-        ) : (
-          <Auth />
-        )}
-      </View>
+          <Letters />
+        </View>
+      </SessionProvider>
     </AnimatedAppLoader>
   );
 }

@@ -37,7 +37,7 @@ AppState.addEventListener("change", (state) => {
 });
 
 export default function Auth() {
-  const [choice, setChoice] = useState<string>();
+  const [choice, setChoice] = useState("Login");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,9 +49,9 @@ export default function Auth() {
       email: email,
       type: "email",
     });
-
-    if (error) Alert.alert(error.message);
     setLoading(false);
+    if (error) Alert.alert(error.message);
+    else router.navigate("/");
   }
 
   async function signInWithEmail() {
@@ -85,10 +85,7 @@ export default function Auth() {
 
   async function signUpWithEmail() {
     setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
         shouldCreateUser: true,
@@ -123,31 +120,10 @@ export default function Auth() {
 
   return (
     <Animated.View
-      entering={FadeIn.duration(1000).delay(5300)}
-      className="flex bg-night h-full w-full items-center justify-center"
+      entering={FadeIn.duration(1000)}
+      className="flex bg-transparent h-full w-full items-center justify-center"
     >
-      {!choice ? (
-        <Animated.View
-          key={"Info"}
-          className="h-fit flex"
-          entering={SlideInLeft}
-          exiting={SlideOutLeft}
-        >
-          <Image
-            className="flex h-56"
-            resizeMode="contain"
-            source={require("@/assets/images/velox.png")}
-          />
-          <View className="-translate-y-10 mx-auto">
-            <Text className="text-2xl text-platinum text-center font-bold w-90">
-              An app that helps improve your
-            </Text>
-            <Text className="text-2xl text-pale_azure text-center font-bold ">
-              mental math skills
-            </Text>
-          </View>
-        </Animated.View>
-      ) : choice === "Login" ? (
+      {choice === "Login" ? (
         <Animated.View
           key={"Login"}
           className="h-full flex w-full"
@@ -252,7 +228,7 @@ export default function Auth() {
           exiting={FadeOut}
           className="absolute top-4 left-4"
         >
-          <TouchableOpacity onPress={() => setChoice("")}>
+          <TouchableOpacity onPress={router.back}>
             <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
           </TouchableOpacity>
         </Animated.View>
