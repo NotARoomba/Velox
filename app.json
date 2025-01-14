@@ -41,7 +41,9 @@
             "node_modules/@expo-google-fonts/inter/Inter_400Regular.ttf"
           ]
         }
-      ]
+      ],
+      "expo-localization",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

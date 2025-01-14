@@ -42,16 +42,26 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    console.log("AUTH");
+  }, []);
+
   async function verifyEmail(code: string) {
     setLoading(true);
-    const { error } = await supabase.auth.verifyOtp({
+    const {
+      error,
+      data: { session },
+    } = await supabase.auth.verifyOtp({
       token: code,
       email: email,
       type: "email",
     });
     setLoading(false);
     if (error) Alert.alert(error.message);
-    else router.navigate("/");
+    else if (session && session.user.user_metadata.username === null) {
+      Alert.alert("Please sign up first!");
+      setChoice("Sign Up");
+    } else router.navigate("/");
   }
 
   async function signInWithEmail() {
@@ -226,7 +236,10 @@ export default function Auth() {
         <Animated.View
           entering={FadeIn}
           exiting={FadeOut}
-          className="absolute top-4 left-4"
+          className={
+            "absolute  left-4 " +
+            (Platform.OS === "android" ? " top-4" : "top-16")
+          }
         >
           <TouchableOpacity onPress={router.back}>
             <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
@@ -235,7 +248,10 @@ export default function Auth() {
       )}
       <KeyboardAvoidingView
         behavior={undefined}
-        className="absolute bottom-4 z-50"
+        className={
+          "absolute  z-50 " +
+          (Platform.OS === "android" ? "bottom-4" : "bottom-12")
+        }
       >
         <Slider
           options={["Login", "Sign Up"]}

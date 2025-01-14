@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Platform } from "react-native";
 import { Games } from "../utils/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -62,7 +62,10 @@ export default function Play() {
       <Animated.View
         entering={FadeIn}
         exiting={FadeOut}
-        className="absolute top-4 left-4"
+        className={
+          "absolute  left-4 " +
+          (Platform.OS === "android" ? " top-4" : "top-16")
+        }
       >
         <TouchableOpacity onPress={router.back}>
           <Ionicons color="#e8e8e8" size={40} name="arrow-back" />

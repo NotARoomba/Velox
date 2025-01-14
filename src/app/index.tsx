@@ -2,11 +2,19 @@ import { router } from "expo-router";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSession } from "../hooks/useSession";
 import Letters from "../components/Letters";
+import { useEffect } from "react";
+import Animated, { FadeOut } from "react-native-reanimated";
 
 export default function Index() {
   const { hasSession } = useSession();
+  useEffect(() => {
+    console.log("INDEX");
+  }, []);
   return (
-    <View className="h-fit bg-transparent flex flex-col gap-0">
+    <Animated.View
+      exiting={FadeOut.duration(5000)}
+      className="h-fit bg-transparent flex flex-col gap-0"
+    >
       <Image
         className="flex h-64 aspect-video mx-auto"
         resizeMode="contain"
@@ -42,6 +50,6 @@ export default function Index() {
           {hasSession ? "Profile" : "Login"}
         </Text>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 }

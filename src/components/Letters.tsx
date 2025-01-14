@@ -87,7 +87,7 @@ export default function Letters() {
       className="absolute top-0 left-0 overflow-hidden w-full bg-night h-screen -z-10"
       style={{ height }}
     >
-      {Array.from({ length: 50 }).map((_, i) => (
+      {Array.from({ length: 30 }).map((_, i) => (
         <AnimatedLetter key={i} />
       ))}
     </View>

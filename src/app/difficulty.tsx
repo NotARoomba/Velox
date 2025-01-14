@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { Difficulty } from "../utils/types";
 import Slider from "../components/Slider";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -41,7 +41,10 @@ export default function DifficultySelect() {
       <Animated.View
         entering={FadeIn}
         exiting={FadeOut}
-        className="absolute top-4 left-4"
+        className={
+          "absolute  left-4 " +
+          (Platform.OS === "android" ? " top-4" : "top-16")
+        }
       >
         <TouchableOpacity onPress={router.back}>
           <Ionicons color="#e8e8e8" size={40} name="arrow-back" />

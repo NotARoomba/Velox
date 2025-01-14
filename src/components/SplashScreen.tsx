@@ -35,7 +35,6 @@ export function AnimatedSplashScreen({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isAppReady) {
-      console.log("READY");
       setTimeout(() => {
         Animated.timing(animation, {
           toValue: 0,
