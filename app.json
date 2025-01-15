@@ -8,8 +8,18 @@
     "scheme": "velox",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "locales": {
+      "en": "./assets/locales/en.json"
+    },
     "ios": {
       "supportsTablet": true,
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true,
+        "CFBundleLocalizations": [
+          "en"
+        ],
+        "CFBundleDevelopmentRegion": "en"
+      },
       "bundleIdentifier": "com.notaroomba.velox"
     },
     "android": {

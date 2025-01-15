@@ -1,7 +1,7 @@
 {
-    "CFBundleDisplayName": "SupDoc",
-    "NSCameraUsageDescription": "SupDoc needs access to your camera to allow doctors to upload their verification documents and patients to upload photos of their symptoms. Your photos will help ensure accurate verification for doctors and better diagnosis and care for patients.",
-    "NSPhotoLibraryUsageDescription": "SupDoc needs access to your gallery to allow doctors to upload their verification documents and patients to upload photos of their symptoms. Your photos will help ensure accurate verification for doctors and better diagnosis and care for patients.",
+    "CFBundleDisplayName": "Velox",
+    "NSCameraUsageDescription": "Velox needs access to your camera to take a photo to update your profile picture.",
+    "NSPhotoLibraryUsageDescription": "Velox needs access to your gallery to choose a photo to update your profile picture.",
     "success": "Success!",
     "error": "Error",
     "check": "Check",
