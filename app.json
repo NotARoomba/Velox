@@ -20,7 +20,8 @@
         ],
         "CFBundleDevelopmentRegion": "en"
       },
-      "bundleIdentifier": "com.notaroomba.velox"
+      "bundleIdentifier": "com.notaroomba.velox",
+      "appleTeamId": "2499QNG3JJ"
     },
     "android": {
       "adaptiveIcon": {
