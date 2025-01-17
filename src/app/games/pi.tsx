@@ -1,7 +1,7 @@
 import Keypad from "@/src/components/Keypad";
 import Lives from "@/src/components/Lives";
 import { PI_DIGITS } from "@/src/utils/constants";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { View, Text, Alert, Platform } from "react-native";
 import Animated, {
@@ -11,6 +11,7 @@ import Animated, {
   useDerivedValue,
 } from "react-native-reanimated";
 import CurvedText from "@/src/components/CurvedText";
+import GameInfo from "@/src/components/GameInfo";
 
 export default function PI() {
   const params = useLocalSearchParams();
@@ -18,21 +19,18 @@ export default function PI() {
   const [guessed, setGuessed] = useState("3.");
   const [lives, setLives] = useState(3);
   const [timeLeft, setTimeLeft] = useState(60); // Adjust for difficulty
-  const [maxDigits, setMaxDigits] = useState(10);
   const rotation = useSharedValue(-120); // For circle rotation
   const [radius, setRadius] = useState(100); // For circle expansion
+  const circleRadius = useSharedValue(100);
   const [gameOver, setGameOver] = useState(false);
 
   // Set difficulty-dependent settings
   useEffect(() => {
     if (params.difficulty === "Easy") {
-      setMaxDigits(10);
       setTimeLeft(60);
     } else if (params.difficulty === "Medium") {
-      setMaxDigits(50);
       setTimeLeft(120);
     } else if (params.difficulty === "Hard") {
-      setMaxDigits(100);
       setTimeLeft(180);
     }
   }, []);
@@ -40,9 +38,15 @@ export default function PI() {
   useEffect(() => {
     if (!gameOver) {
       const interval = setInterval(() => {
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
           setGameOver(true);
-          return Alert.alert("Game Over", "You ran out of time!");
+          return Alert.alert("Game Over", "You ran out of time!", [
+            {
+              style: "default",
+              text: "Ok",
+              onPress: () => router.dismissTo("/play"),
+            },
+          ]);
         }
         setTimeLeft((time) => time - 1);
       }, 1000);
@@ -64,14 +68,21 @@ export default function PI() {
       ); // Rotate for each correct guess and scale logarithmically
       console.log(rotation.value);
       // Increase circle radius every full rotation
-      if (Math.abs(rotation.value) / 360 >= 1) {
+      if (Math.abs(rotation.value - 38) / 360 >= 1) {
         setRadius((r) => r + 6); // Increase radius smoothly
+        circleRadius.value = withSpring(circleRadius.value + 6);
       }
     } else {
       setLives((prev) => prev - 1);
       if (lives === 1) {
         setGameOver(true);
-        Alert.alert("Game Over", "You ran out of lives!");
+        Alert.alert("Game Over", "You ran out of lives!", [
+          {
+            style: "default",
+            text: "Ok",
+            onPress: () => router.dismissTo("/play"),
+          },
+        ]);
       }
     }
   };
@@ -80,8 +91,8 @@ export default function PI() {
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [{ rotate: `${rotation.value}deg` }],
-      width: radius,
-      height: radius,
+      width: circleRadius.value,
+      height: circleRadius.value,
       borderRadius: 9999, // Keep the circle shape
     };
   });
@@ -90,33 +101,11 @@ export default function PI() {
 
   return (
     <View className="h-full bg-transparent flex items-center justify-center">
-      {/* Lives and Timer */}
-      <View
-        className={
-          "absolute  left-4 " +
-          (Platform.OS === "android" ? " top-4" : "top-16")
-        }
-      >
-        <Lives lives={lives} />
-      </View>
-      <View
-        className={
-          "absolute  right-4 " +
-          (Platform.OS === "android" ? " top-4" : "top-16")
-        }
-      >
-        <Text className="text-platinum text-3xl font-bold">{timeLeft}</Text>
-      </View>
-      <View
-        className={
-          "absolute left-1/2 -translate-x-1/2 " +
-          (Platform.OS === "android" ? " top-4" : "top-16")
-        }
-      >
-        <Text className="text-platinum text-3xl font-bold">
-          {guessed.length - 2}/{maxDigits}
-        </Text>
-      </View>
+      <GameInfo
+        lives={lives}
+        timeLeft={timeLeft}
+        guessed={guessed.length - 2}
+      />
 
       {/* Rotating and Expanding Curved Text */}
       <View className="flex flex-col items-center justify-center">

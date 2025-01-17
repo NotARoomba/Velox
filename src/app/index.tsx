@@ -1,18 +1,16 @@
 import { router } from "expo-router";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Animated } from "react-native";
 import { useSession } from "../hooks/useSession";
 import Letters from "../components/Letters";
 import { useEffect } from "react";
-import Animated, { FadeOut } from "react-native-reanimated";
+import useFade from "../hooks/useFade";
 
 export default function Index() {
   const { hasSession } = useSession();
-  useEffect(() => {
-    console.log("INDEX");
-  }, []);
+  const opacity = useFade();
   return (
     <Animated.View
-      exiting={FadeOut.duration(5000)}
+      style={{ opacity }}
       className="h-fit bg-transparent flex flex-col gap-0"
     >
       <Image

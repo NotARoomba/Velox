@@ -198,7 +198,10 @@ export default function Profile() {
   }, [session]);
   return (
     userEdit != null && (
-      <Animated.View entering={FadeIn} className="h-full bg-transparent flex">
+      <Animated.View
+        entering={FadeIn.duration(300)}
+        className="h-full bg-transparent flex z-0"
+      >
         <View className="mx-auto bg-transparent w-48 h-48 rounded-full mt-12">
           <View className=" m-auto">
             <TouchableOpacity className=" w-48 h-48  aspect-square flex  rounded-xl">
@@ -214,7 +217,9 @@ export default function Profile() {
                 }
                 source={
                   typeof userEdit?.avatar_url == "string"
-                    ? { uri: userEdit?.avatar_url }
+                    ? userEdit.avatar_url.includes("http")
+                      ? { uri: userEdit?.avatar_url }
+                      : undefined
                     : userEdit?.avatar_url?.uri
                     ? { uri: userEdit?.avatar_url.uri }
                     : undefined
@@ -222,15 +227,14 @@ export default function Profile() {
               />
 
               {pictureLoading && (
-                <View className=" rounded-xl w-48 h-48  z-50 absolute  flex">
+                <Animated.View
+                  exiting={FadeOut.duration(300)}
+                  className=" rounded-xl w-48 h-48  z-50 absolute  flex"
+                >
                   <Skeleton
                     animationType="shiver"
-                    boneColor={
-                      colorScheme == "dark"
-                        ? "#041225"
-                        : "rgba(91, 149, 165, 0.2)"
-                    }
-                    highlightColor="#b4c5e4"
+                    boneColor={"#151515"}
+                    highlightColor="#e8e8e8"
                     layout={[
                       {
                         borderRadius: 12,
@@ -241,10 +245,10 @@ export default function Profile() {
                     isLoading={pictureLoading}
                   >
                     <View className="m-auto w-48 h-48">
-                      <Icons name="person" size={150} color={"#fbfff1"} />
+                      <Icons name="person" size={150} color={"#e8e8e8"} />
                     </View>
                   </Skeleton>
-                </View>
+                </Animated.View>
               )}
               {((!pictureLoaded && !pictureLoading) ||
                 !userEdit?.avatar_url) && (

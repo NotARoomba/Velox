@@ -1,12 +1,21 @@
 import { router } from "expo-router";
-import { View, Text, Image, TouchableOpacity, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Platform,
+  Animated,
+} from "react-native";
 import { Games } from "../utils/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
+import useFade from "../hooks/useFade";
 
 export default function Play() {
+  const opacity = useFade();
   return (
-    <View className="h-full bg-transparent flex">
+    <Animated.View style={{ opacity }} className="h-full bg-transparent flex">
       <Image
         className="flex h-48 aspect-video mx-auto mt-12"
         resizeMode="contain"
@@ -59,7 +68,7 @@ export default function Play() {
           </View>
         </TouchableOpacity>
       </View>
-      <Animated.View
+      <ReAnimated.View
         entering={FadeIn}
         exiting={FadeOut}
         className={
@@ -70,7 +79,7 @@ export default function Play() {
         <TouchableOpacity onPress={router.back}>
           <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
         </TouchableOpacity>
-      </Animated.View>
-    </View>
+      </ReAnimated.View>
+    </Animated.View>
   );
 }

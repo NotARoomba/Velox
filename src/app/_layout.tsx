@@ -24,7 +24,9 @@ export default function RootLayout() {
               },
               headerTransparent: false,
               headerShown: false,
-              animation: "none",
+              animation: "default",
+              // animation: "fade",
+              animationDuration: 2000,
             }}
           >
             <Stack.Screen name="index" />

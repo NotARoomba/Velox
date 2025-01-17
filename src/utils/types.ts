@@ -38,3 +38,9 @@ export interface KeypadProps {
   onDigitPress: (digit: string) => void;
   disabled: boolean;
 }
+
+export interface GameInfoProps {
+  lives: number;
+  timeLeft: number;
+  guessed: number;
+}

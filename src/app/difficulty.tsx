@@ -1,17 +1,19 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import { View, Text, TouchableOpacity, Platform, Animated } from "react-native";
 import { Difficulty } from "../utils/types";
 import Slider from "../components/Slider";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import useFade from "../hooks/useFade";
 
 export default function DifficultySelect() {
   const params = useLocalSearchParams();
   const [difficulty, setDifficulty] = useState<string>(Difficulty.EASY);
+  const opacity = useFade();
 
   return (
-    <View className="h-full bg-transparent flex">
+    <Animated.View style={{ opacity }} className="h-full bg-transparent flex">
       <View className="m-auto">
         <Text className="text-platinum m-auto font-bold text-4xl text-center mb-4">
           Select Difficulty
@@ -38,7 +40,7 @@ export default function DifficultySelect() {
           </Text>
         </TouchableOpacity>
       </View>
-      <Animated.View
+      <ReAnimated.View
         entering={FadeIn}
         exiting={FadeOut}
         className={
@@ -49,7 +51,7 @@ export default function DifficultySelect() {
         <TouchableOpacity onPress={router.back}>
           <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
         </TouchableOpacity>
-      </Animated.View>
-    </View>
+      </ReAnimated.View>
+    </Animated.View>
   );
 }

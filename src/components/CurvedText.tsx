@@ -109,7 +109,7 @@ export default function CurvedText({
       <Defs>
         <Path id={ellipseId} d={pathD} fill="none" />
       </Defs>
-      <Text {...textProps}>
+      <Text fontWeight={600} {...textProps}>
         <TextPath
           href={`#${ellipseId}`}
           startOffset={`${startOffset}%`} // Ensure offset is percentage
