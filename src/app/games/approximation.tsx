@@ -2,10 +2,11 @@ import GameInfo from "@/src/components/GameInfo";
 import { Difficulty } from "@/src/utils/types";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, GestureResponderEvent } from "react-native";
 import Slider from "@react-native-community/slider";
 import { MathJaxSvg } from "react-native-mathjax-html-to-svg";
 import ApproxSlider from "@/src/components/ApproxSlider";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function Approximation() {
   const params = useLocalSearchParams();
@@ -42,12 +43,32 @@ export default function Approximation() {
     }
   }, [gameOver]);
 
-  useEffect(() => {
-    if (!gameOver) {
-      const eqa = generateEquation(params.difficulty as Difficulty);
-      setEquation(eqa);
+  const checkAnswer = (approxGuess: boolean) => {
+    console.log(approxGuess, equation[1]);
+    if (approxGuess) {
+      setGussed((guessed) => guessed + 1);
+      setEquation(generateEquation(params.difficulty as Difficulty));
+    } else {
+      setLives((lives) => lives - 1);
+      setEquation(generateEquation(params.difficulty as Difficulty));
+      console.log(lives);
+      if (lives <= 1) {
+        setGameOver(true);
+        Alert.alert("Game Over", "You ran out of lives!", [
+          {
+            style: "default",
+            text: "Ok",
+            onPress: () => router.dismissTo("/play"),
+          },
+        ]);
+      }
     }
-  }, [gameOver]);
+  };
+
+  useEffect(() => {
+    const eqa = generateEquation(params.difficulty as Difficulty);
+    setEquation(eqa);
+  }, []);
   return (
     <View className="h-full bg-transparent flex">
       <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
@@ -55,18 +76,28 @@ export default function Approximation() {
         <Text className="text-platinum text-3xl font-bold mx-auto text-center">
           Solve the following equation:
         </Text>
-        <MathJaxSvg
-          style={{ marginHorizontal: "auto" }}
-          fontSize={36}
-          color="white"
-          fontCache={true}
+        <Animated.View
+          key={equation[0]}
+          entering={FadeIn.duration(1000)}
+          exiting={FadeOut.duration(1000)}
         >
-          {equation[0]}
-        </MathJaxSvg>
+          <MathJaxSvg
+            style={{ marginHorizontal: "auto" }}
+            fontSize={36}
+            color="white"
+            fontCache={true}
+          >
+            {equation[0]}
+          </MathJaxSvg>
 
-        {/* add a slider that at the ends are 2 numbers randomly between 3-10 of the answer */}
+          {/* add a slider that at the ends are 2 numbers randomly between 3-10 of the answer */}
 
-        <ApproxSlider inputNumber={equation[1]} />
+          <ApproxSlider
+            inputNumber={equation[1]}
+            onRelease={checkAnswer}
+            difficulty={params.difficulty as Difficulty}
+          />
+        </Animated.View>
       </View>
     </View>
   );
@@ -99,10 +130,12 @@ function generateEquation(difficulty: Difficulty): [string, number] {
       return [`$$${equation}$$`, answer];
 
     case Difficulty.MEDIUM:
-      const c = Math.floor(Math.random() * 500) + 50;
+      let c = Math.floor(Math.random() * 50) + 10;
       const d = Math.floor(Math.random() * 50) + 10;
       const complexOperation = Math.random() > 0.5 ? "*" : "/";
-      const equationMedium = `${c} ${complexOperation} ${d}`;
+      if (complexOperation === "/") c *= Math.floor(Math.random() * 16) + 4;
+      const equationMedium =
+        complexOperation === "*" ? `${c} \\times ${d}` : `\\frac{${c}}{${d}}`;
       const answerMedium = complexOperation === "*" ? c * d : c / d;
       return [`$$${equationMedium}$$`, answerMedium];
 
