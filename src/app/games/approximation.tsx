@@ -7,6 +7,7 @@ import Slider from "@react-native-community/slider";
 import { MathJaxSvg } from "react-native-mathjax-html-to-svg";
 import ApproxSlider from "@/src/components/ApproxSlider";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
 
 export default function Approximation() {
   const params = useLocalSearchParams();
@@ -44,14 +45,13 @@ export default function Approximation() {
   }, [gameOver]);
 
   const checkAnswer = (approxGuess: boolean) => {
-    console.log(approxGuess, equation[1]);
     if (approxGuess) {
       setGussed((guessed) => guessed + 1);
       setEquation(generateEquation(params.difficulty as Difficulty));
     } else {
       setLives((lives) => lives - 1);
       setEquation(generateEquation(params.difficulty as Difficulty));
-      console.log(lives);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives <= 1) {
         setGameOver(true);
         Alert.alert("Game Over", "You ran out of lives!", [
@@ -106,8 +106,8 @@ export default function Approximation() {
 function generateEquation(difficulty: Difficulty): [string, number] {
   switch (difficulty) {
     case Difficulty.EASY:
-      const a = Math.floor(Math.random() * 20) + 1;
-      const b = Math.floor(Math.random() * 20) + 1;
+      const a = Math.floor(Math.random() * 10) + 1;
+      const b = Math.floor(Math.random() * 10) + 1;
       const operations = ["+", "-", "*", "/"];
       const operation =
         operations[Math.floor(Math.random() * operations.length)];
@@ -130,8 +130,8 @@ function generateEquation(difficulty: Difficulty): [string, number] {
       return [`$$${equation}$$`, answer];
 
     case Difficulty.MEDIUM:
-      let c = Math.floor(Math.random() * 50) + 10;
-      const d = Math.floor(Math.random() * 50) + 10;
+      let c = Math.floor(Math.random() * 20) + 10;
+      const d = Math.floor(Math.random() * 20) + 10;
       const complexOperation = Math.random() > 0.5 ? "*" : "/";
       if (complexOperation === "/") c *= Math.floor(Math.random() * 16) + 4;
       const equationMedium =

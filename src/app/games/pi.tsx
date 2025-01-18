@@ -12,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import CurvedText from "@/src/components/CurvedText";
 import GameInfo from "@/src/components/GameInfo";
+import * as Haptics from "expo-haptics";
 
 export default function PI() {
   const params = useLocalSearchParams();
@@ -74,6 +75,7 @@ export default function PI() {
       }
     } else {
       setLives((prev) => prev - 1);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives === 1) {
         setGameOver(true);
         Alert.alert("Game Over", "You ran out of lives!", [
