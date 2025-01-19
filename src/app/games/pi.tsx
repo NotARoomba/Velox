@@ -13,6 +13,10 @@ import Animated, {
 import CurvedText from "@/src/components/CurvedText";
 import GameInfo from "@/src/components/GameInfo";
 import * as Haptics from "expo-haptics";
+import GameOverModal from "@/src/components/GameOverModal";
+import { GameType, Difficulty } from "@/src/utils/types";
+import { supabase } from "@/src/utils/supabase";
+import useFade from "@/src/hooks/useFade";
 
 export default function PI() {
   const params = useLocalSearchParams();
@@ -38,16 +42,23 @@ export default function PI() {
 
   useEffect(() => {
     if (!gameOver) {
-      const interval = setInterval(() => {
+      const interval = setInterval(async () => {
         if (timeLeft <= 0) {
           setGameOver(true);
-          return Alert.alert("Game Over", "You ran out of time!", [
-            {
-              style: "default",
-              text: "Ok",
-              onPress: () => router.dismissTo("/play"),
-            },
-          ]);
+          const { error } = await supabase.from("games").insert({
+            type: GameType.PI,
+            score: guessed.length - 2,
+            lives,
+            time: timeLeft,
+          });
+          if (error) Alert.alert("Error", error.message);
+          // return Alert.alert("Game Over", "You ran out of time!", [
+          //   {
+          //     style: "default",
+          //     text: "Ok",
+          //     onPress: () => router.dismissTo("/play"),
+          //   },
+          // ]);
         }
         setTimeLeft((time) => time - 1);
       }, 1000);
@@ -56,7 +67,7 @@ export default function PI() {
   }, [gameOver]);
 
   // Handle user guess
-  const handleGuess = (input: string) => {
+  const handleGuess = async (input: string) => {
     const correctDigit = PI_DIGITS[currentIndex];
     if (input === correctDigit) {
       // Update guessed digits and index
@@ -78,13 +89,20 @@ export default function PI() {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives === 1) {
         setGameOver(true);
-        Alert.alert("Game Over", "You ran out of lives!", [
-          {
-            style: "default",
-            text: "Ok",
-            onPress: () => router.dismissTo("/play"),
-          },
-        ]);
+        const { error } = await supabase.from("games").insert({
+          type: GameType.PI,
+          score: guessed.length - 2,
+          lives,
+          time: timeLeft,
+        });
+        if (error) Alert.alert("Error", error.message);
+        // Alert.alert("Game Over", "You ran out of lives!", [
+        //   {
+        //     style: "default",
+        //     text: "Ok",
+        //     onPress: () => router.dismissTo("/play"),
+        //   },
+        // ]);
       }
     }
   };
@@ -102,7 +120,7 @@ export default function PI() {
   // Derived values for CurvedText dimensions
 
   return (
-    <View className="h-full bg-transparent flex items-center justify-center">
+    <View className="h-full bg-transparent flex items-center justify-around">
       <GameInfo
         lives={lives}
         timeLeft={timeLeft}
@@ -147,6 +165,28 @@ export default function PI() {
         disabled={gameOver}
         onDigitPress={(digit) => handleGuess(digit)}
       />
+      {gameOver && (
+        <GameOverModal
+          game={{
+            type: GameType.PI,
+            lives,
+            time: timeLeft,
+            score: guessed.length - 2,
+            answer: parseInt(PI_DIGITS.at(currentIndex) ?? "0"),
+          }}
+          onQuit={() => router.dismissTo("/play")}
+          onRestart={() => {
+            setCurrentIndex(2);
+            setGuessed("3.");
+            setLives(3);
+            setTimeLeft(60);
+            setRadius(100);
+            rotation.value = -120;
+            circleRadius.value = 100;
+            setGameOver(false);
+          }}
+        />
+      )}
     </View>
   );
 }

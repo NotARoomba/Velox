@@ -1,5 +1,5 @@
 import GameInfo from "@/src/components/GameInfo";
-import { Difficulty } from "@/src/utils/types";
+import { Difficulty, GameType } from "@/src/utils/types";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text, Alert, GestureResponderEvent } from "react-native";
@@ -8,12 +8,14 @@ import { MathJaxSvg } from "react-native-mathjax-html-to-svg";
 import ApproxSlider from "@/src/components/ApproxSlider";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
+import GameOverModal from "@/src/components/GameOverModal";
+import { supabase } from "@/src/utils/supabase";
 
 export default function Approximation() {
   const params = useLocalSearchParams();
   const [lives, setLives] = useState(3);
   const [timeLeft, setTimeLeft] = useState(60); // Adjust for difficulty
-  const [guessed, setGussed] = useState(0);
+  const [guessed, setGuessed] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [equation, setEquation] = useState<[string, number]>(["", 0]);
   useEffect(() => {
@@ -27,16 +29,23 @@ export default function Approximation() {
   }, []);
   useEffect(() => {
     if (!gameOver) {
-      const interval = setInterval(() => {
+      const interval = setInterval(async () => {
         if (timeLeft <= 0) {
           setGameOver(true);
-          return Alert.alert("Game Over", "You ran out of time!", [
-            {
-              style: "default",
-              text: "Ok",
-              onPress: () => router.dismissTo("/play"),
-            },
-          ]);
+          const { error } = await supabase.from("games").insert({
+            type: GameType.APPROXIMATION,
+            score: guessed,
+            lives,
+            time: timeLeft,
+          });
+          if (error) Alert.alert("Error", error.message);
+          // return Alert.alert("Game Over", "You ran out of time!", [
+          //   {
+          //     style: "default",
+          //     text: "Ok",
+          //     onPress: () => router.dismissTo("/play"),
+          //   },
+          // ]);
         }
         setTimeLeft((time) => time - 1);
       }, 1000);
@@ -44,9 +53,9 @@ export default function Approximation() {
     }
   }, [gameOver]);
 
-  const checkAnswer = (approxGuess: boolean) => {
+  const checkAnswer = async (approxGuess: boolean) => {
     if (approxGuess) {
-      setGussed((guessed) => guessed + 1);
+      setGuessed((guessed) => guessed + 1);
       setEquation(generateEquation(params.difficulty as Difficulty));
     } else {
       setLives((lives) => lives - 1);
@@ -54,13 +63,20 @@ export default function Approximation() {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives <= 1) {
         setGameOver(true);
-        Alert.alert("Game Over", "You ran out of lives!", [
-          {
-            style: "default",
-            text: "Ok",
-            onPress: () => router.dismissTo("/play"),
-          },
-        ]);
+        const { error } = await supabase.from("games").insert({
+          type: GameType.APPROXIMATION,
+          score: guessed,
+          lives,
+          time: timeLeft,
+        });
+        if (error) Alert.alert("Error", error.message);
+        // Alert.alert("Game Over", "You ran out of lives!", [
+        //   {
+        //     style: "default",
+        //     text: "Ok",
+        //     onPress: () => router.dismissTo("/play"),
+        //   },
+        // ]);
       }
     }
   };
@@ -99,6 +115,25 @@ export default function Approximation() {
           />
         </Animated.View>
       </View>
+      {gameOver && (
+        <GameOverModal
+          game={{
+            type: GameType.APPROXIMATION,
+            lives,
+            time: timeLeft,
+            score: guessed,
+            answer: equation[1],
+          }}
+          onQuit={() => router.dismissTo("/play")}
+          onRestart={() => {
+            setLives(3);
+            setTimeLeft(60);
+            setGuessed(0);
+            setGameOver(false);
+            setEquation(generateEquation(params.difficulty as Difficulty));
+          }}
+        />
+      )}
     </View>
   );
 }

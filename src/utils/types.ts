@@ -44,3 +44,19 @@ export interface GameInfoProps {
   timeLeft: number;
   guessed: number;
 }
+
+export enum GameType {
+  PI,
+  MATCH,
+  APPROXIMATION
+}
+
+export interface Game {
+  type: GameType;
+  score: number;
+  lives: number;
+  time: number;
+  username?: string;
+  avatar_url?: string;
+  answer?: number;
+}

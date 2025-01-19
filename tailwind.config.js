@@ -8,21 +8,85 @@ module.exports = {
       //add a holographic effect with the celtic_blue
       boxShadow: { 'holo': '4px 4px #0074d9' },
       keyframes: {
-        lettersAnimation: {
+        bouncepulse: {
+          //red
           "0%": {
-            transform: "translateY(0) rotate(0deg)",
-            opacity: "0.4",
-            borderRadius: "0",
+            "text-shadow": "0 0 rgb(255 69 58)",
+            transform: "rotate(-3deg)",
           },
+          "6.25%": { "text-shadow": "rgb(255 69 58)" },
+          "12.5%": {
+            "text-shadow": ".10em .10em rgb(255 69 58)",
+            transform: "rotate(3deg)",
+          },
+          //orange
+          "18.75%": { "text-shadow": "rgb(255 159 10)" },
+          "25%": {
+            "text-shadow": "0 0 rgb(255 159 10)",
+            transform: "rotate(-3deg)",
+          },
+          "31.25%": { "text-shadow": "rgb(255 159 10)" },
+          "37.5%": {
+            "text-shadow": ".10em .10em rgb(255 159 10)",
+            transform: "rotate(3deg)",
+          },
+          //yellow
+          "43.75%": { "text-shadow": "rgb(255 214 10)" },
+          "50%": {
+            "text-shadow": "0 0 rgb(255 214 10)",
+            transform: "rotate(-3deg)",
+          },
+          "56.25%": { "text-shadow": "rgb(255 214 10)" },
+          "62.5%": {
+            "text-shadow": ".10em .10em rgb(255 214 10)",
+            transform: "rotate(3deg)",
+          },
+          //green
+          "68.75%": { "text-shadow": "rgb(48 209 88)" },
+          "75%": {
+            "text-shadow": "0 0 rgb(48 209 88)",
+            transform: "rotate(-3deg)",
+          },
+          "81.25%": { "text-shadow": "rgb(48 209 88)" },
+          "87.5%": {
+            "text-shadow": ".10em .10em rgb(48 209 88)",
+            transform: "rotate(3deg)",
+          },
+          //blue
+          "93.75%": { "text-shadow": "rgb(10 32 255)" },
           "100%": {
-            transform: "translateY(-1000%) rotate(720deg)",
-            opacity: "0",
-            borderRadius: "50%",
+            "text-shadow": "0 0 rgb(10 32 255)",
+            transform: "rotate(-3deg)",
           },
+        },
+        colorpulse: {
+          //red
+          "0%": { "text-shadow": "0 0 rgb(255 69 58)" },
+          "6.25%": { "text-shadow": "rgb(255 69 58)" },
+          "12.5%": { "text-shadow": ".10em .10em rgb(255 69 58)" },
+          //orange
+          "18.75%": { "text-shadow": "rgb(255 159 10)" },
+          "25%": { "text-shadow": "0 0 rgb(255 159 10)" },
+          "31.25%": { "text-shadow": "rgb(255 159 10)" },
+          "37.5%": { "text-shadow": ".10em .10em rgb(255 159 10)" },
+          //yellow
+          "43.75%": { "text-shadow": "rgb(255 214 10)" },
+          "50%": { "text-shadow": "0 0 rgb(255 214 10)" },
+          "56.25%": { "text-shadow": "rgb(255 214 10)" },
+          "62.5%": { "text-shadow": ".10em .10em rgb(255 214 10)" },
+          //green
+          "68.75%": { "text-shadow": "rgb(48 209 88)" },
+          "75%": { "text-shadow": "0 0 rgb(48 209 88)" },
+          "81.25%": { "text-shadow": "rgb(48 209 88)" },
+          "87.5%": { "text-shadow": ".10em .10em rgb(48 209 88)" },
+          //blue
+          "93.75%": { "text-shadow": "rgb(10 32 255)" },
+          "100%": { "text-shadow": "0 0 rgb(10 32 255)" },
         },
       },
       animation: {
-        animatedLetters: "lettersAnimation 25s linear infinite",
+        bouncepulse: "bouncepulse 12s ease-in-out infinite alternate",
+        colorpulse: "colorpulse 6s ease-in-out infinite alternate",
       },
     },
   },

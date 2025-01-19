@@ -33,6 +33,7 @@ export default function RootLayout() {
             <Stack.Screen name={"auth"} />
             <Stack.Screen name={"profile"} />
             <Stack.Screen name={"play"} />
+            <Stack.Screen name={"leaderboard"} />
             <Stack.Screen name={"difficulty"} />
             <Stack.Screen name={"games/pi"} />
             <Stack.Screen name={"games/approximation"} />

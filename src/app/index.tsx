@@ -38,7 +38,18 @@ export default function Index() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className="bg-platinum/10  w-2/3 mx-auto py-3 mt-6 rounded-2xl"
+        className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl my-6"
+        style={{
+          boxShadow: "4px 4px #0074d9",
+        }}
+        onPress={() => router.push("/leaderboard")}
+      >
+        <Text className="text-platinum m-auto font-bold text-center text-4xl">
+          Leaderboard
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl"
         style={{
           boxShadow: "4px 4px #0074d9",
         }}

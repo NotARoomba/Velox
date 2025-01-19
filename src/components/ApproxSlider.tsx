@@ -90,6 +90,7 @@ export default function ApproxSlider({
           minimumValue={minMax[0]}
           maximumValue={minMax[1]}
           value={value}
+          step={0.5}
           trackImage={require("@/assets/images/track.png")}
           thumbImage={require("@/assets/images/thumb.png")}
           onResponderRelease={() => parseRelease()}

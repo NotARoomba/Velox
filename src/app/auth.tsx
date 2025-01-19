@@ -10,9 +10,10 @@ import {
   Keyboard,
   Alert,
   AppState,
+  Animated,
 } from "react-native";
 import Slider from "../components/Slider";
-import Animated, {
+import ReAnimated, {
   Easing,
   FadeIn,
   FadeInLeft,
@@ -27,6 +28,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { supabase } from "../utils/supabase";
 import prompt from "@powerdesigninc/react-native-prompt";
 import { router } from "expo-router";
+import useFade from "../hooks/useFade";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -41,6 +43,8 @@ export default function Auth() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const opacity = useFade();
 
   useEffect(() => {
     console.log("AUTH");
@@ -129,12 +133,12 @@ export default function Auth() {
   }
 
   return (
-    <Animated.View
+    <ReAnimated.View
       entering={FadeIn.duration(1000)}
       className="flex bg-transparent h-full w-full items-center justify-center"
     >
       {choice === "Login" ? (
-        <Animated.View
+        <ReAnimated.View
           key={"Login"}
           className="h-full flex w-full"
           entering={SlideInRight.withInitialValues({ originX: 400 })}
@@ -172,9 +176,9 @@ export default function Auth() {
               </Text>
             </TouchableOpacity>
           </View>
-        </Animated.View>
+        </ReAnimated.View>
       ) : (
-        <Animated.View
+        <ReAnimated.View
           key={"SignUp"}
           className="h-full flex"
           entering={SlideInLeft.withInitialValues({ originX: -400 })}
@@ -230,10 +234,10 @@ export default function Auth() {
               </Text>
             </TouchableOpacity>
           </View>
-        </Animated.View>
+        </ReAnimated.View>
       )}
       {choice && (
-        <Animated.View
+        <ReAnimated.View
           entering={FadeIn}
           exiting={FadeOut}
           className={
@@ -244,7 +248,7 @@ export default function Auth() {
           <TouchableOpacity onPress={router.back}>
             <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
           </TouchableOpacity>
-        </Animated.View>
+        </ReAnimated.View>
       )}
       <KeyboardAvoidingView
         behavior={undefined}
@@ -259,6 +263,6 @@ export default function Auth() {
           setOption={setChoice}
         />
       </KeyboardAvoidingView>
-    </Animated.View>
+    </ReAnimated.View>
   );
 }
