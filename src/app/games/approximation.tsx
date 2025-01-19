@@ -190,8 +190,8 @@ function generateEquation(difficulty: Difficulty): [string, number] {
           (trigFunction == "sin"
             ? Math.sin
             : trigFunction == "cos"
-            ? Math.cos
-            : Math.tan)(angle * (Math.PI / 180)),
+              ? Math.cos
+              : Math.tan)(angle * (Math.PI / 180)),
         ];
       }
 

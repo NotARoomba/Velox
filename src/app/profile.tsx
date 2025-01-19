@@ -25,16 +25,17 @@ import { User } from "../utils/types";
 import Animated from "react-native-reanimated";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
+import { useLoading } from "../hooks/useLoading";
 
 export default function Profile() {
   const colorScheme = useColorScheme();
   const { session } = useSession();
   const camera = useCamera();
   const gallery = useGallery();
-  const [pictureLoading, setPictureLoading] = useState(false);
+  const [pictureLoading, setPictureLoading] = useState(true);
   const [pictureLoaded, setPictureLoaded] = useState(false);
   const [activeChange, setActiveChange] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = useLoading();
   const [user, setUser] = useState<null | User>(null);
   const [userEdit, setUserEdit] = useState<null | User>(null);
   const { t } = useTranslation();
@@ -42,27 +43,15 @@ export default function Profile() {
     try {
       if (!path)
         return setUserEdit((prev) => ({ ...(prev as User), avatar_url: null }));
-      const { data, error } = await supabase.storage
-        .from("avatars")
-        .download(path);
-
-      if (error) {
-        throw error;
-      }
-
-      const fr = new FileReader();
-      fr.readAsDataURL(data);
-      fr.onload = () => {
-        setUserEdit((prev) => ({
-          ...(prev as User),
-          avatar_url: fr.result as string,
-        }));
-        setUser((prev) => ({
-          ...(prev as User),
-          avatar_url: fr.result as string,
-        }));
-        // console.log(typeof fr.result);
-      };
+      const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+      setUserEdit((prev) => ({
+        ...(prev as User),
+        avatar_url: data.publicUrl as string,
+      }));
+      setUser((prev) => ({
+        ...(prev as User),
+        avatar_url: data.publicUrl as string,
+      }));
     } catch (error) {
       if (error instanceof Error) {
         console.log("Error downloading image: ", error.message);
@@ -73,11 +62,10 @@ export default function Profile() {
   const updateProfile = async () => {
     try {
       setLoading(true);
-      console.log("UPDATING PROFILE");
       if (!session?.user) throw new Error("No user on the session!");
       if (userEdit?.avatar_url && typeof userEdit?.avatar_url == "object") {
         const arraybuffer = await fetch(userEdit?.avatar_url.uri).then((res) =>
-          res.arrayBuffer()
+          res.arrayBuffer(),
         );
 
         const fileExt =
@@ -107,7 +95,7 @@ export default function Profile() {
         }
         setUser(userEdit);
         downloadImage(data.path);
-        Alert.alert(t("profile.updateSuccess"));
+        Alert.alert(t("success"), t("profile.updateSuccess"));
       } else {
         const updates = {
           id: session?.user.id,
@@ -122,7 +110,7 @@ export default function Profile() {
           throw error;
         }
         setUser(userEdit);
-        Alert.alert(t("profile.updateSuccess"));
+        Alert.alert(t("success"), t("profile.updateSuccess"));
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -193,7 +181,6 @@ export default function Profile() {
     }
   };
   useEffect(() => {
-    setPictureLoading(true);
     if (session) getProfile();
   }, [session]);
   return (
@@ -206,7 +193,7 @@ export default function Profile() {
           <View className=" m-auto">
             <TouchableOpacity className=" w-48 h-48  aspect-square flex  rounded-xl">
               <Image
-                onLoadStart={() => setPictureLoading(true)}
+                // onLoadStart={() => setPictureLoading(true)}
                 onLoad={() => {
                   setPictureLoading(false);
                   setPictureLoaded(true);
@@ -221,8 +208,8 @@ export default function Profile() {
                       ? { uri: userEdit?.avatar_url }
                       : undefined
                     : userEdit?.avatar_url?.uri
-                    ? { uri: userEdit?.avatar_url.uri }
-                    : undefined
+                      ? { uri: userEdit?.avatar_url.uri }
+                      : undefined
                 }
               />
 
@@ -276,7 +263,7 @@ export default function Profile() {
                             text: t("images.gallery"),
                             onPress: async () => {
                               const result = (await selectImage(
-                                "gallery"
+                                "gallery",
                               )) as ImagePickerAsset | null;
                               setUserEdit((prev) => ({
                                 ...(prev as User),
@@ -290,7 +277,7 @@ export default function Profile() {
                             text: t("images.camera"),
                             onPress: async () => {
                               const result = (await selectImage(
-                                "camera"
+                                "camera",
                               )) as ImagePickerAsset | null;
                               setUserEdit((prev) => ({
                                 ...(prev as User),
@@ -328,6 +315,7 @@ export default function Profile() {
               className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
               placeholder={userEdit?.username}
               placeholderTextColor={"#f8f8f8"}
+              maxLength={12}
               value={userEdit?.username}
               onChangeText={(text) =>
                 setUserEdit((prev) => ({ ...(prev as User), username: text }))
@@ -359,6 +347,53 @@ export default function Profile() {
         >
           <TouchableOpacity onPress={router.back}>
             <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          className={
+            "absolute  left-4 " +
+            (Platform.OS === "android" ? " top-4" : "top-16")
+          }
+        >
+          <TouchableOpacity onPress={router.back}>
+            <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          className={
+            "absolute  right-4 " +
+            (Platform.OS === "android" ? " top-4" : "top-16")
+          }
+        >
+          <TouchableOpacity
+            className="z-50 p-1"
+            onPress={() =>
+              Alert.alert(
+                t("profile.logoutTitle"),
+                t("profile.logoutDescription"),
+                [
+                  { text: t("buttons.cancel"), style: "cancel" },
+                  {
+                    text: t("profile.logoutTitle"),
+                    style: "destructive",
+                    onPress: () => {
+                      supabase.auth.signOut();
+                      router.replace({ pathname: "/" });
+                    },
+                  },
+                ],
+              )
+            }
+          >
+            <Icons
+              name="sign-out"
+              size={38}
+              color={colorScheme == "light" ? "#020912" : "#fbfff1"}
+            />
           </TouchableOpacity>
         </Animated.View>
       </Animated.View>

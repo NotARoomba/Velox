@@ -33,19 +33,19 @@ export default function Letters() {
     useEffect(() => {
       rotation.value = withDelay(
         startDelay,
-        withRepeat(withTiming(720, { duration }), -1, false)
+        withRepeat(withTiming(720, { duration }), -1, false),
       );
       translateY.value = withDelay(
         startDelay,
-        withRepeat(withTiming(-1000, { duration }), -1, false)
+        withRepeat(withTiming(-1000, { duration }), -1, false),
       );
       opacity.value = withDelay(
         startDelay,
-        withRepeat(withTiming(0, { duration }), -1, false)
+        withRepeat(withTiming(0, { duration }), -1, false),
       );
       borderRadius.value = withDelay(
         startDelay,
-        withRepeat(withTiming(50, { duration }), -1, false)
+        withRepeat(withTiming(50, { duration }), -1, false),
       );
     }, []);
 

@@ -29,7 +29,10 @@ export default function Play() {
               params: { game: Games.APPROXIMATION },
             })
           }
-          className="w-5/6 bg-platinum/10 h-32 rounded-2xl mx-auto p-0 flex"
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
+          className="w-5/6 bg-platinum/10 bg-cy h-32 rounded-2xl mx-auto p-0 flex "
         >
           <View className="flex flex-col my-auto">
             <Text className="text-platinum font-bold text-center text-4xl">
@@ -37,7 +40,7 @@ export default function Play() {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() =>
             router.push({
               pathname: `/difficulty`,
@@ -51,7 +54,7 @@ export default function Play() {
               Match
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           onPress={() =>
             router.push({
@@ -59,6 +62,9 @@ export default function Play() {
               params: { game: Games.PI },
             })
           }
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
           className="w-5/6 bg-platinum/10 h-32 rounded-2xl mx-auto p-0 flex"
         >
           <View className="flex flex-col my-auto">

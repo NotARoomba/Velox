@@ -16,22 +16,22 @@ export interface SliderProps {
 }
 
 export enum Games {
-  MATCH = 'match',
-  PI = 'pi',
-  APPROXIMATION = 'approximation',
+  MATCH = "match",
+  PI = "pi",
+  APPROXIMATION = "approximation",
 }
 
 export enum Difficulty {
-  EASY = 'Easy',
-  MEDIUM = 'Medium',
-  HARD = 'Hard',
+  EASY = "Easy",
+  MEDIUM = "Medium",
+  HARD = "Hard",
 }
 
 export interface User {
   id: string;
   email: string;
   username: string;
-  avatar_url: ImagePickerAsset |  string | null;
+  avatar_url: ImagePickerAsset | string | null;
 }
 
 export interface KeypadProps {
@@ -48,7 +48,7 @@ export interface GameInfoProps {
 export enum GameType {
   PI,
   MATCH,
-  APPROXIMATION
+  APPROXIMATION,
 }
 
 export interface Game {

@@ -39,7 +39,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       session,
       hasSession: session !== null && session.user !== null,
     }),
-    [session]
+    [session],
   );
   return (
     <SessionContext.Provider value={sessionContextValue}>
@@ -51,7 +51,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
 export const useSession = (): SessionContextType => {
   const context = useContext(SessionContext);
   if (!context) {
-    throw new Error("useSettings must be used within a SettingsProvider");
+    throw new Error("useSession must be used within a SessionProvider");
   }
   return context;
 };

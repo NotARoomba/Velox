@@ -1,90 +1,90 @@
 {
-    "CFBundleDisplayName": "Velox",
-    "NSCameraUsageDescription": "Velox needs access to your camera to take a photo to update your profile picture.",
-    "NSPhotoLibraryUsageDescription": "Velox needs access to your gallery to choose a photo to update your profile picture.",
-    "success": "Success!",
-    "error": "Error",
-    "check": "Check",
-    "loading": "Loading",
-    "yes": "Yes",
-    "no": "No",
-    "confirmTitle": "Confirm",
-    "inputs": {
-      "username": "Username",
-      "email": "Email",
-      "picture": "Upload a profile photo",
-      "enterCode": "Enter Verification Code",
-      "enterCode2": "Enter the verification code sent to: "
+  "CFBundleDisplayName": "Velox",
+  "NSCameraUsageDescription": "Velox needs access to your camera to take a photo to update your profile picture.",
+  "NSPhotoLibraryUsageDescription": "Velox needs access to your gallery to choose a photo to update your profile picture.",
+  "success": "Success",
+  "error": "Error",
+  "check": "Check",
+  "loading": "Loading",
+  "yes": "Yes",
+  "no": "No",
+  "confirmTitle": "Confirm",
+  "inputs": {
+    "username": "Username",
+    "email": "Email",
+    "picture": "Upload a profile photo",
+    "enterCode": "Enter Verification Code",
+    "enterCode2": "Enter the verification code sent to: "
+  },
+  "profile": {
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "There was an error updating your profile",
+    "logoutTitle": "Logout",
+    "logoutDescription": "Are you sure you want to logout?"
+  },
+  "titles": {
+    "login": "Login",
+    "signup": "Signup",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "images": {
+    "choose": "Please choose",
+    "gallery": "Gallery",
+    "camera": "Camera",
+    "readingTitle": "Image Error",
+    "readingDescription": "Error reading image",
+    "galleryTitle": "Allow Gallery Access",
+    "galleryDescription": "You need to allow media library permissions for this to work",
+    "cameraTitle": "Allow Camera Access",
+    "cameraDescription": "You need to allow camera permissions for this to work",
+    "remove": "Remove",
+    "removeTitle": "Remove Image",
+    "removeDescription": "Are you sure you want to remove this image?"
+  },
+  "buttons": {
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "update": "Update",
+    "clear": "Clear",
+    "delete": "Delete",
+    "theme": "Theme",
+    "logoutDesc": "Are you sure you want to logout?",
+    "deleteAccountDesc": "Are you sure you want to delete your account?",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light"
     },
-    "profile": {
-      "logoutTitle": "Logout",
-      "logoutDescription": "Are you sure you want to logout?"
-    },
-    "titles": {
-      "login": "Login",
-      "signup": "Signup",
-      "settings": "Settings",
-      "logout": "Logout"
-    },
-    "images": {
-      "choose": "Please choose",
-      "gallery": "Gallery",
-      "camera": "Camera",
-      "readingTitle": "Image Error",
-      "readingDescription": "Error reading image",
-      "galleryTitle": "Allow Gallery Access",
-      "galleryDescription": "You need to allow media library permissions for this to work",
-      "cameraTitle": "Allow Camera Access",
-      "cameraDescription": "You need to allow camera permissions for this to work",
-      "remove": "Remove",
-      "removeTitle": "Remove Image",
-      "removeDescription": "Are you sure you want to remove this image?"
-    },
-    "buttons": {
-      "back": "Back",
-      "next": "Next",
-      "finish": "Finish",
-      "update": "Update",
-      "clear": "Clear",
-      "delete": "Delete",
-      "theme": "Theme",
-      "logoutDesc": "Are you sure you want to logout?",
-      "deleteAccountDesc": "Are you sure you want to delete your account?",
-      "themes": {
-        "dark": "Dark",
-        "light": "Light"
-      },
-      "confirmDelete": "Confirm Delete",
-      "deleteAccount": "Delete Account",
-      "cancel": "Cancel",
-      "submit": "Submit"
-    },
-    "successes": {
-      "login": "You are now logged in",
-      "signup": "You are now registered",
-      "updateData": "Successfully updated your information!"
-    },
-    "errors": {
-      "createUser": "There was an error creating a user",
-      "missing": "Missing Info",
-      "fillmissing": "Please fill out the missing infromation",
-      "missingInfo": "Please fill out the information",
-      "fetchData": "There was an error fetching your data!",
-      "updateData": "There was an error updating your information!",
-      "GENERIC_ERROR": "An error has occured",
-      "USER_NOT_FOUND": "That user does not exist"
-    },
-    "verification": {
-      "title": "Enter Verification Code",
-      "description": "Enter the verification code sent to: "
-    },
-    "settings": {
-      "languages": "Languages",
-      "theme": "Theme",
-      "deleteAccount": "Delete Account",
-      "confirmDelete": "Confirm Delete",
-      "danger": "Danger",
-      "credits": "Made by Nathan Alspaugh (NotARoomba)"
-    }
+    "confirmDelete": "Confirm Delete",
+    "deleteAccount": "Delete Account",
+    "cancel": "Cancel",
+    "submit": "Submit"
+  },
+  "successes": {
+    "login": "You are now logged in",
+    "signup": "You are now registered"
+  },
+  "errors": {
+    "createUser": "There was an error creating a user",
+    "missing": "Missing Info",
+    "fillmissing": "Please fill out the missing infromation",
+    "missingInfo": "Please fill out the information",
+    "fetchData": "There was an error fetching your data!",
+    "updateData": "There was an error updating your information!",
+    "GENERIC_ERROR": "An error has occured",
+    "USER_NOT_FOUND": "That user does not exist"
+  },
+  "verification": {
+    "title": "Enter Verification Code",
+    "description": "Enter the verification code sent to: "
+  },
+  "settings": {
+    "languages": "Languages",
+    "theme": "Theme",
+    "deleteAccount": "Delete Account",
+    "confirmDelete": "Confirm Delete",
+    "danger": "Danger",
+    "credits": "Made by Nathan Alspaugh (NotARoomba)"
   }
-  
+}

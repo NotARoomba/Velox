@@ -8,7 +8,7 @@ const generateEllipsePath = (
   cy: number,
   rx: number,
   ry: number,
-  reversed: boolean
+  reversed: boolean,
 ) => {
   const path = `
     M ${cx - rx}, ${cy} 
@@ -64,10 +64,10 @@ export default function CurvedText({
   }, [cx, cy, rx, ry, reversed]);
 
   // Debug: Log the generated path and dimensions
-  useEffect(() => {
-    console.log("Generated path:", pathD);
-    console.log("SVG dimensions:", { width, height });
-  }, [pathD, width, height]);
+  // useEffect(() => {
+  //   console.log("Generated path:", pathD);
+  //   console.log("SVG dimensions:", { width, height });
+  // }, [pathD, width, height]);
 
   if (isNullOrUndefined(width)) {
     throw new Error("ReactCurvedText Error: width is required");

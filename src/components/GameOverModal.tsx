@@ -26,8 +26,10 @@ export default function GameOverModal({
         .eq("type", game.type)
         .eq("user_id", sessionData.session?.user.id)
         .order("score", { ascending: false });
-      if (data) setHighScore(data[0] as unknown as Game);
-      else Alert.alert("Error", error?.message);
+      if (data) {
+        if (data.length > 0) setHighScore(data[0] as unknown as Game);
+        else setHighScore(game);
+      } else Alert.alert("Error", error?.message);
     };
     if (sessionData.hasSession) fetchHighScore();
   }, []);

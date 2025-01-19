@@ -56,7 +56,7 @@ export default function Index() {
         onPress={() => router.push(hasSession ? "/profile" : "/auth")}
       >
         <Text className="text-platinum m-auto font-bold text-center text-4xl">
-          {hasSession ? "Profile" : "Login"}
+          Profile
         </Text>
       </TouchableOpacity>
     </Animated.View>

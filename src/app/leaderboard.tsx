@@ -7,15 +7,25 @@ import {
   Platform,
   Animated,
   Alert,
+  KeyboardAvoidingView,
+  TextInput,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
+import ReAnimated, {
+  FadeIn,
+  FadeOut,
+  SlideInLeft,
+  SlideInRight,
+  SlideOutLeft,
+  SlideOutRight,
+} from "react-native-reanimated";
 import useFade from "../hooks/useFade";
 import Slider from "../components/Slider";
 import { useEffect, useState } from "react";
 import { Game, Games, GameType } from "../utils/types";
 import { supabase } from "../utils/supabase";
 import { FlashList } from "@shopify/flash-list";
+import { useLoading } from "../hooks/useLoading";
 
 export default function Leaderboard() {
   const opacity = useFade();
@@ -24,25 +34,22 @@ export default function Leaderboard() {
   const [approximationLeaderboard, setApproximationLeaderboard] = useState<
     Game[]
   >([]);
+  const { setLoading } = useLoading();
   useEffect(() => {
     (async () => {
-      const { data: circleLeaderboard, error } = await supabase
+      setLoading(true);
+      const { data: circleLeaderboard, error: circleError } = await supabase
         .from("games")
         .select()
         .eq("type", GameType.PI)
         .order("score", { ascending: false })
         .limit(10);
-      console.log(circleLeaderboard);
-      if (error) return Alert.alert("Error", error.message);
+      if (circleError) return Alert.alert("Error", circleError.message);
       for (let game of circleLeaderboard) {
         try {
           const { data } = supabase.storage
             .from("avatars")
             .getPublicUrl(game.avatar_url as string);
-
-          if (error) {
-            throw error;
-          }
           game.avatar_url = data?.publicUrl;
         } catch (error) {
           if (error instanceof Error) {
@@ -51,8 +58,6 @@ export default function Leaderboard() {
         }
       }
       setCircleLeaderboard(circleLeaderboard as Game[]);
-    })();
-    (async () => {
       const { data: approximationLeaderboard, error } = await supabase
         .from("games")
         .select()
@@ -65,10 +70,6 @@ export default function Leaderboard() {
           const { data } = supabase.storage
             .from("avatars")
             .getPublicUrl(game.avatar_url as string);
-
-          if (error) {
-            throw error;
-          }
           game.avatar_url = data?.publicUrl;
         } catch (error) {
           if (error instanceof Error) {
@@ -77,6 +78,7 @@ export default function Leaderboard() {
         }
       }
       setApproximationLeaderboard(approximationLeaderboard as Game[]);
+      setLoading(false);
     })();
   }, []);
   return (
@@ -89,27 +91,106 @@ export default function Leaderboard() {
       <View className="flex -translate-y-16">
         <Slider
           options={["Circle", "Approx"]}
-          selected={game == GameType.PI ? "Circle" : "Approximation"}
+          selected={game == GameType.PI ? "Circle" : "Approx"}
           setOption={(v) =>
-            setGame(
-              v === "Approximation" ? GameType.APPROXIMATION : GameType.PI
-            )
+            setGame(v === "Approx" ? GameType.APPROXIMATION : GameType.PI)
           }
         />
       </View>
-      {circleLeaderboard.length == 0 && approximationLeaderboard.length == 0 ? (
-        <Text className="text-platinum text-6xl mt-24 font-bold text-center">
-          There are no scores!
-        </Text>
+      {game === GameType.PI ? (
+        <ReAnimated.View
+          key={"Circle"}
+          className="h-full flex w-full"
+          entering={SlideInRight.withInitialValues({ originX: 400 })}
+          exiting={SlideOutRight}
+        >
+          <View className="flex flex-row mx-auto gap-x-28 my-2">
+            <Text className="text-platinum my-auto font-bold text-3xl">#</Text>
+            <Text className="text-platinum my-auto font-bold text-3xl">
+              User
+            </Text>
+            <Text className="text-platinum my-auto font-bold text-3xl">
+              Score
+            </Text>
+          </View>
+          {circleLeaderboard.length == 0 ? (
+            <Text className="text-platinum text-6xl mt-24 font-bold text-center">
+              There are no scores!
+            </Text>
+          ) : (
+            <FlashList
+              data={circleLeaderboard}
+              renderItem={({ item, index }) => (
+                <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
+                  <Text className="text-platinum my-auto font-bold text-2xl">
+                    {index + 1}
+                  </Text>
+                  <View className="flex gap-4 flex-row">
+                    <Image
+                      className="w-16 h-16 rounded-2xl"
+                      source={{ uri: item.avatar_url }}
+                    />
+                    <Text className="text-platinum my-auto font-bold text-2xl">
+                      {item.username}
+                    </Text>
+                  </View>
+                  <Text className="text-platinum my-auto font-bold text-2xl">
+                    {item.score}
+                  </Text>
+                </View>
+              )}
+              estimatedItemSize={200}
+            />
+          )}
+        </ReAnimated.View>
       ) : (
-        <FlashList
-          data={
-            game == GameType.PI ? circleLeaderboard : approximationLeaderboard
-          }
-          renderItem={({ item }) => <Text>{item.score}</Text>}
-          estimatedItemSize={200}
-        />
+        <ReAnimated.View
+          key={"Approx"}
+          className="h-full flex"
+          entering={SlideInLeft.withInitialValues({ originX: -400 })}
+          exiting={SlideOutLeft}
+        >
+          <View className="flex flex-row mx-auto gap-x-28 my-2">
+            <Text className="text-platinum my-auto font-bold text-3xl">#</Text>
+            <Text className="text-platinum my-auto font-bold text-3xl">
+              User
+            </Text>
+            <Text className="text-platinum my-auto font-bold text-3xl">
+              Score
+            </Text>
+          </View>
+          {approximationLeaderboard.length == 0 ? (
+            <Text className="text-platinum text-6xl mt-24 font-bold text-center">
+              There are no scores!
+            </Text>
+          ) : (
+            <FlashList
+              data={approximationLeaderboard}
+              renderItem={({ item, index }) => (
+                <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
+                  <Text className="text-platinum my-auto font-bold text-2xl">
+                    {index + 1}
+                  </Text>
+                  <View className="flex gap-4 flex-row">
+                    <Image
+                      className="w-16 h-16 rounded-2xl"
+                      source={{ uri: item.avatar_url }}
+                    />
+                    <Text className="text-platinum my-auto font-bold text-2xl">
+                      {item.username}
+                    </Text>
+                  </View>
+                  <Text className="text-platinum my-auto font-bold text-2xl">
+                    {item.score}
+                  </Text>
+                </View>
+              )}
+              estimatedItemSize={200}
+            />
+          )}
+        </ReAnimated.View>
       )}
+
       <ReAnimated.View
         entering={FadeIn}
         exiting={FadeOut}

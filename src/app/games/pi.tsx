@@ -76,9 +76,9 @@ export default function PI() {
 
       // Animate circle rotation
       rotation.value = withSpring(
-        rotation.value + -360 / (19 * (-rotation.value / 179))
+        rotation.value + -360 / (19 * (-rotation.value / 179)),
       ); // Rotate for each correct guess and scale logarithmically
-      console.log(rotation.value);
+      // console.log(rotation.value);
       // Increase circle radius every full rotation
       if (Math.abs(rotation.value - 38) / 360 >= 1) {
         setRadius((r) => r + 6); // Increase radius smoothly

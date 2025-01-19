@@ -66,10 +66,10 @@ export default function ApproxSlider({
         const rangeOffset = (minMax[1] - minMax[0]) * 0.15;
         const boundingBoxMin = inputNumber - rangeOffset;
         const boundingBoxMax = inputNumber + rangeOffset;
-        console.log(inputNumber, value, boundingBoxMin, boundingBoxMax);
+        // console.log(inputNumber, value, boundingBoxMin, boundingBoxMax);
         const isCorrect = value >= boundingBoxMin && value <= boundingBoxMax;
         runOnJS(onRelease)(isCorrect);
-      }
+      },
     );
   };
 
@@ -90,7 +90,7 @@ export default function ApproxSlider({
           minimumValue={minMax[0]}
           maximumValue={minMax[1]}
           value={value}
-          step={0.5}
+          step={0.1}
           trackImage={require("@/assets/images/track.png")}
           thumbImage={require("@/assets/images/thumb.png")}
           onResponderRelease={() => parseRelease()}

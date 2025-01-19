@@ -15,9 +15,7 @@
       "supportsTablet": true,
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
-        "CFBundleLocalizations": [
-          "en"
-        ],
+        "CFBundleLocalizations": ["en"],
         "CFBundleDevelopmentRegion": "en"
       },
       "bundleIdentifier": "com.notaroomba.velox",

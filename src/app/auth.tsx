@@ -46,10 +46,6 @@ export default function Auth() {
 
   const opacity = useFade();
 
-  useEffect(() => {
-    console.log("AUTH");
-  }, []);
-
   async function verifyEmail(code: string) {
     setLoading(true);
     const {
@@ -65,7 +61,7 @@ export default function Auth() {
     else if (session && session.user.user_metadata.username === null) {
       Alert.alert("Please sign up first!");
       setChoice("Sign Up");
-    } else router.navigate("/");
+    } else router.replace("/");
   }
 
   async function signInWithEmail() {
@@ -133,16 +129,15 @@ export default function Auth() {
   }
 
   return (
-    <ReAnimated.View
-      entering={FadeIn.duration(1000)}
+    <Animated.View
+      style={{ opacity }}
       className="flex bg-transparent h-full w-full items-center justify-center"
     >
       {choice === "Login" ? (
-        <ReAnimated.View
+        <Animated.View
           key={"Login"}
           className="h-full flex w-full"
-          entering={SlideInRight.withInitialValues({ originX: 400 })}
-          exiting={SlideOutRight}
+          style={{ opacity }}
         >
           <Image
             className="flex h-36 mt-32"
@@ -176,13 +171,12 @@ export default function Auth() {
               </Text>
             </TouchableOpacity>
           </View>
-        </ReAnimated.View>
+        </Animated.View>
       ) : (
-        <ReAnimated.View
+        <Animated.View
           key={"SignUp"}
           className="h-full flex"
-          entering={SlideInLeft.withInitialValues({ originX: -400 })}
-          exiting={SlideOutLeft}
+          style={{ opacity }}
           // onTouchStart={Keyboard.dismiss}
         >
           <Image
@@ -234,7 +228,7 @@ export default function Auth() {
               </Text>
             </TouchableOpacity>
           </View>
-        </ReAnimated.View>
+        </Animated.View>
       )}
       {choice && (
         <ReAnimated.View
@@ -263,6 +257,6 @@ export default function Auth() {
           setOption={setChoice}
         />
       </KeyboardAvoidingView>
-    </ReAnimated.View>
+    </Animated.View>
   );
 }

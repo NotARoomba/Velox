@@ -38,7 +38,7 @@ export default function Lives({
     useAnimatedStyle(() => ({
       transform: [{ scale: withTiming(animation.value, { duration: 300 }) }],
       opacity: withTiming(animation.value, { duration: 300 }),
-    }))
+    })),
   );
 
   React.useEffect(() => {
