@@ -173,10 +173,11 @@ export default function Auth() {
           </View>
         </Animated.View>
       ) : (
-        <Animated.View
+        <ReAnimated.View
           key={"SignUp"}
           className="h-full flex"
-          style={{ opacity }}
+          entering={SlideInLeft.withInitialValues({ originX: -400 })}
+          exiting={SlideOutLeft}
           // onTouchStart={Keyboard.dismiss}
         >
           <Image
@@ -228,7 +229,7 @@ export default function Auth() {
               </Text>
             </TouchableOpacity>
           </View>
-        </Animated.View>
+        </ReAnimated.View>
       )}
       {choice && (
         <ReAnimated.View
