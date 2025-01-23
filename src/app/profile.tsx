@@ -65,7 +65,7 @@ export default function Profile() {
       if (!session?.user) throw new Error("No user on the session!");
       if (userEdit?.avatar_url && typeof userEdit?.avatar_url == "object") {
         const arraybuffer = await fetch(userEdit?.avatar_url.uri).then((res) =>
-          res.arrayBuffer(),
+          res.arrayBuffer()
         );
 
         const fileExt =
@@ -191,7 +191,7 @@ export default function Profile() {
       >
         <View className="mx-auto bg-transparent w-48 h-48 rounded-full mt-12">
           <View className=" m-auto">
-            <TouchableOpacity className=" w-48 h-48  aspect-square flex  rounded-xl">
+            <TouchableOpacity className=" w-48 h-48  aspect-square flex  rounded-xl mt-4">
               <Image
                 // onLoadStart={() => setPictureLoading(true)}
                 onLoad={() => {
@@ -208,8 +208,8 @@ export default function Profile() {
                       ? { uri: userEdit?.avatar_url }
                       : undefined
                     : userEdit?.avatar_url?.uri
-                      ? { uri: userEdit?.avatar_url.uri }
-                      : undefined
+                    ? { uri: userEdit?.avatar_url.uri }
+                    : undefined
                 }
               />
 
@@ -263,7 +263,7 @@ export default function Profile() {
                             text: t("images.gallery"),
                             onPress: async () => {
                               const result = (await selectImage(
-                                "gallery",
+                                "gallery"
                               )) as ImagePickerAsset | null;
                               setUserEdit((prev) => ({
                                 ...(prev as User),
@@ -277,7 +277,7 @@ export default function Profile() {
                             text: t("images.camera"),
                             onPress: async () => {
                               const result = (await selectImage(
-                                "camera",
+                                "camera"
                               )) as ImagePickerAsset | null;
                               setUserEdit((prev) => ({
                                 ...(prev as User),
@@ -385,7 +385,7 @@ export default function Profile() {
                       router.replace({ pathname: "/" });
                     },
                   },
-                ],
+                ]
               )
             }
           >

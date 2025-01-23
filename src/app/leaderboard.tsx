@@ -120,6 +120,7 @@ export default function Leaderboard() {
           ) : (
             <FlashList
               data={circleLeaderboard}
+              className="mb-96"
               renderItem={({ item, index }) => (
                 <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
                   <Text className="text-platinum my-auto font-bold text-2xl">
@@ -166,6 +167,7 @@ export default function Leaderboard() {
           ) : (
             <FlashList
               data={approximationLeaderboard}
+              className="mb-96"
               renderItem={({ item, index }) => (
                 <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
                   <Text className="text-platinum my-auto font-bold text-2xl">

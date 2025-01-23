@@ -14,41 +14,22 @@ export default function ApproxSlider({
   inputNumber,
   onRelease,
   difficulty,
+  bounds,
 }: {
   inputNumber: number;
   onRelease: (event: boolean) => void;
   difficulty: Difficulty;
+  bounds: number[];
 }) {
   const [value, setValue] = useState(0);
-  const [minMax, setMinMax] = useState([inputNumber, inputNumber]);
   const [disabled, setDisabled] = useState(false);
   const width = useSharedValue(0);
   const position = useSharedValue(Dimensions.get("window").width / 2);
-  let preMinMax = [0, 0];
   useEffect(() => {
     width.set(0);
     position.set(Dimensions.get("window").width / 2);
     setDisabled(false);
-    if (difficulty === Difficulty.EASY) {
-      preMinMax = [
-        Math.floor(inputNumber - Math.random() * 10),
-        Math.floor(inputNumber + Math.random() * 10),
-      ];
-    } else if (difficulty === Difficulty.MEDIUM) {
-      preMinMax = [
-        Math.floor(inputNumber - Math.random() * 20 + 5),
-        Math.floor(inputNumber + Math.random() * 20 + 5),
-      ];
-    } else if (difficulty === Difficulty.HARD) {
-      if (Math.abs(inputNumber) < Math.PI) preMinMax = [-Math.PI, Math.PI];
-      else
-        preMinMax = [
-          Math.floor(inputNumber - Math.random() * 30 - 11),
-          Math.floor(inputNumber + Math.random() * 30 + 11),
-        ];
-    }
-    setValue((preMinMax[1] + preMinMax[0]) / 2);
-    setMinMax(preMinMax);
+    setValue((bounds[1] + bounds[0]) / 2);
   }, [inputNumber]);
 
   const parseRelease = () => {
@@ -59,17 +40,17 @@ export default function ApproxSlider({
     position.value = withSpring(
       Dimensions.get("window").width *
         0.9 *
-        ((inputNumber - minMax[0]) / (minMax[1] - minMax[0])) -
+        ((inputNumber - bounds[0]) / (bounds[1] - bounds[0])) -
         w / 2,
       undefined,
       () => {
-        const rangeOffset = (minMax[1] - minMax[0]) * 0.15;
+        const rangeOffset = (bounds[1] - bounds[0]) * 0.15;
         const boundingBoxMin = inputNumber - rangeOffset;
         const boundingBoxMax = inputNumber + rangeOffset;
         // console.log(inputNumber, value, boundingBoxMin, boundingBoxMax);
         const isCorrect = value >= boundingBoxMin && value <= boundingBoxMax;
         runOnJS(onRelease)(isCorrect);
-      },
+      }
     );
   };
 
@@ -87,8 +68,8 @@ export default function ApproxSlider({
         <Slider
           disabled={disabled}
           style={{ width: Dimensions.get("window").width * 0.9, height: 1 }}
-          minimumValue={minMax[0]}
-          maximumValue={minMax[1]}
+          minimumValue={bounds[0]}
+          maximumValue={bounds[1]}
           value={value}
           step={0.1}
           trackImage={require("@/assets/images/track.png")}
@@ -105,7 +86,7 @@ export default function ApproxSlider({
       </View>
 
       <View className="flex-row justify-between w-[90%] self-center mt-2">
-        {minMax[1] == Math.PI ? (
+        {bounds[1] == Math.PI ? (
           <>
             <MathJaxSvg fontSize={36} color={"#e8e8e8"} fontCache={true}>
               {`$$-\\pi$$`}
@@ -116,8 +97,8 @@ export default function ApproxSlider({
           </>
         ) : (
           <>
-            <Text className="text-platinum text-3xl">{minMax[0]}</Text>
-            <Text className="text-platinum text-3xl">{minMax[1]}</Text>
+            <Text className="text-platinum text-3xl">{bounds[0]}</Text>
+            <Text className="text-platinum text-3xl">{bounds[1]}</Text>
           </>
         )}
       </View>

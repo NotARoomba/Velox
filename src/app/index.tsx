@@ -26,39 +26,52 @@ export default function Index() {
           mental math skills
         </Text>
       </View>
-      <TouchableOpacity
-        className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl"
-        style={{
-          boxShadow: "4px 4px #0074d9",
-        }}
-        onPress={() => router.push("/play")}
-      >
-        <Text className="text-platinum m-auto font-bold text-center text-4xl">
-          Play
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl my-6"
-        style={{
-          boxShadow: "4px 4px #0074d9",
-        }}
-        onPress={() => router.push("/leaderboard")}
-      >
-        <Text className="text-platinum m-auto font-bold text-center text-4xl">
-          Leaderboard
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl"
-        style={{
-          boxShadow: "4px 4px #0074d9",
-        }}
-        onPress={() => router.push(hasSession ? "/profile" : "/auth")}
-      >
-        <Text className="text-platinum m-auto font-bold text-center text-4xl">
-          Profile
-        </Text>
-      </TouchableOpacity>
+      <View className="gap-y-6">
+        <TouchableOpacity
+          className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl"
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
+          onPress={() => router.push("/play")}
+        >
+          <Text className="text-platinum m-auto font-bold text-center text-4xl">
+            Play
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl "
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
+          onPress={() => router.push("/leaderboard")}
+        >
+          <Text className="text-platinum m-auto font-bold text-center text-4xl">
+            Leaderboard
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl"
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
+          onPress={() => router.push(hasSession ? "/profile" : "/auth")}
+        >
+          <Text className="text-platinum m-auto font-bold text-center text-4xl">
+            Profile
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-platinum/10  w-2/3 mx-auto py-3 rounded-2xl"
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
+          onPress={() => router.push("/settings")}
+        >
+          <Text className="text-platinum m-auto font-bold text-center text-4xl">
+            Settings
+          </Text>
+        </TouchableOpacity>
+      </View>
     </Animated.View>
   );
 }

@@ -10,14 +10,20 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import GameOverModal from "@/src/components/GameOverModal";
 import { supabase } from "@/src/utils/supabase";
+import { useSession } from "@/src/hooks/useSession";
 
 export default function Approximation() {
   const params = useLocalSearchParams();
+  const { hasSession } = useSession();
   const [lives, setLives] = useState(3);
   const [timeLeft, setTimeLeft] = useState(60); // Adjust for difficulty
   const [guessed, setGuessed] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [equation, setEquation] = useState<[string, number]>(["", 0]);
+  const [equation, setEquation] = useState<[string, number, number[]]>([
+    "",
+    0,
+    [0, 0],
+  ]);
   useEffect(() => {
     if (params.difficulty === "Easy") {
       setTimeLeft(60);
@@ -32,13 +38,15 @@ export default function Approximation() {
       const interval = setInterval(async () => {
         if (timeLeft <= 0) {
           setGameOver(true);
-          const { error } = await supabase.from("games").insert({
-            type: GameType.APPROXIMATION,
-            score: guessed,
-            lives,
-            time: timeLeft,
-          });
-          if (error) Alert.alert("Error", error.message);
+          if (hasSession) {
+            const { error } = await supabase.from("games").insert({
+              type: GameType.APPROXIMATION,
+              score: guessed,
+              lives,
+              time: timeLeft,
+            });
+            if (error) Alert.alert("Error", error.message);
+          }
           // return Alert.alert("Game Over", "You ran out of time!", [
           //   {
           //     style: "default",
@@ -63,13 +71,15 @@ export default function Approximation() {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives <= 1) {
         setGameOver(true);
-        const { error } = await supabase.from("games").insert({
-          type: GameType.APPROXIMATION,
-          score: guessed,
-          lives,
-          time: timeLeft,
-        });
-        if (error) Alert.alert("Error", error.message);
+        if (hasSession) {
+          const { error } = await supabase.from("games").insert({
+            type: GameType.APPROXIMATION,
+            score: guessed,
+            lives,
+            time: timeLeft,
+          });
+          if (error) Alert.alert("Error", error.message);
+        }
         // Alert.alert("Game Over", "You ran out of lives!", [
         //   {
         //     style: "default",
@@ -110,6 +120,7 @@ export default function Approximation() {
 
           <ApproxSlider
             inputNumber={equation[1]}
+            bounds={equation[2]}
             onRelease={checkAnswer}
             difficulty={params.difficulty as Difficulty}
           />
@@ -138,7 +149,7 @@ export default function Approximation() {
   );
 }
 
-function generateEquation(difficulty: Difficulty): [string, number] {
+function generateEquation(difficulty: Difficulty): [string, number, number[]] {
   switch (difficulty) {
     case Difficulty.EASY:
       const a = Math.floor(Math.random() * 10) + 1;
@@ -161,24 +172,48 @@ function generateEquation(difficulty: Difficulty): [string, number] {
         const b = Math.floor(Math.random() * 10) + 1;
         equation = `\\frac{${a}}{${b}}`;
         answer = a / b;
+        // make the bounds betwen 2 fractions
+        const bounds = [
+          Math.floor((answer - (Math.floor(Math.random() * 3) + 1)) / 2) * 2,
+          Math.ceil((answer + (Math.floor(Math.random() * 3) + 1)) / 2) * 2,
+        ];
+        return [`$$${equation}$$`, answer, bounds];
       }
-      return [`$$${equation}$$`, answer];
+      //random bounds but as a multiple of 10
+      const bounds = [
+        Math.floor((answer - (Math.floor(Math.random() * 3) + 1)) / 5) * 5,
+        Math.ceil((answer + (Math.floor(Math.random() * 3) + 1)) / 5) * 5,
+      ];
+      return [`$$${equation}$$`, answer, bounds];
 
     case Difficulty.MEDIUM:
-      let c = Math.floor(Math.random() * 20) + 10;
-      const d = Math.floor(Math.random() * 20) + 10;
+      let c = Math.floor(Math.random() * 10) + 10;
+      const d = Math.floor(Math.random() * 10) + 10;
       const complexOperation = Math.random() > 0.5 ? "*" : "/";
       if (complexOperation === "/") c *= Math.floor(Math.random() * 16) + 4;
       const equationMedium =
         complexOperation === "*" ? `${c} \\times ${d}` : `\\frac{${c}}{${d}}`;
       const answerMedium = complexOperation === "*" ? c * d : c / d;
-      return [`$$${equationMedium}$$`, answerMedium];
+      // random bounds but as a multiple of 5
+      const boundsMedium = [
+        Math.floor((answerMedium - (Math.floor(Math.random() * 3) + 1)) / 10) *
+          10,
+        Math.ceil((answerMedium + (Math.floor(Math.random() * 3) + 1)) / 10) *
+          10,
+      ];
+      return [`$$${equationMedium}$$`, answerMedium, boundsMedium];
 
     case Difficulty.HARD:
       const num = Math.floor(Math.random() * 100) + 1;
       const equationType = Math.random() > 0.5 ? "sqrt" : "trig";
       if (equationType === "sqrt") {
-        return [`$$\\sqrt{${num}}$$`, Math.sqrt(num)];
+        // generate the bounds as a multiple of 5
+        const boundsHard = [
+          0,
+          Math.floor(Math.sqrt(num)) +
+            (Math.floor(Math.random() * 3) + 1) * Math.floor(Math.random() * 5),
+        ];
+        return [`$$\\sqrt{${num}}$$`, Math.sqrt(num), boundsHard];
       } else {
         const angles = [0, 30, 45, 60, 90];
         const trigFunctions = ["sin", "cos", "tan"];
@@ -190,8 +225,9 @@ function generateEquation(difficulty: Difficulty): [string, number] {
           (trigFunction == "sin"
             ? Math.sin
             : trigFunction == "cos"
-              ? Math.cos
-              : Math.tan)(angle * (Math.PI / 180)),
+            ? Math.cos
+            : Math.tan)(angle * (Math.PI / 180)),
+          [-Math.PI, Math.PI],
         ];
       }
 

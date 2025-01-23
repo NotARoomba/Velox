@@ -17,9 +17,11 @@ import GameOverModal from "@/src/components/GameOverModal";
 import { GameType, Difficulty } from "@/src/utils/types";
 import { supabase } from "@/src/utils/supabase";
 import useFade from "@/src/hooks/useFade";
+import { useSession } from "@/src/hooks/useSession";
 
 export default function PI() {
   const params = useLocalSearchParams();
+  const { hasSession } = useSession();
   const [currentIndex, setCurrentIndex] = useState(2); // Start after "3."
   const [guessed, setGuessed] = useState("3.");
   const [lives, setLives] = useState(3);
@@ -34,9 +36,9 @@ export default function PI() {
     if (params.difficulty === "Easy") {
       setTimeLeft(60);
     } else if (params.difficulty === "Medium") {
-      setTimeLeft(120);
+      setTimeLeft(40);
     } else if (params.difficulty === "Hard") {
-      setTimeLeft(180);
+      setTimeLeft(30);
     }
   }, []);
 
@@ -45,13 +47,15 @@ export default function PI() {
       const interval = setInterval(async () => {
         if (timeLeft <= 0) {
           setGameOver(true);
-          const { error } = await supabase.from("games").insert({
-            type: GameType.PI,
-            score: guessed.length - 2,
-            lives,
-            time: timeLeft,
-          });
-          if (error) Alert.alert("Error", error.message);
+          if (hasSession) {
+            const { error } = await supabase.from("games").insert({
+              type: GameType.PI,
+              score: guessed.length - 2,
+              lives,
+              time: timeLeft,
+            });
+            if (error) Alert.alert("Error", error.message);
+          }
           // return Alert.alert("Game Over", "You ran out of time!", [
           //   {
           //     style: "default",
@@ -76,7 +80,7 @@ export default function PI() {
 
       // Animate circle rotation
       rotation.value = withSpring(
-        rotation.value + -360 / (19 * (-rotation.value / 179)),
+        rotation.value + -360 / (19 * (-rotation.value / 179))
       ); // Rotate for each correct guess and scale logarithmically
       // console.log(rotation.value);
       // Increase circle radius every full rotation
@@ -89,13 +93,15 @@ export default function PI() {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives === 1) {
         setGameOver(true);
-        const { error } = await supabase.from("games").insert({
-          type: GameType.PI,
-          score: guessed.length - 2,
-          lives,
-          time: timeLeft,
-        });
-        if (error) Alert.alert("Error", error.message);
+        if (hasSession) {
+          const { error } = await supabase.from("games").insert({
+            type: GameType.PI,
+            score: guessed.length - 2,
+            lives,
+            time: timeLeft,
+          });
+          if (error) Alert.alert("Error", error.message);
+        }
         // Alert.alert("Game Over", "You ran out of lives!", [
         //   {
         //     style: "default",
