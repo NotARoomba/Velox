@@ -9,6 +9,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   TextInput,
+  Dimensions,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ReAnimated, {
@@ -26,14 +27,19 @@ import { Game, Games, GameType } from "../utils/types";
 import { supabase } from "../utils/supabase";
 import { FlashList } from "@shopify/flash-list";
 import { useLoading } from "../hooks/useLoading";
+import { useSettings } from "../hooks/useSettings";
+import HoloText from "../components/HoloText";
+import { useTranslation } from "react-i18next";
 
 export default function Leaderboard() {
   const opacity = useFade();
+  const { theme } = useSettings();
   const [game, setGame] = useState(GameType.PI);
   const [circleLeaderboard, setCircleLeaderboard] = useState<Game[]>([]);
   const [approximationLeaderboard, setApproximationLeaderboard] = useState<
     Game[]
   >([]);
+  const { t } = useTranslation();
   const { setLoading } = useLoading();
   useEffect(() => {
     (async () => {
@@ -83,17 +89,23 @@ export default function Leaderboard() {
   }, []);
   return (
     <Animated.View style={{ opacity }} className="h-full bg-transparent flex">
-      <Image
-        className="flex h-56 aspect-video mx-auto mt-12"
-        resizeMode="contain"
-        source={require("@/assets/images/leaderboard.png")}
-      />
+      <HoloText
+        fontSize={48}
+        width={Dimensions.get("window").width}
+        height={200}
+      >
+        {t("titles.leaderboard")}
+      </HoloText>
       <View className="flex -translate-y-16">
         <Slider
-          options={["Circle", "Approx"]}
-          selected={game == GameType.PI ? "Circle" : "Approx"}
+          options={[t("buttons.circle"), t("buttons.approx")]}
+          selected={
+            game == GameType.PI ? t("buttons.circle") : t("buttons.approx")
+          }
           setOption={(v) =>
-            setGame(v === "Approx" ? GameType.APPROXIMATION : GameType.PI)
+            setGame(
+              v === t("buttons.approx") ? GameType.APPROXIMATION : GameType.PI
+            )
           }
         />
       </View>
@@ -105,16 +117,18 @@ export default function Leaderboard() {
           exiting={SlideOutRight}
         >
           <View className="flex flex-row mx-auto gap-x-28 my-2">
-            <Text className="text-platinum my-auto font-bold text-3xl">#</Text>
-            <Text className="text-platinum my-auto font-bold text-3xl">
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              #
+            </Text>
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
               User
             </Text>
-            <Text className="text-platinum my-auto font-bold text-3xl">
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
               Score
             </Text>
           </View>
           {circleLeaderboard.length == 0 ? (
-            <Text className="text-platinum text-6xl mt-24 font-bold text-center">
+            <Text className="dark:text-platinum text-night text-6xl mt-24 font-bold text-center">
               There are no scores!
             </Text>
           ) : (
@@ -123,7 +137,7 @@ export default function Leaderboard() {
               className="mb-96"
               renderItem={({ item, index }) => (
                 <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
-                  <Text className="text-platinum my-auto font-bold text-2xl">
+                  <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
                     {index + 1}
                   </Text>
                   <View className="flex gap-4 flex-row">
@@ -131,11 +145,11 @@ export default function Leaderboard() {
                       className="w-16 h-16 rounded-2xl"
                       source={{ uri: item.avatar_url }}
                     />
-                    <Text className="text-platinum my-auto font-bold text-2xl">
+                    <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
                       {item.username}
                     </Text>
                   </View>
-                  <Text className="text-platinum my-auto font-bold text-2xl">
+                  <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
                     {item.score}
                   </Text>
                 </View>
@@ -152,17 +166,19 @@ export default function Leaderboard() {
           exiting={SlideOutLeft}
         >
           <View className="flex flex-row mx-auto gap-x-28 my-2">
-            <Text className="text-platinum my-auto font-bold text-3xl">#</Text>
-            <Text className="text-platinum my-auto font-bold text-3xl">
-              User
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              #
             </Text>
-            <Text className="text-platinum my-auto font-bold text-3xl">
-              Score
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              {t("titles.user")}
+            </Text>
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              {t("titles.score")}
             </Text>
           </View>
           {approximationLeaderboard.length == 0 ? (
-            <Text className="text-platinum text-6xl mt-24 font-bold text-center">
-              There are no scores!
+            <Text className="dark:text-platinum text-night text-6xl mt-24 font-bold text-center">
+              {t("errors.noScores")}
             </Text>
           ) : (
             <FlashList
@@ -170,7 +186,7 @@ export default function Leaderboard() {
               className="mb-96"
               renderItem={({ item, index }) => (
                 <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
-                  <Text className="text-platinum my-auto font-bold text-2xl">
+                  <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
                     {index + 1}
                   </Text>
                   <View className="flex gap-4 flex-row">
@@ -178,11 +194,11 @@ export default function Leaderboard() {
                       className="w-16 h-16 rounded-2xl"
                       source={{ uri: item.avatar_url }}
                     />
-                    <Text className="text-platinum my-auto font-bold text-2xl">
+                    <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
                       {item.username}
                     </Text>
                   </View>
-                  <Text className="text-platinum my-auto font-bold text-2xl">
+                  <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
                     {item.score}
                   </Text>
                 </View>
@@ -202,7 +218,11 @@ export default function Leaderboard() {
         }
       >
         <TouchableOpacity onPress={router.back}>
-          <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          <Ionicons
+            color={theme === "dark" ? "#e8e8e8" : "#151515"}
+            size={40}
+            name="arrow-back"
+          />
         </TouchableOpacity>
       </ReAnimated.View>
     </Animated.View>

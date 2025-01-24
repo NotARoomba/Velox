@@ -19,7 +19,9 @@ export default function GameInfo({ lives, timeLeft, guessed }: GameInfoProps) {
           (Platform.OS === "android" ? " top-4" : "top-16")
         }
       >
-        <Text className="text-platinum text-3xl font-bold">{timeLeft}</Text>
+        <Text className="dark:text-platinum text-night text-3xl font-bold">
+          {timeLeft}
+        </Text>
       </View>
       <View
         className={
@@ -27,7 +29,9 @@ export default function GameInfo({ lives, timeLeft, guessed }: GameInfoProps) {
           (Platform.OS === "android" ? " top-4" : "top-16")
         }
       >
-        <Text className="text-platinum text-3xl font-bold">{guessed}</Text>
+        <Text className="dark:text-platinum text-night text-3xl font-bold">
+          {guessed}
+        </Text>
       </View>
     </>
   );

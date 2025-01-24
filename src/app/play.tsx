@@ -6,22 +6,33 @@ import {
   TouchableOpacity,
   Platform,
   Animated,
+  Dimensions,
 } from "react-native";
 import { Games } from "../utils/types";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
 import useFade from "../hooks/useFade";
+import { useSettings } from "../hooks/useSettings";
+import HoloText from "../components/HoloText";
+import { useTranslation } from "react-i18next";
 
 export default function Play() {
   const opacity = useFade();
+  const { theme } = useSettings();
+  const { t } = useTranslation();
   return (
-    <Animated.View style={{ opacity }} className="h-full bg-transparent flex">
-      <Image
-        className="flex h-48 aspect-video mx-auto mt-12"
-        resizeMode="contain"
-        source={require("@/assets/images/play.png")}
-      />
-      <View className="flex flex-col gap-y-8">
+    <Animated.View
+      style={{ opacity }}
+      className="h-full bg-transparent flex pt-12"
+    >
+      <HoloText
+        fontSize={128}
+        width={Dimensions.get("window").width}
+        height={200}
+      >
+        {t("titles.play")}
+      </HoloText>
+      <View className="flex flex-col gap-y-8 -translate-y-8">
         <TouchableOpacity
           onPress={() =>
             router.push({
@@ -32,11 +43,11 @@ export default function Play() {
           style={{
             boxShadow: "4px 4px #0074d9",
           }}
-          className="w-5/6 bg-platinum/10 bg-cy h-32 rounded-2xl mx-auto p-0 flex "
+          className="w-5/6 dark:bg-platinum/10 bg-night/5 bg-cy h-32 rounded-2xl mx-auto p-0 flex "
         >
           <View className="flex flex-col my-auto">
-            <Text className="text-platinum font-bold text-center text-4xl">
-              Approximation
+            <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
+              {t("games.approximation.title")}
             </Text>
           </View>
         </TouchableOpacity>
@@ -47,10 +58,10 @@ export default function Play() {
               params: { game: Games.MATCH },
             })
           }
-          className="w-5/6 bg-platinum/10 h-32 rounded-2xl mx-auto p-0 flex"
+          className="w-5/6 dark:bg-platinum/10 bg-night/5 h-32 rounded-2xl mx-auto p-0 flex"
         >
           <View className="flex flex-col my-auto">
-            <Text className="text-platinum font-bold text-center text-4xl">
+            <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
               Match
             </Text>
           </View>
@@ -65,11 +76,11 @@ export default function Play() {
           style={{
             boxShadow: "4px 4px #0074d9",
           }}
-          className="w-5/6 bg-platinum/10 h-32 rounded-2xl mx-auto p-0 flex"
+          className="w-5/6 dark:bg-platinum/10 bg-night/5 h-32 rounded-2xl mx-auto p-0 flex"
         >
           <View className="flex flex-col my-auto">
-            <Text className="text-platinum font-bold text-center text-4xl">
-              Round the Circle (PI)
+            <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
+              {t("games.round.title")}
             </Text>
           </View>
         </TouchableOpacity>
@@ -83,7 +94,11 @@ export default function Play() {
         }
       >
         <TouchableOpacity onPress={router.back}>
-          <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          <Ionicons
+            color={theme === "dark" ? "#e8e8e8" : "#151515"}
+            size={40}
+            name="arrow-back"
+          />
         </TouchableOpacity>
       </ReAnimated.View>
     </Animated.View>

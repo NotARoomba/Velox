@@ -18,6 +18,8 @@ import { GameType, Difficulty } from "@/src/utils/types";
 import { supabase } from "@/src/utils/supabase";
 import useFade from "@/src/hooks/useFade";
 import { useSession } from "@/src/hooks/useSession";
+import { useSettings } from "@/src/hooks/useSettings";
+import { useTranslation } from "react-i18next";
 
 export default function PI() {
   const params = useLocalSearchParams();
@@ -30,6 +32,8 @@ export default function PI() {
   const [radius, setRadius] = useState(100); // For circle expansion
   const circleRadius = useSharedValue(100);
   const [gameOver, setGameOver] = useState(false);
+  const { theme } = useSettings();
+  const { t } = useTranslation();
 
   // Set difficulty-dependent settings
   useEffect(() => {
@@ -54,7 +58,7 @@ export default function PI() {
               lives,
               time: timeLeft,
             });
-            if (error) Alert.alert("Error", error.message);
+            if (error) Alert.alert(t("error"), error.message);
           }
           // return Alert.alert("Game Over", "You ran out of time!", [
           //   {
@@ -100,7 +104,7 @@ export default function PI() {
             lives,
             time: timeLeft,
           });
-          if (error) Alert.alert("Error", error.message);
+          if (error) Alert.alert(t("error"), error.message);
         }
         // Alert.alert("Game Over", "You ran out of lives!", [
         //   {
@@ -134,13 +138,13 @@ export default function PI() {
       />
 
       {/* Rotating and Expanding Curved Text */}
-      <View className="flex flex-col items-center justify-center">
+      <View className="flex flex-col items-center justify-center ">
         <Animated.View
           className="flex w-full"
           style={[
             animatedStyles,
             {
-              backgroundColor: "#2B6CB0",
+              backgroundColor: "#0074d9",
               alignItems: "center",
               justifyContent: "center",
             },
@@ -160,7 +164,12 @@ export default function PI() {
               style: { backgroundColor: "#00000000" },
             }}
             textPathProps={null}
-            textProps={{ style: { fontSize: 60, fill: "#e8e8e8" } }}
+            textProps={{
+              style: {
+                fontSize: 60,
+                fill: theme === "dark" ? "#e8e8e8" : "#151515",
+              },
+            }}
             tspanProps={null}
           />
         </Animated.View>

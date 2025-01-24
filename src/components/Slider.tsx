@@ -34,7 +34,7 @@ export default function Slider({ options, setOption, selected }: SliderProps) {
   return (
     <View
       collapsable={false}
-      className="flex flex-row mx-auto relative h-12 bg-platinum/10 rounded-2xl py-2"
+      className="flex flex-row mx-auto relative h-12 dark:bg-platinum/10 bg-night/10 rounded-2xl py-2"
     >
       {selected && (
         <Animated.View
@@ -78,7 +78,11 @@ export default function Slider({ options, setOption, selected }: SliderProps) {
               suppressHighlighting
               className={`text-2xl font-semibold ${
                 options.length == 2 ? "w-44" : "w-32"
-              } px-2 h-fit text-platinum text-center`}
+              } px-2 h-fit text-center ${
+                selected == v
+                  ? "text-platinum "
+                  : "dark:text-platinum  text-night"
+              }`}
             >
               {v}
             </Text>

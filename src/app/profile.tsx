@@ -26,9 +26,10 @@ import Animated from "react-native-reanimated";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import { useLoading } from "../hooks/useLoading";
+import { useSettings } from "../hooks/useSettings";
 
 export default function Profile() {
-  const colorScheme = useColorScheme();
+  const { theme } = useSettings();
   const { session } = useSession();
   const camera = useCamera();
   const gallery = useGallery();
@@ -200,7 +201,7 @@ export default function Profile() {
                 }}
                 onLoadEnd={() => setPictureLoading(false)}
                 className={
-                  "rounded-xl border-dashed border border-platinum/80 h-full aspect-square"
+                  "rounded-xl border-dashed border dark:border-platinum/80  h-full aspect-square"
                 }
                 source={
                   typeof userEdit?.avatar_url == "string"
@@ -232,7 +233,11 @@ export default function Profile() {
                     isLoading={pictureLoading}
                   >
                     <View className="m-auto w-48 h-48">
-                      <Icons name="person" size={150} color={"#e8e8e8"} />
+                      <Icons
+                        name="person"
+                        size={150}
+                        color={theme === "dark" ? "#e8e8e8" : "#151515"}
+                      />
                     </View>
                   </Skeleton>
                 </Animated.View>
@@ -308,11 +313,11 @@ export default function Profile() {
             className="h-fit"
             behavior={Platform.OS === "ios" ? "padding" : undefined}
           >
-            <Text className="text-2xl text-platinum font-bold text-center">
-              Username
+            <Text className="text-2xl dark:text-platinum text-night font-bold text-center">
+              {t("inputs.username")}
             </Text>
             <TextInput
-              className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+              className="h-12 w-1/2 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
               placeholder={userEdit?.username}
               placeholderTextColor={"#f8f8f8"}
               maxLength={12}
@@ -331,8 +336,8 @@ export default function Profile() {
               onPress={updateProfile}
               className="h-12 w-1/2 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
             >
-              <Text className="text-platinum text-center font-bold">
-                Update
+              <Text className="dark:text-platinum text-night text-center font-bold">
+                {t("buttons.update")}
               </Text>
             </TouchableOpacity>
           </Animated.View>
@@ -346,7 +351,11 @@ export default function Profile() {
           }
         >
           <TouchableOpacity onPress={router.back}>
-            <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+            <Ionicons
+              color={theme === "dark" ? "#e8e8e8" : "#151515"}
+              size={40}
+              name="arrow-back"
+            />
           </TouchableOpacity>
         </Animated.View>
         <Animated.View
@@ -358,7 +367,11 @@ export default function Profile() {
           }
         >
           <TouchableOpacity onPress={router.back}>
-            <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+            <Ionicons
+              color={theme === "dark" ? "#e8e8e8" : "#151515"}
+              size={40}
+              name="arrow-back"
+            />
           </TouchableOpacity>
         </Animated.View>
         <Animated.View
@@ -392,7 +405,7 @@ export default function Profile() {
             <Icons
               name="sign-out"
               size={38}
-              color={colorScheme == "light" ? "#020912" : "#fbfff1"}
+              color={theme == "light" ? "#151515" : "#e8e8e8"}
             />
           </TouchableOpacity>
         </Animated.View>

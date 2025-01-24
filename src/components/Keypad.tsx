@@ -14,7 +14,7 @@ export default function Keypad({ onDigitPress, disabled }: KeypadProps) {
           className="w-1/4 h-16 bg-celtic_blue rounded-2xl flex items-center justify-center shadow-lg"
           onPress={() => onDigitPress(digit)}
         >
-          <Text className="text-2xl font-bold text-platinum">{digit}</Text>
+          <Text className="text-2xl font-bold text-platinum ">{digit}</Text>
         </TouchableOpacity>
       ))}
     </View>

@@ -7,24 +7,21 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { Difficulty } from "../utils/types";
+import { ApproxSliderProps, Difficulty } from "../utils/types";
 import { MathJaxSvg } from "react-native-mathjax-html-to-svg";
+import { useSettings } from "../hooks/useSettings";
 
 export default function ApproxSlider({
   inputNumber,
   onRelease,
   difficulty,
   bounds,
-}: {
-  inputNumber: number;
-  onRelease: (event: boolean) => void;
-  difficulty: Difficulty;
-  bounds: number[];
-}) {
+}: ApproxSliderProps) {
   const [value, setValue] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const width = useSharedValue(0);
   const position = useSharedValue(Dimensions.get("window").width / 2);
+  const { theme } = useSettings();
   useEffect(() => {
     width.set(0);
     position.set(Dimensions.get("window").width / 2);
@@ -88,17 +85,29 @@ export default function ApproxSlider({
       <View className="flex-row justify-between w-[90%] self-center mt-2">
         {bounds[1] == Math.PI ? (
           <>
-            <MathJaxSvg fontSize={36} color={"#e8e8e8"} fontCache={true}>
+            <MathJaxSvg
+              fontSize={36}
+              color={theme === "dark" ? "#e8e8e8" : "#151515"}
+              fontCache={true}
+            >
               {`$$-\\pi$$`}
             </MathJaxSvg>
-            <MathJaxSvg fontSize={36} color="#e8e8e8" fontCache={true}>
+            <MathJaxSvg
+              fontSize={36}
+              color={theme === "dark" ? "#e8e8e8" : "#151515"}
+              fontCache={true}
+            >
               {`$$\\pi$$`}
             </MathJaxSvg>
           </>
         ) : (
           <>
-            <Text className="text-platinum text-3xl">{bounds[0]}</Text>
-            <Text className="text-platinum text-3xl">{bounds[1]}</Text>
+            <Text className="dark:text-platinum text-night text-3xl">
+              {bounds[0]}
+            </Text>
+            <Text className="dark:text-platinum text-night text-3xl">
+              {bounds[1]}
+            </Text>
           </>
         )}
       </View>

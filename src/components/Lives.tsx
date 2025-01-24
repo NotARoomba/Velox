@@ -6,6 +6,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
+import { LivesProps } from "../utils/types";
 
 const AnimatedHeart = ({
   filled,
@@ -23,13 +24,7 @@ const AnimatedHeart = ({
   </Animated.View>
 );
 
-export default function Lives({
-  lives,
-  totalLives = 3,
-}: {
-  lives: number;
-  totalLives?: number;
-}) {
+export default function Lives({ lives, totalLives = 3 }: LivesProps) {
   const heartAnimations = Array(totalLives)
     .fill(0)
     .map(() => useSharedValue(1)); // Initial scale of 1 for hearts
@@ -38,7 +33,7 @@ export default function Lives({
     useAnimatedStyle(() => ({
       transform: [{ scale: withTiming(animation.value, { duration: 300 }) }],
       opacity: withTiming(animation.value, { duration: 300 }),
-    })),
+    }))
   );
 
   React.useEffect(() => {

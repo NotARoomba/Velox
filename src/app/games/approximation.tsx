@@ -11,14 +11,18 @@ import * as Haptics from "expo-haptics";
 import GameOverModal from "@/src/components/GameOverModal";
 import { supabase } from "@/src/utils/supabase";
 import { useSession } from "@/src/hooks/useSession";
+import { useSettings } from "@/src/hooks/useSettings";
+import { useTranslation } from "react-i18next";
 
 export default function Approximation() {
   const params = useLocalSearchParams();
+  const { theme } = useSettings();
   const { hasSession } = useSession();
   const [lives, setLives] = useState(3);
   const [timeLeft, setTimeLeft] = useState(60); // Adjust for difficulty
   const [guessed, setGuessed] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const { t } = useTranslation();
   const [equation, setEquation] = useState<[string, number, number[]]>([
     "",
     0,
@@ -45,7 +49,7 @@ export default function Approximation() {
               lives,
               time: timeLeft,
             });
-            if (error) Alert.alert("Error", error.message);
+            if (error) Alert.alert(t("error"), error.message);
           }
           // return Alert.alert("Game Over", "You ran out of time!", [
           //   {
@@ -64,10 +68,14 @@ export default function Approximation() {
   const checkAnswer = async (approxGuess: boolean) => {
     if (approxGuess) {
       setGuessed((guessed) => guessed + 1);
-      setEquation(generateEquation(params.difficulty as Difficulty));
+      setEquation(
+        generateEquation(parseInt(params.difficulty as string) as Difficulty)
+      );
     } else {
       setLives((lives) => lives - 1);
-      setEquation(generateEquation(params.difficulty as Difficulty));
+      setEquation(
+        generateEquation(parseInt(params.difficulty as string) as Difficulty)
+      );
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives <= 1) {
         setGameOver(true);
@@ -78,7 +86,7 @@ export default function Approximation() {
             lives,
             time: timeLeft,
           });
-          if (error) Alert.alert("Error", error.message);
+          if (error) Alert.alert(t("error"), error.message);
         }
         // Alert.alert("Game Over", "You ran out of lives!", [
         //   {
@@ -92,15 +100,17 @@ export default function Approximation() {
   };
 
   useEffect(() => {
-    const eqa = generateEquation(params.difficulty as Difficulty);
+    const eqa = generateEquation(
+      parseInt(params.difficulty as string) as Difficulty
+    );
     setEquation(eqa);
   }, []);
   return (
     <View className="h-full bg-transparent flex">
       <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
       <View className="flex flex-col gap-y-8 m-auto justify-center">
-        <Text className="text-platinum text-3xl font-bold mx-auto text-center">
-          Solve the following equation:
+        <Text className="dark:text-platinum text-night text-3xl font-bold mx-auto text-center">
+          {t("games.approximation.description")}
         </Text>
         <Animated.View
           key={equation[0]}
@@ -110,7 +120,7 @@ export default function Approximation() {
           <MathJaxSvg
             style={{ marginHorizontal: "auto" }}
             fontSize={36}
-            color="white"
+            color={theme == "dark" ? "#e8e8e8" : "#151515"}
             fontCache={true}
           >
             {equation[0]}
@@ -122,7 +132,7 @@ export default function Approximation() {
             inputNumber={equation[1]}
             bounds={equation[2]}
             onRelease={checkAnswer}
-            difficulty={params.difficulty as Difficulty}
+            difficulty={parseInt(params.difficulty as string) as Difficulty}
           />
         </Animated.View>
       </View>
@@ -141,7 +151,11 @@ export default function Approximation() {
             setTimeLeft(60);
             setGuessed(0);
             setGameOver(false);
-            setEquation(generateEquation(params.difficulty as Difficulty));
+            setEquation(
+              generateEquation(
+                parseInt(params.difficulty as string) as Difficulty
+              )
+            );
           }}
         />
       )}

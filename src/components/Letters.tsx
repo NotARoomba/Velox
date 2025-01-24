@@ -33,19 +33,19 @@ export default function Letters() {
     useEffect(() => {
       rotation.value = withDelay(
         startDelay,
-        withRepeat(withTiming(720, { duration }), -1, false),
+        withRepeat(withTiming(720, { duration }), -1, false)
       );
       translateY.value = withDelay(
         startDelay,
-        withRepeat(withTiming(-1000, { duration }), -1, false),
+        withRepeat(withTiming(-1000, { duration }), -1, false)
       );
       opacity.value = withDelay(
         startDelay,
-        withRepeat(withTiming(0, { duration }), -1, false),
+        withRepeat(withTiming(0, { duration }), -1, false)
       );
       borderRadius.value = withDelay(
         startDelay,
-        withRepeat(withTiming(50, { duration }), -1, false),
+        withRepeat(withTiming(50, { duration }), -1, false)
       );
     }, []);
 
@@ -84,7 +84,7 @@ export default function Letters() {
 
   return (
     <View
-      className="absolute top-0 left-0 overflow-hidden w-full bg-night h-screen -z-10"
+      className="absolute top-0 left-0 overflow-hidden w-full dark:bg-night bg-platinum h-screen -z-10"
       style={{ height }}
     >
       {Array.from({ length: 30 }).map((_, i) => (

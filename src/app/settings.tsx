@@ -64,8 +64,8 @@ export default function Settings() {
           style: "destructive",
           onPress: () =>
             supabase.rpc("delete_user").then(async ({ error }) => {
-              if (error) return Alert.alert("Error", error.message);
-              else Alert.alert("Success", "Your account has been deleted");
+              if (error) return Alert.alert(t("error"), error.message);
+              else Alert.alert(t("success"), "Your account has been deleted");
               await supabase.auth.signOut();
               router.dismissTo("/");
             }),
@@ -78,20 +78,28 @@ export default function Settings() {
   const buttonStyle = useAnimatedStyle(() => {
     return {
       opacity: withTiming(isConfirmDelete ? 1 : 1, { duration: 300 }),
-      backgroundColor: isConfirmDelete ? "#f87171" : "#808080",
+      backgroundColor: isConfirmDelete
+        ? "#ef4444"
+        : theme == "dark"
+        ? "#e8e8e820"
+        : "#15151520",
     };
   });
   return (
     <Animated.View
       style={{ opacity }}
+      // onTouchEnd={() =>
+      //   setIsConfirmDelete(isConfirmDelete ? false : isConfirmDelete)
+      // }
       className="h-full bg-transparent flex pt-16"
     >
       <HoloText
+        className="mx-auto"
         width={Dimensions.get("window").width}
-        height={128}
+        height={144}
         fontSize={72}
       >
-        Settings
+        {t("titles.settings")}
       </HoloText>
       <View
         className={
@@ -100,7 +108,7 @@ export default function Settings() {
         }
       >
         <Text className="dark:text-platinum text-night text-3xl font-bold text-center mb-2">
-          {t("buttons.theme")}
+          {t("settings.theme")}
         </Text>
         <Slider
           options={[t("buttons.themes.dark"), t("buttons.themes.light")]}
@@ -113,7 +121,7 @@ export default function Settings() {
               : t("buttons.themes.light")
           }
         />
-        <Text className="dark:text-platinum text-night text-3xl font-bold text-center mt-8 mb-2">
+        <Text className=" text-3xl font-bold text-center dark:text-platinum text-night mt-8 mb-2">
           {t("settings.languages")}
         </Text>
 
@@ -133,7 +141,12 @@ export default function Settings() {
           className="flex flex-row h-12 overflow-scroll"
         >
           {LANGUAGES.map((v, i) => (
-            <LanguageButton key={i} index={i} language={v} currentIndex={-1} />
+            <LanguageButton
+              key={i}
+              index={i}
+              language={v}
+              currentIndex={LANGUAGES.findIndex((v) => v.locale === language)}
+            />
           ))}
         </ScrollView>
         {hasSession && (
@@ -144,11 +157,24 @@ export default function Settings() {
 
             {/* Double-click button */}
             <Reanimated.View
-              style={[buttonStyle]}
-              className="mx-auto leading-10 flex rounded-xl justify-center h-12 align-middle w-56"
+              style={[
+                buttonStyle,
+                {
+                  boxShadow: !isConfirmDelete
+                    ? "4px 4px #ef4444"
+                    : "4px 4px #15151520",
+                },
+              ]}
+              className="mx-auto leading-10 bg-red flex rounded-xl justify-center h-12 align-middle w-56"
             >
               <TouchableOpacity onPress={handleButtonPress}>
-                <Text className="text-center text-2xl font-medium dark:text-platinum text-night">
+                <Text
+                  className={`text-center text-2xl font-medium ${
+                    isConfirmDelete
+                      ? "text-platinum"
+                      : "dark:text-platinum text-night"
+                  }`}
+                >
                   {isConfirmDelete
                     ? t("settings.confirmDelete")
                     : t("settings.deleteAccount")}
@@ -159,7 +185,7 @@ export default function Settings() {
         )}
       </View>
       <Reanimated.View className="w-full absolute bottom-6">
-        <Text className=" text-celtic_blue font-bold text-center text-xs w-11/12 mx-auto">
+        <Text className=" text-celtic_blue font-bold  text-center text-xs w-11/12 mx-auto">
           {t("settings.credits")}
         </Text>
       </Reanimated.View>
@@ -172,7 +198,11 @@ export default function Settings() {
         }
       >
         <TouchableOpacity onPress={router.back}>
-          <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          <Ionicons
+            color={theme === "dark" ? "#e8e8e8" : "#151515"}
+            size={40}
+            name="arrow-back"
+          />
         </TouchableOpacity>
       </Reanimated.View>
     </Animated.View>

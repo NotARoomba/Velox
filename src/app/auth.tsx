@@ -11,6 +11,7 @@ import {
   Alert,
   AppState,
   Animated,
+  Dimensions,
 } from "react-native";
 import Slider from "../components/Slider";
 import ReAnimated, {
@@ -29,6 +30,10 @@ import { supabase } from "../utils/supabase";
 import prompt from "@powerdesigninc/react-native-prompt";
 import { router } from "expo-router";
 import useFade from "../hooks/useFade";
+import { theme } from "@/tailwind.config";
+import HoloText from "../components/HoloText";
+import { useSettings } from "../hooks/useSettings";
+import { useTranslation } from "react-i18next";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -45,6 +50,8 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
 
   const opacity = useFade();
+  const { theme } = useSettings();
+  const { t } = useTranslation();
 
   async function verifyEmail(code: string) {
     setLoading(true);
@@ -59,8 +66,8 @@ export default function Auth() {
     setLoading(false);
     if (error) Alert.alert(error.message);
     else if (session && session.user.user_metadata.username === null) {
-      Alert.alert("Please sign up first!");
-      setChoice("Sign Up");
+      Alert.alert(t("errors.noAccount"));
+      setChoice(t("titles.signup"));
     } else router.replace("/");
   }
 
@@ -76,17 +83,17 @@ export default function Auth() {
       Alert.alert(error.message);
       return setLoading(false);
     }
-    prompt("Verification Code", "Enter the code sent to your email", [
+    prompt(t("verification.title"), t("verification.email"), [
       {
         style: "default",
-        text: "Verify",
+        text: t("verification.verify"),
         onPress: (code) => {
           if (code) verifyEmail(code);
-          else Alert.alert("Please enter a code!");
+          else Alert.alert(t("errors.enterCode"));
         },
       },
       {
-        text: "Cancel",
+        text: t("buttons.cancel"),
         style: "cancel",
       },
     ]);
@@ -111,17 +118,17 @@ export default function Auth() {
       Alert.alert(error.message);
       return setLoading(false);
     }
-    prompt("Verification Code", "Enter the code sent to your email", [
+    prompt(t("verification.title"), t("verification.email"), [
       {
         style: "default",
-        text: "Verify",
+        text: t("verification.verify"),
         onPress: (code) => {
           if (code) verifyEmail(code);
-          else Alert.alert("Please enter a code!");
+          else Alert.alert(t("errors.enterCode"));
         },
       },
       {
-        text: "Cancel",
+        text: t("buttons.cancel"),
         style: "cancel",
       },
     ]);
@@ -133,27 +140,30 @@ export default function Auth() {
       style={{ opacity }}
       className="flex bg-transparent h-full w-full items-center justify-center"
     >
-      {choice === "Login" ? (
-        <Animated.View
+      {choice === t("titles.login") ? (
+        <ReAnimated.View
           key={"Login"}
-          className="h-full flex w-full"
-          style={{ opacity }}
+          className="h-full flex w-full pt-12"
+          entering={SlideInLeft.withInitialValues({ originX: 400 })}
+          exiting={SlideOutRight}
         >
-          <Image
-            className="flex h-36 mt-32"
-            resizeMode="contain"
-            source={require("@/assets/images/login.png")}
-          />
+          <HoloText
+            fontSize={82}
+            width={Dimensions.get("window").width}
+            height={200}
+          >
+            {t("titles.login")}
+          </HoloText>
           <View className="flex flex-col gap-y-4 w-full">
             <KeyboardAvoidingView
               className="h-fit"
               behavior={Platform.OS === "ios" ? "padding" : undefined}
             >
-              <Text className="text-2xl text-platinum font-bold text-center">
-                Email
+              <Text className="text-2xl dark:text-platinum text-night font-bold text-center">
+                {t("inputs.email")}
               </Text>
               <TextInput
-                className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+                className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="email@address.com"
                 placeholderTextColor={"#737373"}
                 value={email}
@@ -166,35 +176,37 @@ export default function Auth() {
               className="h-12 w-2/3 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
               onPress={signInWithEmail}
             >
-              <Text className="text-platinum text-center font-bold">
-                {loading ? "Loading..." : "Login"}
+              <Text className="dark:text-platinum text-night text-center font-bold">
+                {loading ? t("loading") : t("titles.login")}
               </Text>
             </TouchableOpacity>
           </View>
-        </Animated.View>
+        </ReAnimated.View>
       ) : (
         <ReAnimated.View
           key={"SignUp"}
-          className="h-full flex"
+          className="h-full flex pt-12"
           entering={SlideInLeft.withInitialValues({ originX: -400 })}
           exiting={SlideOutLeft}
           // onTouchStart={Keyboard.dismiss}
         >
-          <Image
-            className="flex h-32 mt-32"
-            resizeMode="contain"
-            source={require("@/assets/images/signup.png")}
-          />
+          <HoloText
+            fontSize={82}
+            width={Dimensions.get("window").width}
+            height={200}
+          >
+            {t("titles.signup")}
+          </HoloText>
           <View className="flex flex-col gap-y-4">
             <KeyboardAvoidingView
               className="h-fit"
               behavior={Platform.OS === "ios" ? "padding" : undefined}
             >
-              <Text className="text-2xl text-platinum font-bold text-center">
-                Username
+              <Text className="text-2xl dark:text-platinum text-night font-bold text-center">
+                {t("inputs.username")}
               </Text>
               <TextInput
-                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="Username"
                 placeholderTextColor={"#737373"}
                 value={username}
@@ -206,11 +218,11 @@ export default function Auth() {
               className="h-fit"
               behavior={Platform.OS === "ios" ? "padding" : undefined}
             >
-              <Text className="text-2xl text-platinum font-bold text-center">
-                Email
+              <Text className="text-2xl dark:text-platinum text-night font-bold text-center">
+                {t("inputs.email")}
               </Text>
               <TextInput
-                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center text-platinum text-nowrap"
+                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="email@address.com"
                 placeholderTextColor={"#737373"}
                 keyboardType="email-address"
@@ -224,8 +236,8 @@ export default function Auth() {
               className="h-12 w-1/2 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
               onPress={signUpWithEmail}
             >
-              <Text className="text-platinum text-center font-bold">
-                {loading ? "Loading..." : "Sign Up"}
+              <Text className="dark:text-platinum text-night text-center font-bold">
+                {loading ? t("loading") : t("titles.signup")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -241,7 +253,11 @@ export default function Auth() {
           }
         >
           <TouchableOpacity onPress={router.back}>
-            <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+            <Ionicons
+              color={theme === "dark" ? "#e8e8e8" : "#151515"}
+              size={40}
+              name="arrow-back"
+            />
           </TouchableOpacity>
         </ReAnimated.View>
       )}
@@ -253,7 +269,7 @@ export default function Auth() {
         }
       >
         <Slider
-          options={["Login", "Sign Up"]}
+          options={[t("titles.login"), t("titles.signup")]}
           selected={choice}
           setOption={setChoice}
         />

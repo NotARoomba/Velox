@@ -6,22 +6,44 @@ import Slider from "../components/Slider";
 import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import useFade from "../hooks/useFade";
+import { useSettings } from "../hooks/useSettings";
+import { useTranslation } from "react-i18next";
 
 export default function DifficultySelect() {
   const params = useLocalSearchParams();
-  const [difficulty, setDifficulty] = useState<string>(Difficulty.EASY);
+  const [difficulty, setDifficulty] = useState(Difficulty.EASY);
   const opacity = useFade();
+  const { theme } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <Animated.View style={{ opacity }} className="h-full bg-transparent flex">
       <View className="m-auto">
-        <Text className="text-platinum m-auto font-bold text-4xl text-center mb-4">
-          Select Difficulty
+        <Text className="dark:text-platinum text-night m-auto font-bold text-4xl text-center mb-4">
+          {t("titles.difficulty")}
         </Text>
         <Slider
-          options={["Easy", "Medium", "Hard"]}
-          setOption={setDifficulty}
-          selected={difficulty}
+          options={[
+            t("buttons.difficulties.easy"),
+            t("buttons.difficulties.medium"),
+            t("buttons.difficulties.hard"),
+          ]}
+          setOption={(v) =>
+            setDifficulty(
+              v == t("buttons.difficulties.easy")
+                ? Difficulty.EASY
+                : v == t("buttons.difficulties.medium")
+                ? Difficulty.MEDIUM
+                : Difficulty.HARD
+            )
+          }
+          selected={
+            difficulty == Difficulty.EASY
+              ? t("buttons.difficulties.easy")
+              : difficulty == Difficulty.MEDIUM
+              ? t("buttons.difficulties.medium")
+              : t("buttons.difficulties.hard")
+          }
         />
         <TouchableOpacity
           style={{
@@ -35,8 +57,8 @@ export default function DifficultySelect() {
           }
           className="bg-platinum/10 rounded-2xl mx-auto py-2 flex w-full mt-4 px-16"
         >
-          <Text className="text-platinum m-auto font-bold text-center text-2xl">
-            Start
+          <Text className="dark:text-platinum text-night m-auto font-bold text-center text-2xl">
+            {t("buttons.start")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -49,7 +71,11 @@ export default function DifficultySelect() {
         }
       >
         <TouchableOpacity onPress={router.back}>
-          <Ionicons color="#e8e8e8" size={40} name="arrow-back" />
+          <Ionicons
+            color={theme === "dark" ? "#e8e8e8" : "#151515"}
+            size={40}
+            name="arrow-back"
+          />
         </TouchableOpacity>
       </ReAnimated.View>
     </Animated.View>

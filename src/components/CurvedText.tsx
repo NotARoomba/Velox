@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useState } from "react";
 import Svg, { Path, Text, TextPath, TSpan, Defs } from "react-native-svg";
+import { CurvedTextProps } from "../utils/types";
 
 const isNullOrUndefined = (param: any) => param === undefined || param === null;
 
@@ -8,7 +9,7 @@ const generateEllipsePath = (
   cy: number,
   rx: number,
   ry: number,
-  reversed: boolean,
+  reversed: boolean
 ) => {
   const path = `
     M ${cx - rx}, ${cy} 
@@ -39,21 +40,7 @@ export default function CurvedText({
   textPathProps,
   textProps,
   tspanProps,
-}: {
-  width: number;
-  height: number;
-  cx: number;
-  cy: number;
-  rx: number;
-  ry: number;
-  startOffset: number;
-  reversed: boolean;
-  text: string;
-  svgProps?: any;
-  textPathProps?: any;
-  textProps?: any;
-  tspanProps?: any;
-}) {
+}: CurvedTextProps) {
   const uniqueId = useId();
   const ellipseId = `ellipse-path-${uniqueId.replaceAll(":", "-")}`;
   const [pathD, setPathD] = useState("");

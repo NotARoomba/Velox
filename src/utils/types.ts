@@ -22,9 +22,9 @@ export enum Games {
 }
 
 export enum Difficulty {
-  EASY = "Easy",
-  MEDIUM = "Medium",
-  HARD = "Hard",
+  EASY,
+  MEDIUM,
+  HARD
 }
 
 export interface User {
@@ -126,5 +126,39 @@ export interface LanguageButtonProps {
   language: Language;
   index: number;
   currentIndex: number;
+}
+
+export interface ApproxSliderProps {
+  inputNumber: number;
+  onRelease: (event: boolean) => void;
+  difficulty: Difficulty;
+  bounds: number[];
+}
+
+export interface CurvedTextProps {
+  width: number;
+  height: number;
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+  startOffset: number;
+  reversed: boolean;
+  text: string;
+  svgProps?: any;
+  textPathProps?: any;
+  textProps?: any;
+  tspanProps?: any;
+}
+
+export interface GameOverModalProps {
+  game: Game;
+  onQuit: () => void;
+  onRestart: () => void;
+}
+
+export interface LivesProps {
+  lives: number;
+  totalLives?: number;
 }
 

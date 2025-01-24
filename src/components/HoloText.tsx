@@ -14,6 +14,7 @@ export default function HoloText({
     <Svg
       width={width}
       height={height}
+      preserveAspectRatio="xMinYMin meet"
       viewBox={`0 0 ${width} ${height}`}
       className={className}
       style={style}
@@ -25,6 +26,7 @@ export default function HoloText({
           y={height / 2}
           textAnchor="middle"
           fontSize={fontSize}
+          fontWeight={700}
           stroke={textColor}
           fill={textColor}
           translateX={i * 3}
