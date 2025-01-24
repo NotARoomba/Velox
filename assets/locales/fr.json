@@ -1,0 +1,121 @@
+{
+    "CFBundleDisplayName": "Velox",
+    "NSCameraUsageDescription": "Velox a besoin d'accéder à votre caméra pour prendre une photo et mettre à jour votre photo de profil.",
+    "NSPhotoLibraryUsageDescription": "Velox a besoin d'accéder à votre galerie pour choisir une photo et mettre à jour votre photo de profil.",
+    "description": "Une application qui vous aide à améliorer vos compétences en calcul mental",
+    "success": "Succès",
+    "error": "Erreur",
+    "check": "Vérifier",
+    "loading": "Chargement",
+    "yes": "Oui",
+    "no": "Non",
+    "confirmTitle": "Confirmer",
+    "inputs": {
+      "username": "Nom d'utilisateur",
+      "email": "E-mail",
+      "picture": "Téléchargez une photo de profil",
+      "enterCode": "Entrez le code de vérification",
+      "enterCode2": "Entrez le code de vérification envoyé à : "
+    },
+    "profile": {
+      "updateSuccess": "Profil mis à jour avec succès",
+      "updateError": "Une erreur est survenue lors de la mise à jour du profil",
+      "logoutTitle": "Déconnexion",
+      "logoutDescription": "Êtes-vous sûr de vouloir vous déconnecter ?"
+    },
+    "titles": {
+      "play": "Jouer",
+      "profile": "Profil",
+      "user": "Utilisateur",
+      "score": "Score",
+      "leaderboard": "Classement",
+      "difficulty": "Choisir la difficulté",
+      "login": "Connexion",
+      "signup": "S'inscrire",
+      "settings": "Paramètres",
+      "logout": "Déconnexion",
+      "gameOver": "Fin de la partie",
+      "time": "Temps",
+      "lives": "Vies",
+      "highscore": "Meilleur score",
+      "loginOrSignup1": "Connectez-vous ou inscrivez-vous",
+      "loginOrSignup2": "pour afficher vos meilleurs scores !",
+      "restart": "Recommencer",
+      "quit": "Quitter"
+    },
+    "images": {
+      "choose": "Veuillez choisir",
+      "gallery": "Galerie",
+      "camera": "Caméra",
+      "readingTitle": "Erreur d'image",
+      "readingDescription": "Erreur de lecture de l'image",
+      "galleryTitle": "Autoriser l'accès à la galerie",
+      "galleryDescription": "Vous devez autoriser l'accès à la bibliothèque multimédia pour que cela fonctionne",
+      "cameraTitle": "Autoriser l'accès à la caméra",
+      "cameraDescription": "Vous devez autoriser les permissions de la caméra pour que cela fonctionne",
+      "remove": "Supprimer",
+      "removeTitle": "Supprimer l'image",
+      "removeDescription": "Êtes-vous sûr de vouloir supprimer cette image ?"
+    },
+    "buttons": {
+      "update": "Mettre à jour",
+      "clear": "Effacer",
+      "delete": "Supprimer",
+      "logoutDesc": "Êtes-vous sûr de vouloir vous déconnecter ?",
+      "deleteAccountDesc": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+      "themes": {
+        "dark": "Sombre",
+        "light": "Clair"
+      },
+      "difficulties": {
+        "easy": "Facile",
+        "medium": "Moyen",
+        "hard": "Difficile"
+      },
+      "confirmDelete": "Confirmer la suppression",
+      "deleteAccount": "Supprimer le compte",
+      "cancel": "Annuler",
+      "submit": "Soumettre",
+      "start": "Commencer",
+      "approx": "Approximatif",
+      "circle": "Cercle"
+    },
+    "successes": {
+      "login": "Vous êtes maintenant connecté",
+      "signup": "Vous êtes maintenant inscrit",
+      "deleted": "Votre compte a été supprimé"
+    },
+    "errors": {
+      "createUser": "Une erreur est survenue lors de la création de l'utilisateur",
+      "fetchData": "Une erreur est survenue lors de la récupération de vos données",
+      "updateData": "Une erreur est survenue lors de la mise à jour de vos informations",
+      "enterCode": "Veuillez entrer un code !",
+      "noAccount": "Veuillez vous inscrire d'abord !",
+      "noScores": "Il n'y a pas de scores !",
+      "noHighscore": "Vous n'avez pas encore de meilleur score !"
+    },
+    "verification": {
+      "verify": "Vérifier",
+      "title": "Code de vérification",
+      "description": "Entrez le code envoyé à votre e-mail"
+    },
+    "games": {
+      "approximation": {
+        "title": "Approximation",
+        "description": "Résolvez l'équation suivante :"
+      },
+      "round": {
+        "title": "Faites le tour du cercle (PI)"
+      },
+      "answer": "La réponse était"
+    },
+    "settings": {
+      "languages": "Langues",
+      "theme": "Thème",
+      "deleteAccount": "Supprimer le compte",
+      "confirmDelete": "Confirmer la suppression",
+      "danger": "Danger",
+      "credits": "Créé par Nathan Alspaugh (NotARoomba)"
+    }
+  }
+  

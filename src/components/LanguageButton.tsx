@@ -12,7 +12,7 @@ export default function LanguageButton({
   index,
   currentIndex,
 }: LanguageButtonProps) {
-  console.log(index, currentIndex);
+  // //console.log(index, currentIndex);
   const color = useSharedValue("#002f58");
   useEffect(() => {
     if (index == currentIndex)

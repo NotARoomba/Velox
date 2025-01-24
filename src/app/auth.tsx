@@ -44,14 +44,14 @@ AppState.addEventListener("change", (state) => {
 });
 
 export default function Auth() {
-  const [choice, setChoice] = useState("Login");
+  const { t } = useTranslation();
+  const [choice, setChoice] = useState(t("titles.login"));
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const opacity = useFade();
   const { theme } = useSettings();
-  const { t } = useTranslation();
 
   async function verifyEmail(code: string) {
     setLoading(true);
@@ -83,20 +83,26 @@ export default function Auth() {
       Alert.alert(error.message);
       return setLoading(false);
     }
-    prompt(t("verification.title"), t("verification.email"), [
-      {
-        style: "default",
-        text: t("verification.verify"),
-        onPress: (code) => {
-          if (code) verifyEmail(code);
-          else Alert.alert(t("errors.enterCode"));
+    prompt(
+      t("verification.title"),
+      t("verification.description"),
+      [
+        {
+          style: "default",
+          text: t("verification.verify"),
+          onPress: (code) => {
+            if (code) verifyEmail(code);
+            else Alert.alert(t("errors.enterCode"));
+          },
         },
-      },
-      {
-        text: t("buttons.cancel"),
-        style: "cancel",
-      },
-    ]);
+        {
+          text: t("buttons.cancel"),
+          style: "cancel",
+        },
+      ],
+      undefined,
+      "numeric"
+    );
     setLoading(false);
   }
 
@@ -118,20 +124,26 @@ export default function Auth() {
       Alert.alert(error.message);
       return setLoading(false);
     }
-    prompt(t("verification.title"), t("verification.email"), [
-      {
-        style: "default",
-        text: t("verification.verify"),
-        onPress: (code) => {
-          if (code) verifyEmail(code);
-          else Alert.alert(t("errors.enterCode"));
+    prompt(
+      t("verification.title"),
+      t("verification.description"),
+      [
+        {
+          style: "default",
+          text: t("verification.verify"),
+          onPress: (code) => {
+            if (code) verifyEmail(code);
+            else Alert.alert(t("errors.enterCode"));
+          },
         },
-      },
-      {
-        text: t("buttons.cancel"),
-        style: "cancel",
-      },
-    ]);
+        {
+          text: t("buttons.cancel"),
+          style: "cancel",
+        },
+      ],
+      undefined,
+      "numeric"
+    );
     setLoading(false);
   }
 
@@ -163,7 +175,7 @@ export default function Auth() {
                 {t("inputs.email")}
               </Text>
               <TextInput
-                className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
+                className="h-12 w-1/2 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="email@address.com"
                 placeholderTextColor={"#737373"}
                 value={email}
@@ -206,7 +218,7 @@ export default function Auth() {
                 {t("inputs.username")}
               </Text>
               <TextInput
-                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
+                className="h-12 w-1/2 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="Username"
                 placeholderTextColor={"#737373"}
                 value={username}

@@ -13,9 +13,20 @@ import { useLanguageUpdater } from "../utils/i18n";
 import { LoadingProvider } from "../hooks/useLoading";
 import Loading from "../components/Loading";
 import { SettingsProvider } from "../hooks/useSettings";
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated";
 
 export default function RootLayout() {
   if (Platform.OS == "android") useLanguageUpdater();
+  useEffect(() => {
+    configureReanimatedLogger({
+      level: ReanimatedLogLevel.warn,
+      strict: false, // Reanimated runs in strict mode by default
+    });
+  }, []);
+
   return (
     <AnimatedAppLoader>
       <LoadingProvider>

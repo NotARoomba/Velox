@@ -121,15 +121,15 @@ export default function Leaderboard() {
               #
             </Text>
             <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
-              User
+              {t("titles.user")}
             </Text>
             <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
-              Score
+              {t("titles.score")}
             </Text>
           </View>
           {circleLeaderboard.length == 0 ? (
             <Text className="dark:text-platinum text-night text-6xl mt-24 font-bold text-center">
-              There are no scores!
+              {t("errors.noScores")}
             </Text>
           ) : (
             <FlashList

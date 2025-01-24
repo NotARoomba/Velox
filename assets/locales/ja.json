@@ -1,0 +1,121 @@
+{
+    "CFBundleDisplayName": "Velox",
+    "NSCameraUsageDescription": "Veloxは、プロフィール写真を更新するためにカメラへのアクセスを必要とします。",
+    "NSPhotoLibraryUsageDescription": "Veloxは、プロフィール写真を更新するためにギャラリーへのアクセスを必要とします。",
+    "description": "計算スキルを向上させるアプリ",
+    "success": "成功",
+    "error": "エラー",
+    "check": "確認",
+    "loading": "読み込み中",
+    "yes": "はい",
+    "no": "いいえ",
+    "confirmTitle": "確認",
+    "inputs": {
+      "username": "ユーザー名",
+      "email": "メールアドレス",
+      "picture": "プロフィール写真をアップロード",
+      "enterCode": "確認コードを入力してください",
+      "enterCode2": "送信された確認コードを入力してください: "
+    },
+    "profile": {
+      "updateSuccess": "プロフィールが正常に更新されました",
+      "updateError": "プロフィールの更新中にエラーが発生しました",
+      "logoutTitle": "ログアウト",
+      "logoutDescription": "本当にログアウトしますか？"
+    },
+    "titles": {
+      "play": "プレイ",
+      "profile": "プロフィール",
+      "user": "ユーザー",
+      "score": "スコア",
+      "leaderboard": "リーダーボード",
+      "difficulty": "難易度を選択",
+      "login": "ログイン",
+      "signup": "サインアップ",
+      "settings": "設定",
+      "logout": "ログアウト",
+      "gameOver": "ゲームオーバー",
+      "time": "時間",
+      "lives": "ライフ",
+      "highscore": "ハイスコア",
+      "loginOrSignup1": "ログインまたはサインアップ",
+      "loginOrSignup2": "ハイスコアを表示するために！",
+      "restart": "再スタート",
+      "quit": "終了"
+    },
+    "images": {
+      "choose": "選択してください",
+      "gallery": "ギャラリー",
+      "camera": "カメラ",
+      "readingTitle": "画像エラー",
+      "readingDescription": "画像の読み取り中にエラーが発生しました",
+      "galleryTitle": "ギャラリーアクセスを許可",
+      "galleryDescription": "メディアライブラリへのアクセス許可が必要です",
+      "cameraTitle": "カメラアクセスを許可",
+      "cameraDescription": "カメラへのアクセス許可が必要です",
+      "remove": "削除",
+      "removeTitle": "画像を削除",
+      "removeDescription": "本当にこの画像を削除しますか？"
+    },
+    "buttons": {
+      "update": "更新",
+      "clear": "クリア",
+      "delete": "削除",
+      "logoutDesc": "本当にログアウトしますか？",
+      "deleteAccountDesc": "本当にアカウントを削除しますか？",
+      "themes": {
+        "dark": "ダーク",
+        "light": "ライト"
+      },
+      "difficulties": {
+        "easy": "簡単",
+        "medium": "普通",
+        "hard": "難しい"
+      },
+      "confirmDelete": "削除を確認",
+      "deleteAccount": "アカウントを削除",
+      "cancel": "キャンセル",
+      "submit": "送信",
+      "start": "開始",
+      "approx": "近似",
+      "circle": "円"
+    },
+    "successes": {
+      "login": "ログインしました",
+      "signup": "登録が完了しました",
+      "deleted": "アカウントが削除されました"
+    },
+    "errors": {
+      "createUser": "ユーザーの作成中にエラーが発生しました",
+      "fetchData": "データの取得中にエラーが発生しました",
+      "updateData": "情報の更新中にエラーが発生しました",
+      "enterCode": "コードを入力してください！",
+      "noAccount": "最初にサインアップしてください！",
+      "noScores": "スコアがありません！",
+      "noHighscore": "まだハイスコアがありません！"
+    },
+    "verification": {
+      "verify": "確認",
+      "title": "確認コード",
+      "description": "メールに送信されたコードを入力してください"
+    },
+    "games": {
+      "approximation": {
+        "title": "近似計算",
+        "description": "次の方程式を解いてください:"
+      },
+      "round": {
+        "title": "円を丸める（PI）"
+      },
+      "answer": "答えは"
+    },
+    "settings": {
+      "languages": "言語",
+      "theme": "テーマ",
+      "deleteAccount": "アカウントを削除",
+      "confirmDelete": "削除を確認",
+      "danger": "危険",
+      "credits": "作成者: Nathan Alspaugh（NotARoomba）"
+    }
+  }
+  

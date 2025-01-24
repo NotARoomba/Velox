@@ -1,0 +1,121 @@
+{
+      "CFBundleDisplayName": "Velox",
+      "NSCameraUsageDescription": "Velox necesita acceso a tu cámara para tomar una foto y actualizar tu foto de perfil.",
+      "NSPhotoLibraryUsageDescription": "Velox necesita acceso a tu galería para elegir una foto y actualizar tu foto de perfil.",
+      "description": "Una aplicación que ayuda a mejorar tus habilidades de cálculo mental",
+      "success": "Éxito",
+      "error": "Error",
+      "check": "Verificar",
+      "loading": "Cargando",
+      "yes": "Sí",
+      "no": "No",
+      "confirmTitle": "Confirmar",
+      "inputs": {
+        "username": "Nombre de usuario",
+        "email": "Correo electrónico",
+        "picture": "Subir una foto de perfil",
+        "enterCode": "Introduce el código de verificación",
+        "enterCode2": "Introduce el código de verificación enviado a: "
+      },
+      "profile": {
+        "updateSuccess": "Perfil actualizado con éxito",
+        "updateError": "Hubo un error al actualizar tu perfil",
+        "logoutTitle": "Cerrar sesión",
+        "logoutDescription": "¿Estás seguro de que deseas cerrar sesión?"
+      },
+      "titles": {
+        "play": "Jugar",
+        "profile": "Perfil",
+        "user": "Usuario",
+        "score": "Puntuación",
+        "leaderboard": "Tabla de posiciones",
+        "difficulty": "Seleccionar dificultad",
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "settings": "Configuraciones",
+        "logout": "Cerrar sesión",
+        "gameOver": "Fin del juego",
+        "time": "Tiempo",
+        "lives": "Vidas",
+        "highscore": "Puntuación más alta",
+        "loginOrSignup1": "Inicia sesión o regístrate",
+        "loginOrSignup2": "¡para mostrar tus puntuaciones altas!",
+        "restart": "Reiniciar",
+        "quit": "Salir"
+      },
+      "images": {
+        "choose": "Por favor elige",
+        "gallery": "Galería",
+        "camera": "Cámara",
+        "readingTitle": "Error de imagen",
+        "readingDescription": "Error al leer la imagen",
+        "galleryTitle": "Permitir acceso a la galería",
+        "galleryDescription": "Necesitas permitir los permisos de la biblioteca multimedia para que esto funcione",
+        "cameraTitle": "Permitir acceso a la cámara",
+        "cameraDescription": "Necesitas permitir los permisos de la cámara para que esto funcione",
+        "remove": "Eliminar",
+        "removeTitle": "Eliminar imagen",
+        "removeDescription": "¿Estás seguro de que deseas eliminar esta imagen?"
+      },
+      "buttons": {
+        "update": "Actualizar",
+        "clear": "Limpiar",
+        "delete": "Eliminar",
+        "logoutDesc": "¿Estás seguro de que deseas cerrar sesión?",
+        "deleteAccountDesc": "¿Estás seguro de que deseas eliminar tu cuenta?",
+        "themes": {
+          "dark": "Oscuro",
+          "light": "Claro"
+        },
+        "difficulties": {
+          "easy": "Fácil",
+          "medium": "Medio",
+          "hard": "Difícil"
+        },
+        "confirmDelete": "Confirmar eliminación",
+        "deleteAccount": "Eliminar cuenta",
+        "cancel": "Cancelar",
+        "submit": "Enviar",
+        "start": "Comenzar",
+        "approx": "Aproximar",
+        "circle": "Círculo"
+      },
+      "successes": {
+        "login": "Has iniciado sesión",
+        "signup": "Te has registrado con éxito",
+        "deleted": "Tu cuenta ha sido eliminada"
+      },
+      "errors": {
+        "createUser": "Hubo un error al crear un usuario",
+        "fetchData": "Hubo un error al obtener tus datos",
+        "updateData": "Hubo un error al actualizar tu información",
+        "enterCode": "¡Por favor introduce un código!",
+        "noAccount": "¡Por favor regístrate primero!",
+        "noScores": "¡No hay puntuaciones!",
+        "noHighscore": "¡Aún no tienes una puntuación alta!"
+      },
+      "verification": {
+        "verify": "Verificar",
+        "title": "Código de verificación",
+        "description": "Introduce el código enviado a tu correo electrónico"
+      },
+      "games": {
+        "approximation": {
+          "title": "Aproximación",
+          "description": "Resuelve la siguiente ecuación:"
+        },
+        "round": {
+          "title": "Redondea el círculo (PI)"
+        },
+        "answer": "La respuesta era"
+      },
+      "settings": {
+        "languages": "Idiomas",
+        "theme": "Tema",
+        "deleteAccount": "Eliminar cuenta",
+        "confirmDelete": "Confirmar eliminación",
+        "danger": "Peligro",
+        "credits": "Hecho por Nathan Alspaugh (NotARoomba)"
+      }
+  }
+  

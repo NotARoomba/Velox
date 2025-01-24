@@ -9,17 +9,32 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "locales": {
-      "en": "./assets/locales/en.json"
+      "en": "./assets/locales/en.json",
+      "es": "./assets/locales/es.json",
+      "zh": "./assets/locales/zh.json",
+      "fr": "./assets/locales/fr.json",
+      "de": "./assets/locales/de.json",
+      "ru": "./assets/locales/ru.json",
+      "ja": "./assets/locales/ja.json",
+      "ko": "./assets/locales/ko.json"
     },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
-        "CFBundleLocalizations": ["en"],
+        "CFBundleLocalizations": [
+          "en",
+          "es",
+          "zh",
+          "fr",
+          "de",
+          "ru",
+          "ja",
+          "ko"
+        ],
         "CFBundleDevelopmentRegion": "en"
       },
-      "bundleIdentifier": "com.notaroomba.velox",
-      "appleTeamId": "2499QNG3JJ"
+      "bundleIdentifier": "com.notaroomba.velox"
     },
     "android": {
       "adaptiveIcon": {
@@ -56,6 +71,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6370c0cf-c07a-49a2-87c4-ce3f02ca6423"
+      }
     }
   }
 }

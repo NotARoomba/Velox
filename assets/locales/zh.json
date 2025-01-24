@@ -1,0 +1,121 @@
+{
+    "CFBundleDisplayName": "Velox",
+    "NSCameraUsageDescription": "Velox 需要访问您的相机以拍摄照片更新您的个人资料图片。",
+    "NSPhotoLibraryUsageDescription": "Velox 需要访问您的图库以选择照片更新您的个人资料图片。",
+    "description": "一款帮助您提高心算技能的应用程序",
+    "success": "成功",
+    "error": "错误",
+    "check": "检查",
+    "loading": "加载中",
+    "yes": "是",
+    "no": "否",
+    "confirmTitle": "确认",
+    "inputs": {
+      "username": "用户名",
+      "email": "电子邮件",
+      "picture": "上传个人资料照片",
+      "enterCode": "输入验证码",
+      "enterCode2": "输入发送到以下地址的验证码："
+    },
+    "profile": {
+      "updateSuccess": "个人资料更新成功",
+      "updateError": "更新个人资料时出错",
+      "logoutTitle": "登出",
+      "logoutDescription": "您确定要登出吗？"
+    },
+    "titles": {
+      "play": "开始游戏",
+      "profile": "个人资料",
+      "user": "用户",
+      "score": "分数",
+      "leaderboard": "排行榜",
+      "difficulty": "选择难度",
+      "login": "登录",
+      "signup": "注册",
+      "settings": "设置",
+      "logout": "登出",
+      "gameOver": "游戏结束",
+      "time": "时间",
+      "lives": "生命",
+      "highscore": "最高分",
+      "loginOrSignup1": "登录或注册",
+      "loginOrSignup2": "以显示您的最高分！",
+      "restart": "重新开始",
+      "quit": "退出"
+    },
+    "images": {
+      "choose": "请选择",
+      "gallery": "图库",
+      "camera": "相机",
+      "readingTitle": "图片错误",
+      "readingDescription": "读取图片时出错",
+      "galleryTitle": "允许访问图库",
+      "galleryDescription": "您需要允许访问媒体库权限才能使用此功能",
+      "cameraTitle": "允许访问相机",
+      "cameraDescription": "您需要允许相机权限才能使用此功能",
+      "remove": "删除",
+      "removeTitle": "删除图片",
+      "removeDescription": "您确定要删除此图片吗？"
+    },
+    "buttons": {
+      "update": "更新",
+      "clear": "清除",
+      "delete": "删除",
+      "logoutDesc": "您确定要登出吗？",
+      "deleteAccountDesc": "您确定要删除您的账户吗？",
+      "themes": {
+        "dark": "深色",
+        "light": "浅色"
+      },
+      "difficulties": {
+        "easy": "简单",
+        "medium": "中等",
+        "hard": "困难"
+      },
+      "confirmDelete": "确认删除",
+      "deleteAccount": "删除账户",
+      "cancel": "取消",
+      "submit": "提交",
+      "start": "开始",
+      "approx": "近似",
+      "circle": "圆形"
+    },
+    "successes": {
+      "login": "您已成功登录",
+      "signup": "您已成功注册",
+      "deleted": "您的账户已被删除"
+    },
+    "errors": {
+      "createUser": "创建用户时出错",
+      "fetchData": "获取数据时出错",
+      "updateData": "更新信息时出错",
+      "enterCode": "请输入验证码！",
+      "noAccount": "请先注册！",
+      "noScores": "目前没有分数！",
+      "noHighscore": "您还没有最高分！"
+    },
+    "verification": {
+      "verify": "验证",
+      "title": "验证码",
+      "description": "请输入发送到您邮箱的验证码"
+    },
+    "games": {
+      "approximation": {
+        "title": "近似",
+        "description": "解答以下方程："
+      },
+      "round": {
+        "title": "圆周游戏（PI）"
+      },
+      "answer": "答案是"
+    },
+    "settings": {
+      "languages": "语言",
+      "theme": "主题",
+      "deleteAccount": "删除账户",
+      "confirmDelete": "确认删除",
+      "danger": "危险",
+      "credits": "由 Nathan Alspaugh (NotARoomba) 制作"
+    }
+  }
+  

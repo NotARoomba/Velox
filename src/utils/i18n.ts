@@ -1,4 +1,12 @@
 import en from "@/assets/locales/en.json";
+import es from "@/assets/locales/es.json";
+import fr from "@/assets/locales/fr.json";
+import zh from "@/assets/locales/zh.json";
+import de from "@/assets/locales/de.json";
+import ru from "@/assets/locales/ru.json";
+import ja from "@/assets/locales/ja.json";
+import ko from "@/assets/locales/ko.json";
+
 import { getLocales } from "expo-localization";
 import * as SecureStore from "expo-secure-store";
 import i18n from "i18next";
@@ -10,6 +18,27 @@ import { AppState, AppStateStatus } from "react-native";
 const resources = {
   en: {
     translation: en,
+  },
+  es: {
+    translation: es,
+  },
+  fr: {
+    translation: fr,
+  },
+  zh: {
+    translation: zh,
+  },
+  de: {
+    translation: de,
+  },
+  ru: {
+    translation: ru,
+  },
+  ja: {
+    translation: ja,
+  },
+  ko: {
+    translation: ko,
   },
 };
 i18n.use(initReactI18next).init({

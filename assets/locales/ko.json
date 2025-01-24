@@ -1,0 +1,121 @@
+{
+    "CFBundleDisplayName": "Velox",
+    "NSCameraUsageDescription": "Velox는 프로필 사진을 업데이트하기 위해 카메라 접근 권한이 필요합니다.",
+    "NSPhotoLibraryUsageDescription": "Velox는 프로필 사진을 업데이트하기 위해 갤러리 접근 권한이 필요합니다.",
+    "description": "계산 능력을 향상시키는 앱",
+    "success": "성공",
+    "error": "오류",
+    "check": "확인",
+    "loading": "로딩 중",
+    "yes": "예",
+    "no": "아니요",
+    "confirmTitle": "확인",
+    "inputs": {
+      "username": "사용자 이름",
+      "email": "이메일",
+      "picture": "프로필 사진 업로드",
+      "enterCode": "인증 코드를 입력하세요",
+      "enterCode2": "보내드린 인증 코드를 입력하세요: "
+    },
+    "profile": {
+      "updateSuccess": "프로필이 성공적으로 업데이트되었습니다",
+      "updateError": "프로필 업데이트 중 오류가 발생했습니다",
+      "logoutTitle": "로그아웃",
+      "logoutDescription": "정말 로그아웃하시겠습니까?"
+    },
+    "titles": {
+      "play": "플레이",
+      "profile": "프로필",
+      "user": "사용자",
+      "score": "점수",
+      "leaderboard": "리더보드",
+      "difficulty": "난이도 선택",
+      "login": "로그인",
+      "signup": "회원가입",
+      "settings": "설정",
+      "logout": "로그아웃",
+      "gameOver": "게임 오버",
+      "time": "시간",
+      "lives": "목숨",
+      "highscore": "최고 점수",
+      "loginOrSignup1": "로그인 또는 회원가입",
+      "loginOrSignup2": "최고 점수를 확인하려면!",
+      "restart": "재시작",
+      "quit": "종료"
+    },
+    "images": {
+      "choose": "선택하세요",
+      "gallery": "갤러리",
+      "camera": "카메라",
+      "readingTitle": "이미지 오류",
+      "readingDescription": "이미지 읽기 중 오류가 발생했습니다",
+      "galleryTitle": "갤러리 접근 허용",
+      "galleryDescription": "작동하려면 미디어 라이브러리 권한이 필요합니다",
+      "cameraTitle": "카메라 접근 허용",
+      "cameraDescription": "작동하려면 카메라 권한이 필요합니다",
+      "remove": "제거",
+      "removeTitle": "이미지 제거",
+      "removeDescription": "정말 이 이미지를 제거하시겠습니까?"
+    },
+    "buttons": {
+      "update": "업데이트",
+      "clear": "지우기",
+      "delete": "삭제",
+      "logoutDesc": "정말 로그아웃하시겠습니까?",
+      "deleteAccountDesc": "정말 계정을 삭제하시겠습니까?",
+      "themes": {
+        "dark": "다크",
+        "light": "라이트"
+      },
+      "difficulties": {
+        "easy": "쉬움",
+        "medium": "중간",
+        "hard": "어려움"
+      },
+      "confirmDelete": "삭제 확인",
+      "deleteAccount": "계정 삭제",
+      "cancel": "취소",
+      "submit": "제출",
+      "start": "시작",
+      "approx": "근사치",
+      "circle": "원"
+    },
+    "successes": {
+      "login": "로그인 성공",
+      "signup": "회원가입 완료",
+      "deleted": "계정이 삭제되었습니다"
+    },
+    "errors": {
+      "createUser": "사용자 생성 중 오류가 발생했습니다",
+      "fetchData": "데이터 가져오기 중 오류가 발생했습니다",
+      "updateData": "정보 업데이트 중 오류가 발생했습니다",
+      "enterCode": "코드를 입력하세요!",
+      "noAccount": "먼저 회원가입을 진행하세요!",
+      "noScores": "점수가 없습니다!",
+      "noHighscore": "아직 최고 점수가 없습니다!"
+    },
+    "verification": {
+      "verify": "확인",
+      "title": "인증 코드",
+      "description": "이메일로 전송된 코드를 입력하세요"
+    },
+    "games": {
+      "approximation": {
+        "title": "근사치 계산",
+        "description": "다음 방정식을 풀어보세요:"
+      },
+      "round": {
+        "title": "원을 반올림하기 (PI)"
+      },
+      "answer": "정답은"
+    },
+    "settings": {
+      "languages": "언어",
+      "theme": "테마",
+      "deleteAccount": "계정 삭제",
+      "confirmDelete": "삭제 확인",
+      "danger": "위험",
+      "credits": "제작자: Nathan Alspaugh (NotARoomba)"
+    }
+  }
+  
