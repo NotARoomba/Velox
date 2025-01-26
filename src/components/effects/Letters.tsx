@@ -1,5 +1,7 @@
+import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { Pressable } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -20,7 +22,7 @@ export default function Letters() {
     return () => emitter.remove();
   }, []);
 
-  const AnimatedLetter = () => {
+  const AnimatedLetter = ({ index }: { index: number }) => {
     const startDelay = Math.random() * 8000; // Random delay up to 8s
     const duration = Math.random() * 50000 + 10000; // Random duration between 10s and 60s
     const size = Math.random() * 70 + 60; // Random size between 60 and 130
@@ -70,14 +72,19 @@ export default function Letters() {
           animatedStyle,
         ]}
       >
-        <Text
-          className="text-7xl text-center"
-          style={{
-            color: colors[Math.floor(Math.random() * colors.length)],
-          }}
+        <Pressable
+          className="h-full w-full"
+          onPress={() => (index === 7 ? router.push("/secret") : undefined)}
         >
-          {letters[Math.floor(Math.random() * letters.length)]}
-        </Text>
+          <Text
+            className="text-7xl text-center"
+            style={{
+              color: colors[Math.floor(Math.random() * colors.length)],
+            }}
+          >
+            {letters[Math.floor(Math.random() * letters.length)]}
+          </Text>
+        </Pressable>
       </Animated.View>
     );
   };
@@ -88,7 +95,7 @@ export default function Letters() {
       style={{ height }}
     >
       {Array.from({ length: 30 }).map((_, i) => (
-        <AnimatedLetter key={i} />
+        <AnimatedLetter key={i} index={i} />
       ))}
     </View>
   );

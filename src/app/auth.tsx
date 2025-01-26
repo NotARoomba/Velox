@@ -13,7 +13,7 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
-import Slider from "../components/Slider";
+import Slider from "../components/buttons/Slider";
 import ReAnimated, {
   Easing,
   FadeIn,
@@ -31,7 +31,7 @@ import prompt from "@powerdesigninc/react-native-prompt";
 import { router } from "expo-router";
 import useFade from "../hooks/useFade";
 import { theme } from "@/tailwind.config";
-import HoloText from "../components/HoloText";
+import HoloText from "../components/effects/HoloText";
 import { useSettings } from "../hooks/useSettings";
 import { useTranslation } from "react-i18next";
 

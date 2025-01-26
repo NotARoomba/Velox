@@ -1,4 +1,4 @@
-import { HoloTextProps } from "../utils/types";
+import { HoloTextProps } from "../../utils/types";
 import Svg, { Text } from "react-native-svg";
 
 export default function HoloText({

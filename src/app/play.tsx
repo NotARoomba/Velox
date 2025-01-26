@@ -13,7 +13,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
 import useFade from "../hooks/useFade";
 import { useSettings } from "../hooks/useSettings";
-import HoloText from "../components/HoloText";
+import HoloText from "../components/effects/HoloText";
 import { useTranslation } from "react-i18next";
 
 export default function Play() {

@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import useFade from "../hooks/useFade";
-import HoloText from "../components/HoloText";
+import HoloText from "../components/effects/HoloText";
 import Reanimated, {
   FadeIn,
   FadeOut,
@@ -24,8 +24,8 @@ import { useSettings } from "../hooks/useSettings";
 import { LANGUAGES } from "../utils/types";
 import { supabase } from "../utils/supabase";
 import { useSession } from "../hooks/useSession";
-import Slider from "../components/Slider";
-import LanguageButton from "../components/LanguageButton";
+import Slider from "../components/buttons/Slider";
+import LanguageButton from "../components/buttons/LanguageButton";
 
 export default function Settings() {
   const opacity = useFade();

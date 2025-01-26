@@ -57,8 +57,6 @@ module.exports = {
           900: "#fafafa",
         },
       },
-      //add a holographic effect with the celtic_blue
-      boxShadow: { holo: "4px 4px #0074d9" },
     },
   },
   plugins: [],

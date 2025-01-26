@@ -8,10 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import { useSession } from "../hooks/useSession";
-import Letters from "../components/Letters";
-import { useEffect } from "react";
 import useFade from "../hooks/useFade";
-import HoloText from "../components/HoloText";
+import HoloText from "../components/effects/HoloText";
 import { useTranslation } from "react-i18next";
 
 export default function Index() {
@@ -34,7 +32,7 @@ export default function Index() {
         <Text className="text-2xl dark:text-platinum text-night text-center font-bold w-90">
           {t("description").split("\\")[0]}
         </Text>
-        <Text className="text-2xl text-pale_azure text-center font-bold ">
+        <Text className="text-2xl text-celtic_blue text-center font-bold ">
           {t("description").split("\\")[1]}
         </Text>
       </View>

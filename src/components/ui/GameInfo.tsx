@@ -1,6 +1,6 @@
 import { View, Platform, Text } from "react-native";
 import Lives from "./Lives";
-import { GameInfoProps } from "../utils/types";
+import { GameInfoProps } from "../../utils/types";
 
 export default function GameInfo({ lives, timeLeft, guessed }: GameInfoProps) {
   return (

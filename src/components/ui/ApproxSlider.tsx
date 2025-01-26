@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Dimensions, GestureResponderEvent } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  View,
+  Text,
+  Dimensions,
+  GestureResponderEvent,
+  Platform,
+} from "react-native";
 import Slider from "@react-native-community/slider";
 import Animated, {
   runOnJS,
@@ -7,14 +13,13 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { ApproxSliderProps, Difficulty } from "../utils/types";
+import { ApproxSliderProps } from "../../utils/types";
 import { MathJaxSvg } from "react-native-mathjax-html-to-svg";
-import { useSettings } from "../hooks/useSettings";
+import { useSettings } from "../../hooks/useSettings";
 
 export default function ApproxSlider({
   inputNumber,
   onRelease,
-  difficulty,
   bounds,
 }: ApproxSliderProps) {
   const [value, setValue] = useState(0);
@@ -53,7 +58,10 @@ export default function ApproxSlider({
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: position.value }, { translateY: 11 }],
+      transform: [
+        { translateX: position.value },
+        { translateY: Platform.OS == "ios" ? 11 : -9 },
+      ],
       width: width.value,
       borderRadius: 9999,
     };
@@ -69,12 +77,21 @@ export default function ApproxSlider({
           maximumValue={bounds[1]}
           value={value}
           step={0.1}
-          trackImage={require("@/assets/images/track.png")}
-          thumbImage={require("@/assets/images/thumb.png")}
+          trackImage={
+            Platform.OS == "ios"
+              ? require("@/assets/images/track.png")
+              : undefined
+          }
+          thumbImage={
+            Platform.OS == "ios"
+              ? require("@/assets/images/thumb.png")
+              : undefined
+          }
           onResponderRelease={() => parseRelease()}
-          onValueChange={setValue}
+          onSlidingComplete={setValue}
           minimumTrackTintColor="#0074d9"
           maximumTrackTintColor="#e8e8e8"
+          thumbTintColor="#0074d9"
         />
         <Animated.View
           style={animatedStyles}

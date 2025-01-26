@@ -119,7 +119,6 @@ export interface LanguageButtonProps {
 export interface ApproxSliderProps {
   inputNumber: number;
   onRelease: (event: boolean) => void;
-  difficulty: Difficulty;
   bounds: number[];
 }
 

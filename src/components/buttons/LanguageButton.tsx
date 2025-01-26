@@ -4,7 +4,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { LanguageButtonProps } from "../utils/types";
+import { LanguageButtonProps } from "../../utils/types";
 import { useEffect } from "react";
 
 export default function LanguageButton({

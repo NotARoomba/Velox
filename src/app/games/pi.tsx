@@ -1,5 +1,5 @@
-import Keypad from "@/src/components/Keypad";
-import Lives from "@/src/components/Lives";
+import Keypad from "@/src/components/buttons/Keypad";
+import Lives from "@/src/components/ui/Lives";
 import { PI_DIGITS } from "@/src/utils/constants";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState, useEffect } from "react";
@@ -10,10 +10,10 @@ import Animated, {
   withSpring,
   useDerivedValue,
 } from "react-native-reanimated";
-import CurvedText from "@/src/components/CurvedText";
-import GameInfo from "@/src/components/GameInfo";
+import CurvedText from "@/src/components/effects/CurvedText";
+import GameInfo from "@/src/components/ui/GameInfo";
 import * as Haptics from "expo-haptics";
-import GameOverModal from "@/src/components/GameOverModal";
+import GameOverModal from "@/src/components/screens/GameOverModal";
 import { GameType, Difficulty } from "@/src/utils/types";
 import { supabase } from "@/src/utils/supabase";
 import useFade from "@/src/hooks/useFade";

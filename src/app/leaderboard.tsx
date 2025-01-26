@@ -21,14 +21,14 @@ import ReAnimated, {
   SlideOutRight,
 } from "react-native-reanimated";
 import useFade from "../hooks/useFade";
-import Slider from "../components/Slider";
+import Slider from "../components/buttons/Slider";
 import { useEffect, useState } from "react";
 import { Game, Games, GameType } from "../utils/types";
 import { supabase } from "../utils/supabase";
 import { FlashList } from "@shopify/flash-list";
 import { useLoading } from "../hooks/useLoading";
 import { useSettings } from "../hooks/useSettings";
-import HoloText from "../components/HoloText";
+import HoloText from "../components/effects/HoloText";
 import { useTranslation } from "react-i18next";
 
 export default function Leaderboard() {

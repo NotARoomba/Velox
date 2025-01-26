@@ -1,7 +1,7 @@
 import { View, ActivityIndicator, Text } from "react-native";
-import { useLoading } from "../hooks/useLoading";
+import { useLoading } from "../../hooks/useLoading";
 import { useEffect } from "react";
-import { useSettings } from "../hooks/useSettings";
+import { useSettings } from "../../hooks/useSettings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 

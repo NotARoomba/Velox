@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { KeypadProps } from "../utils/types";
+import { KeypadProps } from "../../utils/types";
 
 export default function Keypad({ onDigitPress, disabled }: KeypadProps) {
   const digits = [..."1234567890"];

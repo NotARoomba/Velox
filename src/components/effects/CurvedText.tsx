@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useState } from "react";
 import Svg, { Path, Text, TextPath, TSpan, Defs } from "react-native-svg";
-import { CurvedTextProps } from "../utils/types";
+import { CurvedTextProps } from "../../utils/types";
 
 const isNullOrUndefined = (param: any) => param === undefined || param === null;
 

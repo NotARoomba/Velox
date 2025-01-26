@@ -10,7 +10,7 @@ import {
   Image,
   Platform,
 } from "react-native";
-import Letters from "../components/Letters";
+import Letters from "../components/effects/Letters";
 import { useSession } from "../hooks/useSession";
 import React, { useEffect, useState } from "react";
 import Reanimated, { FadeIn, FadeOut } from "react-native-reanimated";

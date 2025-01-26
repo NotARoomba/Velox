@@ -6,7 +6,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { LivesProps } from "../utils/types";
+import { LivesProps } from "../../utils/types";
 
 const AnimatedHeart = ({
   filled,

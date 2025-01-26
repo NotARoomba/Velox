@@ -2,7 +2,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Platform, Animated } from "react-native";
 import { Difficulty } from "../utils/types";
-import Slider from "../components/Slider";
+import Slider from "../components/buttons/Slider";
 import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import useFade from "../hooks/useFade";

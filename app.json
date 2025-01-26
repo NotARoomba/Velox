@@ -41,7 +41,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#151515"
       },
-      "package": "com.notaroomba.Velox"
+      "package": "com.notaroomba.velox"
     },
     "web": {
       "bundler": "metro",

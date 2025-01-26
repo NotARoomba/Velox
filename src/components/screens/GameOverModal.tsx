@@ -1,9 +1,9 @@
 import { Button, View, Text, TouchableOpacity, Alert } from "react-native";
-import { Game, GameOverModalProps } from "../utils/types";
+import { Game, GameOverModalProps } from "../../utils/types";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useEffect, useState } from "react";
-import { supabase } from "../utils/supabase";
-import { useSession } from "../hooks/useSession";
+import { supabase } from "../../utils/supabase";
+import { useSession } from "../../hooks/useSession";
 import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 

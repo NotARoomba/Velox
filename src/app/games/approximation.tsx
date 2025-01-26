@@ -1,14 +1,14 @@
-import GameInfo from "@/src/components/GameInfo";
+import GameInfo from "@/src/components/ui/GameInfo";
 import { Difficulty, GameType } from "@/src/utils/types";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text, Alert, GestureResponderEvent } from "react-native";
 import Slider from "@react-native-community/slider";
 import { MathJaxSvg } from "react-native-mathjax-html-to-svg";
-import ApproxSlider from "@/src/components/ApproxSlider";
+import ApproxSlider from "@/src/components/ui/ApproxSlider";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
-import GameOverModal from "@/src/components/GameOverModal";
+import GameOverModal from "@/src/components/screens/GameOverModal";
 import { supabase } from "@/src/utils/supabase";
 import { useSession } from "@/src/hooks/useSession";
 import { useSettings } from "@/src/hooks/useSettings";
@@ -132,7 +132,6 @@ export default function Approximation() {
             inputNumber={equation[1]}
             bounds={equation[2]}
             onRelease={checkAnswer}
-            difficulty={parseInt(params.difficulty as string) as Difficulty}
           />
         </Animated.View>
       </View>
