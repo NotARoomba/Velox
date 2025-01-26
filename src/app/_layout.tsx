@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import AnimatedAppLoader from "../components/effects/SplashScreen";
+import AnimatedAppLoader from "../components/screens/SplashScreen";
 import "@/global.css";
 import { useEffect } from "react";
 import { Platform, StatusBar, Text, useColorScheme, View } from "react-native";
