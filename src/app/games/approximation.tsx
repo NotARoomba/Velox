@@ -29,12 +29,12 @@ export default function Approximation() {
     [0, 0],
   ]);
   useEffect(() => {
-    if (params.difficulty === "Easy") {
+    if (parseInt(params.difficulty as string) === Difficulty.EASY) {
       setTimeLeft(60);
-    } else if (params.difficulty === "Medium") {
+    } else if (parseInt(params.difficulty as string) === Difficulty.MEDIUM) {
+      setTimeLeft(80);
+    } else if (parseInt(params.difficulty as string) === Difficulty.HARD) {
       setTimeLeft(120);
-    } else if (params.difficulty === "Hard") {
-      setTimeLeft(180);
     }
   }, []);
   useEffect(() => {
@@ -67,12 +67,14 @@ export default function Approximation() {
 
   const checkAnswer = async (approxGuess: boolean) => {
     if (approxGuess) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setGuessed((guessed) => guessed + 1);
       setEquation(
         generateEquation(parseInt(params.difficulty as string) as Difficulty)
       );
     } else {
       setLives((lives) => lives - 1);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setEquation(
         generateEquation(parseInt(params.difficulty as string) as Difficulty)
       );

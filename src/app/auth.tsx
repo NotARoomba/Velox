@@ -100,7 +100,8 @@ export default function Auth() {
           style: "cancel",
         },
       ],
-      undefined,
+      "plain-text",
+      "",
       "numeric"
     );
     setLoading(false);
@@ -141,7 +142,8 @@ export default function Auth() {
           style: "cancel",
         },
       ],
-      undefined,
+      "plain-text",
+      "",
       "numeric"
     );
     setLoading(false);
@@ -175,7 +177,7 @@ export default function Auth() {
                 {t("inputs.email")}
               </Text>
               <TextInput
-                className="h-12 w-1/2 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
+                className="h-12 w-2/3 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="email@address.com"
                 placeholderTextColor={"#737373"}
                 value={email}
@@ -218,7 +220,7 @@ export default function Auth() {
                 {t("inputs.username")}
               </Text>
               <TextInput
-                className="h-12 w-1/2 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
+                className="h-12 w-2/3 dark:bg-platinum/10 bg-night/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="Username"
                 placeholderTextColor={"#737373"}
                 value={username}
@@ -234,7 +236,7 @@ export default function Auth() {
                 {t("inputs.email")}
               </Text>
               <TextInput
-                className="h-12 w-1/2 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
+                className="h-12 w-2/3 bg-platinum/10 rounded-2xl mx-auto mt-1 text-center dark:text-platinum text-night text-nowrap"
                 placeholder="email@address.com"
                 placeholderTextColor={"#737373"}
                 keyboardType="email-address"
@@ -245,7 +247,7 @@ export default function Auth() {
             </KeyboardAvoidingView>
             <TouchableOpacity
               disabled={loading}
-              className="h-12 w-1/2 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
+              className="h-12 w-2/3 bg-celtic_blue rounded-2xl mx-auto mt-6 flex items-center justify-center"
               onPress={signUpWithEmail}
             >
               <Text className="dark:text-platinum text-night text-center font-bold">

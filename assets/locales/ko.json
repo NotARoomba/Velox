@@ -78,7 +78,8 @@
       "submit": "제출",
       "start": "시작",
       "approx": "근사치",
-      "circle": "원"
+      "circle": "원",
+      "match": "일치"
     },
     "successes": {
       "login": "로그인 성공",

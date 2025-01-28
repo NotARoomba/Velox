@@ -78,7 +78,8 @@
     "submit": "Submit",
     "start": "Start",
     "approx": "Approx",
-    "circle": "Circle"
+    "circle": "Circle",
+    "match": "Match"
   },
   "successes": {
     "login": "You are now logged in",

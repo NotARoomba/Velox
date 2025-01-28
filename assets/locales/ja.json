@@ -78,7 +78,8 @@
       "submit": "送信",
       "start": "開始",
       "approx": "近似",
-      "circle": "円"
+      "circle": "円",
+      "match": "一致"
     },
     "successes": {
       "login": "ログインしました",

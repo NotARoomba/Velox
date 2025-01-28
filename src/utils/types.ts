@@ -1,4 +1,5 @@
 import { ImagePickerAsset } from "expo-image-picker";
+import { Dispatch, SetStateAction } from "react";
 
 declare global {
   namespace NodeJS {
@@ -149,3 +150,8 @@ export interface LivesProps {
   totalLives?: number;
 }
 
+export interface MatchNumberProps {
+  number: number;
+  selected: number;
+  setSelected: Dispatch<SetStateAction<number>>;
+}

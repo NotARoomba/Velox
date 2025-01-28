@@ -35,7 +35,7 @@ export default function GameOverModal({
     <Animated.View
       entering={FadeIn.duration(1000)}
       exiting={FadeOut.duration(1000)}
-      className="absolute top-0 left-0 h-screen w-screen z-50 flex bg-platinum/10"
+      className="absolute top-0 left-0 h-screen w-screen z-50 flex dark:bg-platinum/10 bg-night/10"
     >
       <View
         style={{
@@ -145,7 +145,7 @@ export default function GameOverModal({
         )}
         <View className="flex flex-row justify-center mt-4">
           <TouchableOpacity
-            className="bg-platinum/10  w-32 mx-auto py-3 mt-6 rounded-2xl"
+            className="dark:bg-platinum/10 bg-night/5  w-32 mx-auto py-3 mt-6 rounded-2xl"
             style={{
               boxShadow: "4px 4px #22c55e",
             }}
@@ -156,7 +156,7 @@ export default function GameOverModal({
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="bg-platinum/10  w-32 mx-auto py-3 mt-6 rounded-2xl"
+            className="dark:bg-platinum/10 bg-night/5  w-32 mx-auto py-3 mt-6 rounded-2xl"
             style={{
               boxShadow: "4px 4px #ef4444",
             }}

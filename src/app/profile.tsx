@@ -221,8 +221,8 @@ export default function Profile() {
                 >
                   <Skeleton
                     animationType="shiver"
-                    boneColor={"#151515"}
-                    highlightColor="#e8e8e8"
+                    boneColor={theme === "dark" ? "#151515" : "#e8e8e8"}
+                    highlightColor={theme === "dark" ? "#e8e8e8" : "#151515"}
                     layout={[
                       {
                         borderRadius: 12,

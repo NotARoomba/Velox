@@ -37,11 +37,11 @@ export default function PI() {
 
   // Set difficulty-dependent settings
   useEffect(() => {
-    if (params.difficulty === "Easy") {
+    if (parseInt(params.difficulty as string) === Difficulty.EASY) {
       setTimeLeft(60);
-    } else if (params.difficulty === "Medium") {
+    } else if (parseInt(params.difficulty as string) === Difficulty.MEDIUM) {
       setTimeLeft(40);
-    } else if (params.difficulty === "Hard") {
+    } else if (parseInt(params.difficulty as string) === Difficulty.HARD) {
       setTimeLeft(30);
     }
   }, []);
@@ -78,6 +78,7 @@ export default function PI() {
   const handleGuess = async (input: string) => {
     const correctDigit = PI_DIGITS[currentIndex];
     if (input === correctDigit) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       // Update guessed digits and index
       setGuessed((prev) => prev + correctDigit);
       setCurrentIndex((prev) => prev + 1);
@@ -94,7 +95,7 @@ export default function PI() {
       }
     } else {
       setLives((prev) => prev - 1);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       if (lives === 1) {
         setGameOver(true);
         if (hasSession) {

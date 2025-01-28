@@ -51,21 +51,24 @@ export default function Play() {
             </Text>
           </View>
         </TouchableOpacity>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={() =>
             router.push({
               pathname: `/difficulty`,
               params: { game: Games.MATCH },
             })
           }
-          className="w-5/6 dark:bg-platinum/10 bg-night/5 h-32 rounded-2xl mx-auto p-0 flex"
+          style={{
+            boxShadow: "4px 4px #0074d9",
+          }}
+          className="w-5/6 dark:bg-platinum/10 bg-night/5 bg-cy h-32 rounded-2xl mx-auto p-0 flex "
         >
           <View className="flex flex-col my-auto">
             <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
-              Match
+              {t("buttons.match")}
             </Text>
           </View>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
             router.push({

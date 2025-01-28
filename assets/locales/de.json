@@ -78,7 +78,8 @@
       "submit": "Absenden",
       "start": "Start",
       "approx": "Annäherung",
-      "circle": "Kreis"
+      "circle": "Kreis",
+       "match": "Übereinstimmung"
     },
     "successes": {
       "login": "Sie sind jetzt eingeloggt",

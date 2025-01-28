@@ -78,7 +78,8 @@
       "submit": "提交",
       "start": "开始",
       "approx": "近似",
-      "circle": "圆形"
+      "circle": "圆形",
+       "match": "匹配"
     },
     "successes": {
       "login": "您已成功登录",

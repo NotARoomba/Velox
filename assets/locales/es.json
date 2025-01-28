@@ -78,7 +78,8 @@
         "submit": "Enviar",
         "start": "Comenzar",
         "approx": "Aproximar",
-        "circle": "Círculo"
+        "circle": "Círculo",
+        "match": "Coincidencia"
       },
       "successes": {
         "login": "Has iniciado sesión",

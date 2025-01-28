@@ -78,7 +78,8 @@
       "submit": "Soumettre",
       "start": "Commencer",
       "approx": "Approximatif",
-      "circle": "Cercle"
+      "circle": "Cercle",
+      "match": "Correspondance"
     },
     "successes": {
       "login": "Vous êtes maintenant connecté",

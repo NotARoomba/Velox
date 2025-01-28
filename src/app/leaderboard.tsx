@@ -39,6 +39,7 @@ export default function Leaderboard() {
   const [approximationLeaderboard, setApproximationLeaderboard] = useState<
     Game[]
   >([]);
+  const [matchLeaderboard, setMatchLeaderboard] = useState<Game[]>([]);
   const { t } = useTranslation();
   const { setLoading } = useLoading();
   useEffect(() => {
@@ -84,6 +85,28 @@ export default function Leaderboard() {
         }
       }
       setApproximationLeaderboard(approximationLeaderboard as Game[]);
+
+      const { data: matchLeaderboard, error: matchError } = await supabase
+        .from("games")
+        .select()
+        .eq("type", GameType.MATCH)
+        .order("score", { ascending: false })
+        .limit(10);
+      if (matchError) return Alert.alert("Error", matchError.message);
+      for (let game of matchLeaderboard) {
+        try {
+          const { data } = supabase.storage
+            .from("avatars")
+            .getPublicUrl(game.avatar_url as string);
+          game.avatar_url = data?.publicUrl;
+        } catch (error) {
+          if (error instanceof Error) {
+            console.log("Error fetching image: ", error.message);
+          }
+        }
+      }
+      setMatchLeaderboard(matchLeaderboard as Game[]);
+
       setLoading(false);
     })();
   }, []);
@@ -98,13 +121,25 @@ export default function Leaderboard() {
       </HoloText>
       <View className="flex -translate-y-16">
         <Slider
-          options={[t("buttons.circle"), t("buttons.approx")]}
+          options={[
+            t("buttons.circle"),
+            t("buttons.match"),
+            t("buttons.approx"),
+          ]}
           selected={
-            game == GameType.PI ? t("buttons.circle") : t("buttons.approx")
+            game == GameType.PI
+              ? t("buttons.circle")
+              : game == GameType.MATCH
+              ? t("buttons.match")
+              : t("buttons.approx")
           }
           setOption={(v) =>
             setGame(
-              v === t("buttons.approx") ? GameType.APPROXIMATION : GameType.PI
+              v === t("buttons.approx")
+                ? GameType.APPROXIMATION
+                : v === t("buttons.match")
+                ? GameType.MATCH
+                : GameType.PI
             )
           }
         />
@@ -134,6 +169,55 @@ export default function Leaderboard() {
           ) : (
             <FlashList
               data={circleLeaderboard}
+              className="mb-96"
+              renderItem={({ item, index }) => (
+                <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
+                  <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
+                    {index + 1}
+                  </Text>
+                  <View className="flex gap-4 flex-row">
+                    <Image
+                      className="w-16 h-16 rounded-2xl"
+                      source={{ uri: item.avatar_url }}
+                    />
+                    <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
+                      {item.username}
+                    </Text>
+                  </View>
+                  <Text className="dark:text-platinum text-night my-auto font-bold text-2xl">
+                    {item.score}
+                  </Text>
+                </View>
+              )}
+              estimatedItemSize={200}
+            />
+          )}
+        </ReAnimated.View>
+      ) : game === GameType.MATCH ? (
+        <ReAnimated.View
+          key={"Match"}
+          className="h-full flex"
+          entering={SlideInLeft.withInitialValues({ originX: -400 })}
+          exiting={SlideOutLeft}
+        >
+          <View className="flex flex-row mx-auto gap-x-28 my-2">
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              #
+            </Text>
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              {t("titles.user")}
+            </Text>
+            <Text className="dark:text-platinum text-night my-auto font-bold text-3xl">
+              {t("titles.score")}
+            </Text>
+          </View>
+          {matchLeaderboard.length == 0 ? (
+            <Text className="dark:text-platinum text-night text-6xl mt-24 font-bold text-center">
+              {t("errors.noScores")}
+            </Text>
+          ) : (
+            <FlashList
+              data={matchLeaderboard}
               className="mb-96"
               renderItem={({ item, index }) => (
                 <View className="flex flex-row mx-auto gap-x-6 justify-around w-full my-2">
