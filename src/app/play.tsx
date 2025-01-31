@@ -15,11 +15,14 @@ import useFade from "../hooks/useFade";
 import { useSettings } from "../hooks/useSettings";
 import HoloText from "../components/effects/HoloText";
 import { useTranslation } from "react-i18next";
+import StyledButton from "../components/buttons/StyledButton";
+import { useSession } from "../hooks/useSession";
 
 export default function Play() {
   const opacity = useFade();
   const { theme } = useSettings();
   const { t } = useTranslation();
+  const { hasSession } = useSession();
   return (
     <Animated.View
       style={{ opacity }}
@@ -32,61 +35,40 @@ export default function Play() {
       >
         {t("titles.play")}
       </HoloText>
-      <View className="flex flex-col gap-y-8 -translate-y-8">
-        <TouchableOpacity
-          onPress={() =>
+      <View className="flex flex-col gap-y-6 -translate-y-8">
+        <StyledButton
+          callback={() =>
             router.push({
               pathname: `/difficulty`,
-              params: { game: Games.APPROXIMATION },
+              params: { game: Games.APPROXIMATION, multiplayer: 0 },
             })
           }
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          className="w-5/6 dark:bg-platinum/10 bg-night/5 bg-cy h-32 rounded-2xl mx-auto p-0 flex "
-        >
-          <View className="flex flex-col my-auto">
-            <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
-              {t("games.approximation.title")}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
+          text={t("games.approximation.title")}
+        />
+        <StyledButton
+          callback={() =>
             router.push({
               pathname: `/difficulty`,
-              params: { game: Games.MATCH },
+              params: { game: Games.MATCH, multiplayer: 0 },
             })
           }
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          className="w-5/6 dark:bg-platinum/10 bg-night/5 bg-cy h-32 rounded-2xl mx-auto p-0 flex "
-        >
-          <View className="flex flex-col my-auto">
-            <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
-              {t("buttons.match")}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
+          text={t("buttons.match")}
+        />
+        <StyledButton
+          callback={() =>
             router.push({
               pathname: `/difficulty`,
-              params: { game: Games.PI },
+              params: { game: Games.PI, multiplayer: 0 },
             })
           }
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          className="w-5/6 dark:bg-platinum/10 bg-night/5 h-32 rounded-2xl mx-auto p-0 flex"
-        >
-          <View className="flex flex-col my-auto">
-            <Text className="dark:text-platinum text-night font-bold text-center text-4xl">
-              {t("games.round.title")}
-            </Text>
-          </View>
-        </TouchableOpacity>
+          text={"π"}
+        />
+        <StyledButton
+          callback={() =>
+            hasSession ? router.push(`/multiplayer`) : router.push(`/auth`)
+          }
+          text={t("titles.multiplayer")}
+        />
       </View>
       <ReAnimated.View
         entering={FadeIn}

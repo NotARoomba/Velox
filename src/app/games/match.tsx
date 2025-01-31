@@ -24,6 +24,7 @@ import { useSettings } from "@/src/hooks/useSettings";
 import { useTranslation } from "react-i18next";
 import GridNumber from "@/src/components/ui/GridNumber";
 import MatchNumber from "@/src/components/ui/MatchNumber";
+import useInterval from "@/src/hooks/useInterval";
 
 export default function Match() {
   const params = useLocalSearchParams();
@@ -38,42 +39,106 @@ export default function Match() {
   const [numberSelected, setNumberSelected] = useState<number>(0);
   const [answerSelected, setAnswerSelected] = useState<number>(0);
   const { t } = useTranslation();
+  const { session } = useSession();
+  const [waiting, setWaiting] = useState(false);
+  const [multiplayer, setMultiplayer] = useState<{
+    score: number;
+    lives: number;
+  }>();
   // Set difficulty-dependent settings
   useEffect(() => {
-    if (parseInt(params.difficulty as string) === Difficulty.EASY) {
-      setTimeLeft(60);
-    } else if (parseInt(params.difficulty as string) === Difficulty.MEDIUM) {
-      setTimeLeft(40);
-    } else if (parseInt(params.difficulty as string) === Difficulty.HARD) {
-      setTimeLeft(30);
+    if (params.multiplayer === "1") {
+      setMultiplayer({
+        score: 0,
+        lives: 3,
+      });
+      setWaiting(params.join === "0");
+      // Subscribe to updates for the multiplayer game
+      const playerChannel = supabase
+        .channel(params.code + "_players")
+        .on(
+          "postgres_changes",
+          {
+            schema: "public",
+            table: "multiplayer_players",
+            filter: `code=eq.${params.code}`,
+            event: "UPDATE",
+          },
+          async (payload: any) => {
+            const data = payload.new;
+
+            // Get the user's index from the players array
+            if (data.user_id === session?.user.id) return;
+            // Update the multiplayer state
+            setMultiplayer({
+              score: data.score,
+              lives: data.lives,
+            });
+          }
+        )
+        .subscribe();
+      const gameChannel = supabase
+        .channel(params.code + "_game")
+        .on(
+          "postgres_changes",
+          {
+            schema: "public",
+            table: "multiplayer_games",
+            filter: `code=eq.${params.code}`,
+            event: "UPDATE",
+          },
+          (payload: any) => {
+            const data = payload.new;
+            if (!("end" in payload.old) || params.join == "1") {
+              setWaiting(false);
+              const timestamp = new Date().getTime();
+              setTimeLeft(
+                Math.floor(
+                  (new Date(data.end as unknown as string).getTime() -
+                    timestamp) /
+                    1000
+                )
+              );
+            }
+            if (data.is_over) {
+              setGameOver(true);
+            }
+          }
+        )
+        .subscribe();
+
+      // Cleanup subscription
+      return () => {
+        playerChannel.unsubscribe();
+        gameChannel.unsubscribe();
+      };
+    } else {
+      if (parseInt(params.difficulty as string) === Difficulty.EASY) {
+        setTimeLeft(60);
+      } else if (parseInt(params.difficulty as string) === Difficulty.MEDIUM) {
+        setTimeLeft(40);
+      } else if (parseInt(params.difficulty as string) === Difficulty.HARD) {
+        setTimeLeft(30);
+      }
     }
   }, []);
-
+  useInterval(() => {
+    if (timeLeft > 0 && !gameOver) setTimeLeft((time) => time - 1);
+    else if (!gameOver && timeLeft == 0) setGameOver(true);
+  }, 1000);
   useEffect(() => {
-    if (!gameOver) {
-      const interval = setInterval(async () => {
-        if (timeLeft <= 0) {
-          setGameOver(true);
-          if (hasSession) {
-            const { error } = await supabase.from("games").insert({
-              type: GameType.MATCH,
-              score: guessed,
-              lives,
-              time: timeLeft,
-            });
-            if (error) Alert.alert(t("error"), error.message);
-          }
-          // return Alert.alert("Game Over", "You ran out of time!", [
-          //   {
-          //     style: "default",
-          //     text: "Ok",
-          //     onPress: () => router.dismissTo("/play"),
-          //   },
-          // ]);
-        }
-        setTimeLeft((time) => time - 1);
-      }, 1000);
-      return () => clearInterval(interval);
+    if (gameOver && hasSession && params.multiplayer == "0") {
+      supabase
+        .from("games")
+        .insert({
+          type: GameType.MATCH,
+          score: guessed,
+          lives,
+          time: timeLeft,
+        })
+        .then(({ error }) => {
+          if (error) Alert.alert(t("error"), error.message);
+        });
     }
   }, [gameOver]);
 
@@ -96,6 +161,11 @@ export default function Match() {
   useEffect(() => {
     if (numberSelected && answerSelected) {
       if (numberSelected === answerSelected) {
+        if (params.multiplayer == "1")
+          supabase
+            .from("multiplayer_players")
+            .update({ score: guessed + 1 })
+            .match({ code: params.code, user_id: session?.user.id });
         setGuessed((guessed) => guessed + 1);
         setAlreadyGuessed((alreadyGuessed) => {
           // if the length of already gu
@@ -137,92 +207,111 @@ export default function Match() {
         setAnswerSelected(0);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } else {
+        if (params.multiplayer == "1")
+          supabase
+            .from("multiplayer_players")
+            .update({ lives: lives - 1 })
+            .match({ code: params.code, user_id: session?.user.id });
         setLives((lives) => lives - 1);
         setNumberSelected(0);
         setAnswerSelected(0);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        if (lives === 1) {
-          setGameOver(true);
-          if (hasSession) {
-            supabase
-              .from("games")
-              .insert({
-                type: GameType.MATCH,
-                score: guessed,
-                lives,
-                time: timeLeft,
-              })
-              .then(({ error }) => {
-                if (error) Alert.alert(t("error"), error.message);
-              });
-          }
-        }
+        if (lives === 1)
+          supabase
+            .rpc("finish_multiplayer_game", {
+              game_code: params.code,
+            })
+            .then(({ error }) => {
+              Alert.alert(t("error"), error?.message);
+              setGameOver(true);
+            });
       }
     }
   }, [numberSelected, answerSelected]);
 
   return (
     <View className="h-full bg-transparent flex items-center justify-around">
-      <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
-      <View className="flex flex-row items-center justify-around w-full">
-        {/* Numbers */}
-        <View className="flex flex-col items-center justify-around gap-y-4 w-1/2">
-          {numbers.map((number, i) =>
-            alreadyGuessed.includes(number) ? (
-              <View
-                key={i + number}
-                // entering={FadeIn}
-                // exiting={FadeOut}
-                className="w-10/12 aspect-square flex rounded-2xl p-2  dark:bg-platinum/10 bg-night/5"
-              />
-            ) : (
-              <MatchNumber
-                key={i + number}
-                number={number}
-                selected={numberSelected}
-                setSelected={setNumberSelected}
-              />
-            )
-          )}
+      {waiting ? (
+        <View className="m-auto">
+          <Text className="text-3xl font-bold text-center text-platinum">
+            {t("multiplayer.waiting")}
+          </Text>
+          <Text className="text-xl text-center text-platinum">
+            {t("multiplayer.share").split("&&")[0]}
+            <Text className="font-bold text-celtic_blue">{params.code}</Text>
+            {t("multiplayer.share").split("&&")[1]}
+          </Text>
         </View>
+      ) : (
+        <>
+          <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
+          <GameInfo
+            lives={multiplayer?.lives ?? 3}
+            guessed={multiplayer?.score ?? 0}
+          />
 
-        <View className="flex flex-col items-center justify-around gap-y-4 w-1/2">
-          {answers.map((number, i) =>
-            alreadyGuessed.includes(number) ? (
-              <View
-                key={i + number}
-                // entering={FadeIn}
-                // exiting={FadeOut}
-                className="w-10/12 aspect-square flex rounded-2xl p-2  dark:bg-platinum/10 bg-night/5"
-              />
-            ) : (
-              <GridNumber
-                key={i + number}
-                number={number}
-                selected={answerSelected}
-                setSelected={setAnswerSelected}
-              />
-            )
+          <View className="flex flex-row items-center justify-around w-full">
+            {/* Numbers */}
+            <View className="flex flex-col items-center justify-around gap-y-4 w-1/2">
+              {numbers.map((number, i) =>
+                alreadyGuessed.includes(number) ? (
+                  <View
+                    key={i + number}
+                    // entering={FadeIn}
+                    // exiting={FadeOut}
+                    className="w-10/12 aspect-square flex rounded-2xl p-2  dark:bg-platinum/10 bg-night/5"
+                  />
+                ) : (
+                  <MatchNumber
+                    key={i + number}
+                    number={number}
+                    selected={numberSelected}
+                    setSelected={setNumberSelected}
+                  />
+                )
+              )}
+            </View>
+
+            <View className="flex flex-col items-center justify-around gap-y-4 w-1/2">
+              {answers.map((number, i) =>
+                alreadyGuessed.includes(number) ? (
+                  <View
+                    key={i + number}
+                    // entering={FadeIn}
+                    // exiting={FadeOut}
+                    className="w-10/12 aspect-square flex rounded-2xl p-2  dark:bg-platinum/10 bg-night/5"
+                  />
+                ) : (
+                  <GridNumber
+                    key={i + number}
+                    number={number}
+                    selected={answerSelected}
+                    setSelected={setAnswerSelected}
+                  />
+                )
+              )}
+            </View>
+          </View>
+
+          {gameOver && (
+            <GameOverModal
+              game={{
+                type: GameType.PI,
+                lives,
+                time: timeLeft,
+                score: guessed,
+              }}
+              multiplayer={multiplayer}
+              onQuit={() => router.dismissTo("/play")}
+              onRestart={() => {
+                setGuessed(0);
+                setLives(3);
+                setTimeLeft(60);
+                setGameOver(false);
+              }}
+            />
           )}
-        </View>
-      </View>
-
-      {gameOver && (
-        <GameOverModal
-          game={{
-            type: GameType.PI,
-            lives,
-            time: timeLeft,
-            score: guessed,
-          }}
-          onQuit={() => router.dismissTo("/play")}
-          onRestart={() => {
-            setGuessed(0);
-            setLives(3);
-            setTimeLeft(60);
-            setGameOver(false);
-          }}
-        />
+        </>
       )}
     </View>
   );

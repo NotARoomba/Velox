@@ -20,6 +20,7 @@ export enum Games {
   MATCH = "match",
   PI = "pi",
   APPROXIMATION = "approximation",
+  MULTIPLAYER = "multiplayer",
 }
 
 export enum Difficulty {
@@ -141,6 +142,7 @@ export interface CurvedTextProps {
 
 export interface GameOverModalProps {
   game: Game;
+  multiplayer?: {score: number, lives: number},
   onQuit: () => void;
   onRestart: () => void;
 }
@@ -154,4 +156,10 @@ export interface MatchNumberProps {
   number: number;
   selected: number;
   setSelected: Dispatch<SetStateAction<number>>;
+}
+
+export interface StyledButtonProps {
+  callback: () => void;
+  text: string;
+  disabled?: boolean;
 }

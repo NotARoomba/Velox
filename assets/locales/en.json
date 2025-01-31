@@ -41,7 +41,8 @@
     "loginOrSignup1": "Login or Sign Up",
     "loginOrSignup2": "to show your highscores!",
     "restart": "Restart",
-    "quit": "Quit"
+    "quit": "Quit",
+    "multiplayer": "Multiplayer"
   },
   "images": {
     "choose": "Please choose",
@@ -79,7 +80,10 @@
     "start": "Start",
     "approx": "Approx",
     "circle": "Circle",
-    "match": "Match"
+    "match": "Match",
+    "join": "Join",
+    "findRandom": "Find Random",
+    "host": "Host"
   },
   "successes": {
     "login": "You are now logged in",
@@ -87,13 +91,15 @@
     "deleted": "Your account has been deleted"
   },
   "errors": {
-    "createUser": "There was an error creating a user",
-    "fetchData": "There was an error fetching your data",
-    "updateData": "There was an error updating your information",
+    "generic": "There was an error!",
+    "createUser": "There was an error creating a user!",
+    "fetchData": "There was an error fetching your data!",
+    "updateData": "There was an error updating your information!",
     "enterCode": "Please enter a code!",
     "noAccount": "Please sign up first!",
-    "noScores": "There are no scores!",
-    "noHighscore": "You have no highscore yet!"
+    "noScores": "There are no scores!", 
+    "noHighscore": "You have no highscore yet!",
+    "alreadyInGame": "You are already in a game!"
   },
   "verification": {
     "verify": "Verify",
@@ -109,6 +115,14 @@
       "title": "Round the Circle (PI)"
     },
     "answer": "The answer was"
+  },
+  "multiplayer": {
+    "waiting": "Waiting for other player...",
+    "share": "Share the code && with your friend to play together!",
+    "win": "won the game!",
+    "lost": "lost the game!",
+    "decision": "You have ",
+    "opponent": "Opponent"
   },
   "settings": {
     "languages": "Languages",

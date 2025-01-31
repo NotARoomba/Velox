@@ -34,6 +34,7 @@ export default function Settings() {
   const { t } = useTranslation();
   const scrollRef = useRef<ScrollView>(null);
   const [isConfirmDelete, setIsConfirmDelete] = useState(false);
+  const [secretPresses, setSecretPresses] = useState(0);
   const itemWidth = 224;
   const handleScrollEnd = (event: any) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
@@ -184,7 +185,15 @@ export default function Settings() {
           </>
         )}
       </View>
-      <Reanimated.View className="w-full absolute bottom-6">
+      <Reanimated.View
+        onTouchStart={() => {
+          if (secretPresses >= 3) {
+            setSecretPresses(0);
+            router.push("/secret");
+          } else setSecretPresses((v) => v + 1);
+        }}
+        className="w-full absolute bottom-6"
+      >
         <Text className=" text-celtic_blue font-bold  text-center text-xs w-11/12 mx-auto">
           {t("settings.credits")}
         </Text>

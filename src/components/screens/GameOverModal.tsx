@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export default function GameOverModal({
   game,
+  multiplayer,
   onRestart,
   onQuit,
 }: GameOverModalProps) {
@@ -17,6 +18,7 @@ export default function GameOverModal({
   const { t } = useTranslation();
   useEffect(() => {
     // get th high score and sleect where he user column is equal to the auth userid
+
     const fetchHighScore = async () => {
       const { data, error } = await supabase
         .from("games")
@@ -29,7 +31,9 @@ export default function GameOverModal({
         else setHighScore(game);
       } else Alert.alert(t("error"), error?.message);
     };
-    if (sessionData.hasSession) fetchHighScore();
+    if (sessionData.hasSession && !multiplayer) fetchHighScore();
+    else if (multiplayer)
+      setHighScore({ ...multiplayer, time: game.time, type: game.type });
   }, []);
   return (
     <Animated.View
@@ -53,9 +57,9 @@ export default function GameOverModal({
         >
           {t("titles.gameOver")}
         </Text>
-        {game.answer && (
+        {multiplayer ? (
           <Text className="dark:text-platinum text-night text-center text-xl font-bold">
-            {t("games.answer")}{" "}
+            {t("multiplayer.decision")}
             <Text
               style={{
                 textShadowColor: "#0074d9",
@@ -63,9 +67,27 @@ export default function GameOverModal({
                 textShadowRadius: 2,
               }}
             >
-              {game.answer}
+              {game.score > (highScore?.score as number) ||
+              highScore?.lives == 0
+                ? t("multiplayer.win")
+                : t("multiplayer.lost")}
             </Text>
           </Text>
+        ) : (
+          game.answer && (
+            <Text className="dark:text-platinum text-night text-center text-xl font-bold">
+              {t("games.answer")}{" "}
+              <Text
+                style={{
+                  textShadowColor: "#0074d9",
+                  textShadowOffset: { width: 2, height: 2 },
+                  textShadowRadius: 2,
+                }}
+              >
+                {game.answer}
+              </Text>
+            </Text>
+          )
         )}
         <Text className="dark:text-platinum text-night text-2xl font-bold text-center mt-6 mb-3">
           {t("titles.score")}
@@ -90,14 +112,16 @@ export default function GameOverModal({
               {t("titles.score")}
             </Text>
           </View>
-          <View className="flex flex-col gap-0">
-            <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
-              {game.time}
-            </Text>
-            <Text className="dark:text-platinum text-night text-2xl font-bold text-center">
-              {t("titles.time")}
-            </Text>
-          </View>
+          {!multiplayer && (
+            <View className="flex flex-col gap-0">
+              <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
+                {game.time}
+              </Text>
+              <Text className="dark:text-platinum text-night text-2xl font-bold text-center">
+                {t("titles.time")}
+              </Text>
+            </View>
+          )}
           <View className="flex flex-col gap-0">
             <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
               {game.lives}
@@ -113,15 +137,17 @@ export default function GameOverModal({
               <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
                 {highScore.score}
               </Text>
-              <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
-                {highScore.time}
-              </Text>
+              {!multiplayer && (
+                <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
+                  {highScore.time}
+                </Text>
+              )}
               <Text className="dark:text-platinum text-night text-5xl font-bold text-center">
                 {highScore.lives}
               </Text>
             </View>
             <Text className="dark:text-platinum text-night text-2xl font-bold text-center">
-              {t("titles.highscore")}
+              {multiplayer ? t("multiplayer.opponent") : t("titles.highscore")}
             </Text>
           </View>
         ) : sessionData.hasSession ? (
@@ -144,17 +170,19 @@ export default function GameOverModal({
           </Text>
         )}
         <View className="flex flex-row justify-center mt-4">
-          <TouchableOpacity
-            className="dark:bg-platinum/10 bg-night/5  w-32 mx-auto py-3 mt-6 rounded-2xl"
-            style={{
-              boxShadow: "4px 4px #22c55e",
-            }}
-            onPress={onRestart}
-          >
-            <Text className="dark:text-platinum text-night bg-red m-auto font-bold text-center text-2xl">
-              {t("titles.restart")}
-            </Text>
-          </TouchableOpacity>
+          {!multiplayer && (
+            <TouchableOpacity
+              className="dark:bg-platinum/10 bg-night/5  w-32 mx-auto py-3 mt-6 rounded-2xl"
+              style={{
+                boxShadow: "4px 4px #22c55e",
+              }}
+              onPress={onRestart}
+            >
+              <Text className="dark:text-platinum text-night bg-red m-auto font-bold text-center text-2xl">
+                {t("titles.restart")}
+              </Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             className="dark:bg-platinum/10 bg-night/5  w-32 mx-auto py-3 mt-6 rounded-2xl"
             style={{

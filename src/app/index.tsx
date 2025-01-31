@@ -11,6 +11,8 @@ import { useSession } from "../hooks/useSession";
 import useFade from "../hooks/useFade";
 import HoloText from "../components/effects/HoloText";
 import { useTranslation } from "react-i18next";
+import Letters from "../components/effects/Letters";
+import StyledButton from "../components/buttons/StyledButton";
 
 export default function Index() {
   const { hasSession } = useSession();
@@ -37,50 +39,24 @@ export default function Index() {
         </Text>
       </View>
       <View className="gap-y-6 -translate-y-12">
-        <TouchableOpacity
-          className="dark:bg-platinum/10 bg-night/5  w-2/3 mx-auto py-3 rounded-2xl"
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          onPress={() => router.push("/play")}
-        >
-          <Text className="dark:text-platinum text-night m-auto font-bold text-center text-4xl">
-            {t("titles.play")}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="dark:bg-platinum/10 bg-night/5  w-2/3 mx-auto py-3 rounded-2xl "
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          onPress={() => router.push("/leaderboard")}
-        >
-          <Text className="dark:text-platinum text-night m-auto font-bold text-center text-4xl">
-            {t("titles.leaderboard")}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="dark:bg-platinum/10 bg-night/5  w-2/3 mx-auto py-3 rounded-2xl"
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          onPress={() => router.push(hasSession ? "/profile" : "/auth")}
-        >
-          <Text className="dark:text-platinum text-night m-auto font-bold text-center text-4xl">
-            {t("titles.profile")}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="dark:bg-platinum/10 bg-night/5  w-2/3 mx-auto py-3 rounded-2xl"
-          style={{
-            boxShadow: "4px 4px #0074d9",
-          }}
-          onPress={() => router.push("/settings")}
-        >
-          <Text className="dark:text-platinum text-night m-auto font-bold text-center text-4xl">
-            {t("titles.settings")}
-          </Text>
-        </TouchableOpacity>
+        <StyledButton
+          callback={() => router.push("/play")}
+          text={t("titles.play")}
+        />
+        <StyledButton
+          callback={() => router.push("/leaderboard")}
+          text={t("titles.leaderboard")}
+        />
+        <StyledButton
+          callback={() =>
+            hasSession ? router.push("/profile") : router.push("/auth")
+          }
+          text={t("titles.profile")}
+        />
+        <StyledButton
+          callback={() => router.push("/settings")}
+          text={t("titles.settings")}
+        />
       </View>
     </Animated.View>
   );

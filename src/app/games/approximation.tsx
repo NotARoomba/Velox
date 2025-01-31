@@ -13,11 +13,12 @@ import { supabase } from "@/src/utils/supabase";
 import { useSession } from "@/src/hooks/useSession";
 import { useSettings } from "@/src/hooks/useSettings";
 import { useTranslation } from "react-i18next";
+import useInterval from "@/src/hooks/useInterval";
 
 export default function Approximation() {
   const params = useLocalSearchParams();
   const { theme } = useSettings();
-  const { hasSession } = useSession();
+  const { hasSession, session } = useSession();
   const [lives, setLives] = useState(3);
   const [timeLeft, setTimeLeft] = useState(60); // Adjust for difficulty
   const [guessed, setGuessed] = useState(0);
@@ -28,51 +29,124 @@ export default function Approximation() {
     0,
     [0, 0],
   ]);
+  const [waiting, setWaiting] = useState(false);
+  const [multiplayer, setMultiplayer] = useState<{
+    score: number;
+    lives: number;
+  }>();
   useEffect(() => {
-    if (parseInt(params.difficulty as string) === Difficulty.EASY) {
-      setTimeLeft(60);
-    } else if (parseInt(params.difficulty as string) === Difficulty.MEDIUM) {
-      setTimeLeft(80);
-    } else if (parseInt(params.difficulty as string) === Difficulty.HARD) {
-      setTimeLeft(120);
+    if (params.multiplayer === "1") {
+      setMultiplayer({
+        score: 0,
+        lives: 3,
+      });
+      setWaiting(params.join === "0");
+      // Subscribe to updates for the multiplayer game
+      const playerChannel = supabase
+        .channel(params.code + "_players")
+        .on(
+          "postgres_changes",
+          {
+            schema: "public",
+            table: "multiplayer_players",
+            filter: `code=eq.${params.code}`,
+            event: "UPDATE",
+          },
+          async (payload: any) => {
+            const data = payload.new;
+
+            // Get the user's index from the players array
+            if (data.user_id === session?.user.id) return;
+            // Update the multiplayer state
+            setMultiplayer({
+              score: data.score,
+              lives: data.lives,
+            });
+          }
+        )
+        .subscribe();
+      const gameChannel = supabase
+        .channel(params.code + "_game")
+        .on(
+          "postgres_changes",
+          {
+            schema: "public",
+            table: "multiplayer_games",
+            filter: `code=eq.${params.code}`,
+            event: "UPDATE",
+          },
+          (payload: any) => {
+            const data = payload.new;
+            if (!("end" in payload.old) || params.join == "1") {
+              setWaiting(false);
+              const timestamp = new Date().getTime();
+              setTimeLeft(
+                Math.floor(
+                  (new Date(data.end as unknown as string).getTime() -
+                    timestamp) /
+                    1000
+                )
+              );
+            }
+            if (data.is_over) {
+              setGameOver(true);
+            }
+          }
+        )
+        .subscribe();
+
+      // Cleanup subscription
+      return () => {
+        playerChannel.unsubscribe();
+        gameChannel.unsubscribe();
+      };
+    } else {
+      if (parseInt(params.difficulty as string) === Difficulty.EASY) {
+        setTimeLeft(60);
+      } else if (parseInt(params.difficulty as string) === Difficulty.MEDIUM) {
+        setTimeLeft(40);
+      } else if (parseInt(params.difficulty as string) === Difficulty.HARD) {
+        setTimeLeft(30);
+      }
     }
   }, []);
+  useInterval(() => {
+    if (timeLeft > 0 && !gameOver) setTimeLeft((time) => time - 1);
+    else if (!gameOver && timeLeft == 0) setGameOver(true);
+  }, 1000);
   useEffect(() => {
-    if (!gameOver) {
-      const interval = setInterval(async () => {
-        if (timeLeft <= 0) {
-          setGameOver(true);
-          if (hasSession) {
-            const { error } = await supabase.from("games").insert({
-              type: GameType.APPROXIMATION,
-              score: guessed,
-              lives,
-              time: timeLeft,
-            });
-            if (error) Alert.alert(t("error"), error.message);
-          }
-          // return Alert.alert("Game Over", "You ran out of time!", [
-          //   {
-          //     style: "default",
-          //     text: "Ok",
-          //     onPress: () => router.dismissTo("/play"),
-          //   },
-          // ]);
-        }
-        setTimeLeft((time) => time - 1);
-      }, 1000);
-      return () => clearInterval(interval);
+    if (gameOver && hasSession && params.multiplayer == "0") {
+      supabase
+        .from("games")
+        .insert({
+          type: GameType.APPROXIMATION,
+          score: guessed,
+          lives,
+          time: timeLeft,
+        })
+        .then(({ error }) => {
+          if (error) Alert.alert(t("error"), error.message);
+        });
     }
   }, [gameOver]);
 
   const checkAnswer = async (approxGuess: boolean) => {
     if (approxGuess) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      if (params.multiplayer == "1")
+        await supabase
+          .from("multiplayer_players")
+          .update({ score: guessed + 1 })
+          .match({ code: params.code, user_id: session?.user.id });
       setGuessed((guessed) => guessed + 1);
       setEquation(
         generateEquation(parseInt(params.difficulty as string) as Difficulty)
       );
     } else {
+      await supabase
+        .from("multiplayer_players")
+        .update({ lives: lives - 1 })
+        .match({ code: params.code, user_id: session?.user.id });
       setLives((lives) => lives - 1);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setEquation(
@@ -80,23 +154,11 @@ export default function Approximation() {
       );
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives <= 1) {
+        const { error } = await supabase.rpc("finish_multiplayer_game", {
+          game_code: params.code,
+        });
+        if (error) Alert.alert(t("error"), error.message);
         setGameOver(true);
-        if (hasSession) {
-          const { error } = await supabase.from("games").insert({
-            type: GameType.APPROXIMATION,
-            score: guessed,
-            lives,
-            time: timeLeft,
-          });
-          if (error) Alert.alert(t("error"), error.message);
-        }
-        // Alert.alert("Game Over", "You ran out of lives!", [
-        //   {
-        //     style: "default",
-        //     text: "Ok",
-        //     onPress: () => router.dismissTo("/play"),
-        //   },
-        // ]);
       }
     }
   };
@@ -109,56 +171,75 @@ export default function Approximation() {
   }, []);
   return (
     <View className="h-full bg-transparent flex">
-      <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
-      <View className="flex flex-col gap-y-8 m-auto justify-center">
-        <Text className="dark:text-platinum text-night text-3xl font-bold mx-auto text-center">
-          {t("games.approximation.description")}
-        </Text>
-        <Animated.View
-          key={equation[0]}
-          entering={FadeIn.duration(1000)}
-          exiting={FadeOut.duration(1000)}
-        >
-          <MathJaxSvg
-            style={{ marginHorizontal: "auto" }}
-            fontSize={36}
-            color={theme == "dark" ? "#e8e8e8" : "#151515"}
-            fontCache={true}
-          >
-            {equation[0]}
-          </MathJaxSvg>
-
-          {/* add a slider that at the ends are 2 numbers randomly between 3-10 of the answer */}
-
-          <ApproxSlider
-            inputNumber={equation[1]}
-            bounds={equation[2]}
-            onRelease={checkAnswer}
+      {waiting ? (
+        <View className="m-auto">
+          <Text className="text-3xl font-bold text-center text-platinum">
+            {t("multiplayer.waiting")}
+          </Text>
+          <Text className="text-xl text-center text-platinum">
+            {t("multiplayer.share").split("&&")[0]}
+            <Text className="font-bold text-celtic_blue">{params.code}</Text>
+            {t("multiplayer.share").split("&&")[1]}
+          </Text>
+        </View>
+      ) : (
+        <>
+          <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
+          <GameInfo
+            lives={multiplayer?.lives ?? 3}
+            guessed={multiplayer?.score ?? 3}
           />
-        </Animated.View>
-      </View>
-      {gameOver && (
-        <GameOverModal
-          game={{
-            type: GameType.APPROXIMATION,
-            lives,
-            time: timeLeft,
-            score: guessed,
-            answer: equation[1],
-          }}
-          onQuit={() => router.dismissTo("/play")}
-          onRestart={() => {
-            setLives(3);
-            setTimeLeft(60);
-            setGuessed(0);
-            setGameOver(false);
-            setEquation(
-              generateEquation(
-                parseInt(params.difficulty as string) as Difficulty
-              )
-            );
-          }}
-        />
+          <View className="flex flex-col gap-y-8 m-auto justify-center">
+            <Text className="dark:text-platinum text-night text-3xl font-bold mx-auto text-center">
+              {t("games.approximation.description")}
+            </Text>
+            <Animated.View
+              key={equation[0]}
+              entering={FadeIn.duration(1000)}
+              exiting={FadeOut.duration(1000)}
+            >
+              <MathJaxSvg
+                style={{ marginHorizontal: "auto" }}
+                fontSize={36}
+                color={theme == "dark" ? "#e8e8e8" : "#151515"}
+                fontCache={true}
+              >
+                {equation[0]}
+              </MathJaxSvg>
+
+              {/* add a slider that at the ends are 2 numbers randomly between 3-10 of the answer */}
+
+              <ApproxSlider
+                inputNumber={equation[1]}
+                bounds={equation[2]}
+                onRelease={checkAnswer}
+              />
+            </Animated.View>
+          </View>
+          {gameOver && (
+            <GameOverModal
+              game={{
+                type: GameType.APPROXIMATION,
+                lives,
+                time: timeLeft,
+                score: guessed,
+                answer: equation[1],
+              }}
+              onQuit={() => router.dismissTo("/play")}
+              onRestart={() => {
+                setLives(3);
+                setTimeLeft(60);
+                setGuessed(0);
+                setGameOver(false);
+                setEquation(
+                  generateEquation(
+                    parseInt(params.difficulty as string) as Difficulty
+                  )
+                );
+              }}
+            />
+          )}
+        </>
       )}
     </View>
   );
@@ -202,8 +283,8 @@ function generateEquation(difficulty: Difficulty): [string, number, number[]] {
       return [`$$${equation}$$`, answer, bounds];
 
     case Difficulty.MEDIUM:
-      let c = Math.floor(Math.random() * 10) + 10;
-      const d = Math.floor(Math.random() * 10) + 10;
+      let c = Math.floor(Math.random() * 10) + 3;
+      const d = Math.floor(Math.random() * 10) + 3;
       const complexOperation = Math.random() > 0.5 ? "*" : "/";
       if (complexOperation === "/") c *= Math.floor(Math.random() * 16) + 4;
       const equationMedium =

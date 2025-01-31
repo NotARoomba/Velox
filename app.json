@@ -34,14 +34,14 @@
         ],
         "CFBundleDevelopmentRegion": "en"
       },
-      "bundleIdentifier": "com.notaroomba.velox"
+      "bundleIdentifier": "com.notaroomba.makinator"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#151515"
       },
-      "package": "com.notaroomba.velox"
+      "package": "com.notaroomba.makinator"
     },
     "web": {
       "bundler": "metro",
