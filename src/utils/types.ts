@@ -43,7 +43,7 @@ export interface KeypadProps {
 
 export interface GameInfoProps {
   lives: number;
-  timeLeft: number;
+  timeLeft?: number;
   guessed: number;
 }
 
