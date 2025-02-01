@@ -25,8 +25,9 @@
 
 ## Features
 
-- Fun games
-- Public leaderboard
+- Fun (if you like math) Games
+- Multiplayer (may have bugs)
+- Global leaderboard (to brag to your friends)
 - Support for 8 languages
 - Dark/Light mode
 
