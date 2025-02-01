@@ -1,26 +1,29 @@
 {
   "folders": [
     {
-      "path": ".",
+      "path": "."
     },
     {
-      "path": "../SupDoc",
+      "path": "../SupDoc"
     },
     {
-      "path": "../Makinator",
+      "path": "../Makinator"
     },
     {
-      "path": "../NotARoomba-Backend",
+      "path": "../NotARoomba-Backend"
     },
     {
-      "path": "../ROCKETMEN/Talos/Server",
+      "path": "../ROCKETMEN/Talos/Server"
     },
     {
-      "path": "../NivelesDeNiveles",
+      "path": "../NivelesDeNiveles"
     },
     {
-      "path": "../Asteroids",
+      "path": "../Asteroids"
     },
+    {
+      "path": "../ROCKETMEN/Talos/Web"
+    }
   ],
   "settings": {},
 }

@@ -1,122 +1,135 @@
 {
-    "CFBundleDisplayName": "Velox",
-    "NSCameraUsageDescription": "Velox benötigt Zugriff auf Ihre Kamera, um ein Foto aufzunehmen und Ihr Profilbild zu aktualisieren.",
-    "NSPhotoLibraryUsageDescription": "Velox benötigt Zugriff auf Ihre Galerie, um ein Foto auszuwählen und Ihr Profilbild zu aktualisieren.",
-    "description": "Eine App, die Ihnen hilft, Ihre Kopfrechenfähigkeiten zu verbessern",
-    "success": "Erfolg",
-    "error": "Fehler",
-    "check": "Überprüfen",
-    "loading": "Wird geladen",
-    "yes": "Ja",
-    "no": "Nein",
-    "confirmTitle": "Bestätigen",
-    "inputs": {
-      "username": "Benutzername",
-      "email": "E-Mail",
-      "picture": "Profilfoto hochladen",
-      "enterCode": "Bestätigungscode eingeben",
-      "enterCode2": "Geben Sie den an folgende Adresse gesendeten Code ein: "
+  "CFBundleDisplayName": "Velox",
+  "NSCameraUsageDescription": "Velox benötigt Zugriff auf Ihre Kamera, um ein Foto aufzunehmen und Ihr Profilbild zu aktualisieren.",
+  "NSPhotoLibraryUsageDescription": "Velox benötigt Zugriff auf Ihre Galerie, um ein Foto auszuwählen und Ihr Profilbild zu aktualisieren.",
+  "description": "Eine App, die hilft, Ihre Fähigkeiten im Kopfrechnen zu verbessern",
+  "success": "Erfolg",
+  "error": "Fehler",
+  "check": "Überprüfen",
+  "loading": "Laden",
+  "yes": "Ja",
+  "no": "Nein",
+  "confirmTitle": "Bestätigen",
+  "inputs": {
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "picture": "Laden Sie ein Profilfoto hoch",
+    "enterCode": "Bestätigungscode eingeben",
+    "enterCode2": "Geben Sie den an folgende Adresse gesendeten Bestätigungscode ein: "
+  },
+  "profile": {
+    "updateSuccess": "Profil erfolgreich aktualisiert",
+    "updateError": "Fehler beim Aktualisieren des Profils",
+    "logoutTitle": "Abmelden",
+    "logoutDescription": "Möchten Sie sich wirklich abmelden?"
+  },
+  "titles": {
+    "play": "Spielen",
+    "profile": "Profil",
+    "user": "Benutzer",
+    "score": "Punkte",
+    "leaderboard": "Bestenliste",
+    "difficulty": "Schwierigkeitsgrad wählen",
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "gameOver": "Spiel vorbei",
+    "time": "Zeit",
+    "lives": "Leben",
+    "highscore": "Höchstpunktzahl",
+    "loginOrSignup1": "Anmelden oder Registrieren",
+    "loginOrSignup2": "um Ihre Höchstpunktzahlen anzuzeigen!",
+    "restart": "Neustart",
+    "quit": "Beenden",
+    "multiplayer": "Mehrspieler"
+  },
+  "images": {
+    "choose": "Bitte auswählen",
+    "gallery": "Galerie",
+    "camera": "Kamera",
+    "readingTitle": "Bildfehler",
+    "readingDescription": "Fehler beim Lesen des Bildes",
+    "galleryTitle": "Galeriezugriff erlauben",
+    "galleryDescription": "Sie müssen die Berechtigung zur Medienbibliothek aktivieren, damit dies funktioniert",
+    "cameraTitle": "Kamerazugriff erlauben",
+    "cameraDescription": "Sie müssen die Kameraberechtigung aktivieren, damit dies funktioniert",
+    "remove": "Entfernen",
+    "removeTitle": "Bild entfernen",
+    "removeDescription": "Möchten Sie dieses Bild wirklich entfernen?"
+  },
+  "buttons": {
+    "update": "Aktualisieren",
+    "clear": "Löschen",
+    "delete": "Löschen",
+    "logoutDesc": "Möchten Sie sich wirklich abmelden?",
+    "deleteAccountDesc": "Möchten Sie Ihr Konto wirklich löschen?",
+    "themes": {
+      "dark": "Dunkel",
+      "light": "Hell"
     },
-    "profile": {
-      "updateSuccess": "Profil erfolgreich aktualisiert",
-      "updateError": "Fehler beim Aktualisieren des Profils",
-      "logoutTitle": "Abmelden",
-      "logoutDescription": "Möchten Sie sich wirklich abmelden?"
+    "difficulties": {
+      "easy": "Einfach",
+      "medium": "Mittel",
+      "hard": "Schwer"
     },
-    "titles": {
-      "play": "Spielen",
-      "profile": "Profil",
-      "user": "Benutzer",
-      "score": "Punktzahl",
-      "leaderboard": "Bestenliste",
-      "difficulty": "Schwierigkeitsgrad auswählen",
-      "login": "Anmelden",
-      "signup": "Registrieren",
-      "settings": "Einstellungen",
-      "logout": "Abmelden",
-      "gameOver": "Spiel vorbei",
-      "time": "Zeit",
-      "lives": "Leben",
-      "highscore": "Rekord",
-      "loginOrSignup1": "Anmelden oder Registrieren",
-      "loginOrSignup2": "um Ihre Rekorde anzuzeigen!",
-      "restart": "Neustart",
-      "quit": "Beenden"
+    "confirmDelete": "Löschen bestätigen",
+    "deleteAccount": "Konto löschen",
+    "cancel": "Abbrechen",
+    "submit": "Absenden",
+    "start": "Starten",
+    "approx": "Annäherung",
+    "circle": "Kreis",
+    "match": "Übereinstimmen",
+    "join": "Beitreten",
+    "findRandom": "Zufälligen finden",
+    "host": "Host"
+  },
+  "successes": {
+    "login": "Sie sind jetzt angemeldet",
+    "signup": "Sie sind jetzt registriert",
+    "deleted": "Ihr Konto wurde gelöscht"
+  },
+  "errors": {
+    "generic": "Es ist ein Fehler aufgetreten!",
+    "createUser": "Es gab einen Fehler beim Erstellen eines Benutzers!",
+    "fetchData": "Es gab einen Fehler beim Abrufen Ihrer Daten!",
+    "updateData": "Es gab einen Fehler beim Aktualisieren Ihrer Informationen!",
+    "enterCode": "Bitte geben Sie einen Code ein!",
+    "noAccount": "Bitte melden Sie sich zuerst an!",
+    "noScores": "Es gibt keine Punktzahlen!",
+    "noHighscore": "Sie haben noch keine Höchstpunktzahl!",
+    "alreadyInGame": "Sie sind bereits in einem Spiel!"
+  },
+  "verification": {
+    "verify": "Verifizieren",
+    "title": "Bestätigungscode",
+    "description": "Geben Sie den Code ein, der an Ihre E-Mail gesendet wurde"
+  },
+  "games": {
+    "approximation": {
+      "title": "Annäherung",
+      "description": "Lösen Sie die folgende Gleichung:"
     },
-    "images": {
-      "choose": "Bitte auswählen",
-      "gallery": "Galerie",
-      "camera": "Kamera",
-      "readingTitle": "Bildfehler",
-      "readingDescription": "Fehler beim Lesen des Bildes",
-      "galleryTitle": "Galeriezugriff erlauben",
-      "galleryDescription": "Sie müssen den Zugriff auf die Medienbibliothek erlauben, damit dies funktioniert",
-      "cameraTitle": "Kamerazugriff erlauben",
-      "cameraDescription": "Sie müssen den Zugriff auf die Kamera erlauben, damit dies funktioniert",
-      "remove": "Entfernen",
-      "removeTitle": "Bild entfernen",
-      "removeDescription": "Möchten Sie dieses Bild wirklich entfernen?"
+    "round": {
+      "title": "Runde den Kreis (PI)"
     },
-    "buttons": {
-      "update": "Aktualisieren",
-      "clear": "Löschen",
-      "delete": "Löschen",
-      "logoutDesc": "Möchten Sie sich wirklich abmelden?",
-      "deleteAccountDesc": "Möchten Sie Ihr Konto wirklich löschen?",
-      "themes": {
-        "dark": "Dunkel",
-        "light": "Hell"
-      },
-      "difficulties": {
-        "easy": "Einfach",
-        "medium": "Mittel",
-        "hard": "Schwer"
-      },
-      "confirmDelete": "Löschen bestätigen",
-      "deleteAccount": "Konto löschen",
-      "cancel": "Abbrechen",
-      "submit": "Absenden",
-      "start": "Start",
-      "approx": "Annäherung",
-      "circle": "Kreis",
-       "match": "Übereinstimmung"
-    },
-    "successes": {
-      "login": "Sie sind jetzt eingeloggt",
-      "signup": "Sie sind jetzt registriert",
-      "deleted": "Ihr Konto wurde gelöscht"
-    },
-    "errors": {
-      "createUser": "Fehler beim Erstellen eines Benutzers",
-      "fetchData": "Fehler beim Abrufen der Daten",
-      "updateData": "Fehler beim Aktualisieren Ihrer Informationen",
-      "enterCode": "Bitte geben Sie einen Code ein!",
-      "noAccount": "Bitte registrieren Sie sich zuerst!",
-      "noScores": "Es gibt keine Punktzahlen!",
-      "noHighscore": "Sie haben noch keinen Rekord!"
-    },
-    "verification": {
-      "verify": "Verifizieren",
-      "title": "Bestätigungscode",
-      "description": "Geben Sie den an Ihre E-Mail gesendeten Code ein"
-    },
-    "games": {
-      "approximation": {
-        "title": "Annäherung",
-        "description": "Lösen Sie die folgende Gleichung:"
-      },
-      "round": {
-        "title": "Runde den Kreis (PI)"
-      },
-      "answer": "Die Antwort war"
-    },
-    "settings": {
-      "languages": "Sprachen",
-      "theme": "Thema",
-      "deleteAccount": "Konto löschen",
-      "confirmDelete": "Löschen bestätigen",
-      "danger": "Gefahr",
-      "credits": "Erstellt von Nathan Alspaugh (NotARoomba)"
-    }
+    "answer": "Die Antwort war"
+  },
+  "multiplayer": {
+    "waiting": "Warten auf einen anderen Spieler...",
+    "share": "Teilen Sie den Code mit Ihrem Freund && um gemeinsam zu spielen!",
+    "win": "hat das Spiel gewonnen!",
+    "lost": "hat das Spiel verloren!",
+    "decision": "Sie haben ",
+    "opponent": "Gegner"
+  },
+  "settings": {
+    "languages": "Sprachen",
+    "theme": "Thema",
+    "deleteAccount": "Konto löschen",
+    "confirmDelete": "Löschen bestätigen",
+    "danger": "Gefahr",
+    "credits": "Erstellt von Nathan Alspaugh (NotARoomba)"
   }
-  
+}

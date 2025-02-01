@@ -1,30 +1,58 @@
+import { useEffect, useState } from "react";
 import Credits from "../components/Credits";
 import HoloText from "../components/HoloText";
 import Letters from "../components/Letters";
 import { Localizations } from "../utils/Localizations";
-// import { GooglePlayButton, AppStoreButton } from "react-mobile-app-button";
+import { GooglePlayButton, AppStoreButton } from "react-mobile-app-button";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 export default function App() {
+  const [isDarkMode, setDarkMode] = useState(true);
+
+  const toggleDarkMode = (checked: boolean) => {
+    setDarkMode(checked);
+    document.body.classList.toggle("dark");
+  };
+
+  useEffect(() => {
+    document.body.classList.add("dark");
+  }, []);
+
   return (
     <div className="bg-transparent dark:text-platinum text-night h-screen w-full flex flex-col justify-center">
       <HoloText className="text-9xl font-bold">Velox</HoloText>
       <div className="mx-auto">
-        <p className="text-2xl dark:text-platinum text-night text-center font-bold w-90">
+        <p className="text-xl md:text-2xl dark:text-platinum text-night text-center font-bold w-90">
           {Localizations.description.split("\\")[0]}
         </p>
-        <p className="text-2xl text-celtic_blue text-center font-bold ">
+        <p className="text-xl md:text-2xl text-celtic_blue text-center font-bold ">
           {Localizations.description.split("\\")[1]}
         </p>
       </div>
-      {/* <div className="flex gap-x-8">
-        <AppStoreButton url="" />
-        <GooglePlayButton url="" />
-      </div> */}
+      <div className="flex flex-wrap gap-x-8 gap-y-2 mx-auto mt-6 justify-center">
+        <AppStoreButton
+          width={190}
+          theme={isDarkMode ? "dark" : "light"}
+          url="https://testflight.apple.com/join/asvFTt9T"
+        />
+        <GooglePlayButton
+          width={190}
+          theme={isDarkMode ? "dark" : "light"}
+          url="https://drive.google.com/file/d/12LeZa2rkF64xta8LN-kcMzcT9pcMnLwU/view?usp=sharing"
+        />
+      </div>
       <p className="my-4 mx-auto font-bold text-xs">
-        (free download coming soon)
+        (app store links coming soon)
       </p>
       <Credits />
       <Letters />
+      <div className="absolute top-2 right-2">
+        <DarkModeSwitch
+          checked={isDarkMode}
+          onChange={toggleDarkMode}
+          size={40}
+        />
+      </div>
     </div>
   );
 }
