@@ -24,7 +24,9 @@ export default function HoloText({
     }
   }, []);
 
-  const { width, height } = dimensions;
+  let { width, height } = dimensions;
+
+  if (children == "Features" && window.innerWidth < 768) width = width * 1.5;
 
   return (
     <svg
@@ -45,7 +47,7 @@ export default function HoloText({
             transform={`translate(${i * 3}, 0)`}
             opacity={1 - i * 0.2}
             initial={{ x: 50, opacity: 0 }}
-            animate={{ x: i * 4, opacity: 1 - i * 0.2 }}
+            whileInView={{ x: i * 4, opacity: 1 - i * 0.2 }}
             transition={{
               delay: 0.3 + (i * 0.05 + i * 0.02),
               duration: 1,

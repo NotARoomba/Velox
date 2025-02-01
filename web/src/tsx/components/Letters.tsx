@@ -1,9 +1,9 @@
 import { useState, useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 
+export const OTHER_COLORS = ["#0074d9", "#7499fd", "#D7263D", "#1B998B"];
 export default function Letters() {
   const letters = [..."/?<>⋅=+÷^*!±√Δ∞∑φπ∏∝∫"];
-  const colors = ["#0074d9", "#7499fd", "#D7263D", "#1B998B"];
   const [height, setHeight] = useState(0);
 
   // Dynamically calculate the height of the document
@@ -23,7 +23,8 @@ export default function Letters() {
     >
       {[...Array(50)].map((_v, i) => {
         const wh = Math.floor(Math.random() * 131) + 60; // Random size for letters
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const randomColor =
+          OTHER_COLORS[Math.floor(Math.random() * OTHER_COLORS.length)];
         const randomLetter =
           letters[Math.floor(Math.random() * letters.length)];
         const delay = Math.floor(Math.random() * 8); // Random delay
