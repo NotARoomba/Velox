@@ -8,11 +8,13 @@ export default function StyledButton({
   callback,
   text,
   disabled,
+  testID,
 }: StyledButtonProps) {
   const colors = ["#45DDEA", "#0074d9", "#89DAFF", "#FCDEBE"];
   const [color] = useState(colors[Math.floor(Math.random() * colors.length)]);
   return (
     <TouchableOpacity
+      testID={testID}
       disabled={disabled}
       className="dark:bg-platinum/10 bg-night/5  w-2/3 mx-auto py-3 rounded-2xl "
       style={{

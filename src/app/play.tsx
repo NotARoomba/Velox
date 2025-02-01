@@ -37,6 +37,7 @@ export default function Play() {
       </HoloText>
       <View className="flex flex-col gap-y-6 -translate-y-8">
         <StyledButton
+          testID="approx_button"
           callback={() =>
             router.push({
               pathname: `/difficulty`,
@@ -46,6 +47,7 @@ export default function Play() {
           text={t("games.approximation.title")}
         />
         <StyledButton
+          testID="match_button"
           callback={() =>
             router.push({
               pathname: `/difficulty`,
@@ -55,6 +57,7 @@ export default function Play() {
           text={t("buttons.match")}
         />
         <StyledButton
+          testID="pi_button"
           callback={() =>
             router.push({
               pathname: `/difficulty`,

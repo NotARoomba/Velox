@@ -162,4 +162,5 @@ export interface StyledButtonProps {
   callback: () => void;
   text: string;
   disabled?: boolean;
+  testID?: string;
 }

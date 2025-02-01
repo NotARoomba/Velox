@@ -46,6 +46,7 @@ export default function DifficultySelect() {
           }
         />
         <TouchableOpacity
+          testID="start_game_button"
           style={{
             boxShadow: "4px 4px #0074d9",
           }}

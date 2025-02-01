@@ -128,6 +128,7 @@ export default function Settings() {
 
         {/* ScrollView with snapping behavior */}
         <ScrollView
+          testID="language_scrollview"
           horizontal
           ref={scrollRef}
           snapToAlignment="start"
@@ -206,7 +207,7 @@ export default function Settings() {
           (Platform.OS === "android" ? " top-4" : "top-16")
         }
       >
-        <TouchableOpacity onPress={router.back}>
+        <TouchableOpacity testID="settings_back_button" onPress={router.back}>
           <Ionicons
             color={theme === "dark" ? "#e8e8e8" : "#151515"}
             size={40}

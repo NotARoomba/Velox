@@ -40,6 +40,7 @@ export default function Index() {
       </View>
       <View className="gap-y-6 -translate-y-12">
         <StyledButton
+          testID="play_button"
           callback={() => router.push("/play")}
           text={t("titles.play")}
         />
@@ -54,6 +55,7 @@ export default function Index() {
           text={t("titles.profile")}
         />
         <StyledButton
+          testID="settings_button"
           callback={() => router.push("/settings")}
           text={t("titles.settings")}
         />
