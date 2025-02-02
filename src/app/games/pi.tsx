@@ -229,7 +229,7 @@ export default function PI() {
             timeLeft={timeLeft}
             guessed={guessed.length - 2}
           />
-          {params.multiplayer == "1" && !gameOver && (
+          {params.multiplayer == "1" && (
             <GameInfo
               lives={multiplayer?.lives ?? 0}
               guessed={multiplayer?.score ?? 0}

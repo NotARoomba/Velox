@@ -2,7 +2,7 @@
   "expo": {
     "name": "Velox",
     "slug": "velox",
-    "version": "1.2.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "velox",
@@ -20,9 +20,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "config": {
-        "usesNonExemptEncryption": false
-      },
+      "usesNonExemptEncryption": false,
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
         "CFBundleLocalizations": [
@@ -70,7 +68,8 @@
         }
       ],
       "expo-localization",
-      "expo-secure-store"
+      "expo-secure-store",
+      "@config-plugins/detox"
     ],
     "experiments": {
       "typedRoutes": true
