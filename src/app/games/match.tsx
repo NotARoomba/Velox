@@ -245,7 +245,7 @@ export default function Match() {
       ) : (
         <>
           <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
-          {params.multiplayer == "1" && (
+          {params.multiplayer == "1" && !gameOver && (
             <GameInfo
               lives={multiplayer?.lives ?? 0}
               guessed={multiplayer?.score ?? 0}
