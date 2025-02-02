@@ -185,10 +185,12 @@ export default function Approximation() {
       ) : (
         <>
           <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
-          <GameInfo
-            lives={multiplayer?.lives ?? 3}
-            guessed={multiplayer?.score ?? 3}
-          />
+          {params.multiplayer == "1" && (
+            <GameInfo
+              lives={multiplayer?.lives ?? 0}
+              guessed={multiplayer?.score ?? 0}
+            />
+          )}
           <View className="flex flex-col gap-y-8 m-auto justify-center">
             <Text className="dark:text-platinum text-night text-3xl font-bold mx-auto text-center">
               {t("games.approximation.description")}

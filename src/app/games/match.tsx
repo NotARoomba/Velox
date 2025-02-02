@@ -245,10 +245,12 @@ export default function Match() {
       ) : (
         <>
           <GameInfo lives={lives} timeLeft={timeLeft} guessed={guessed} />
-          <GameInfo
-            lives={multiplayer?.lives ?? 3}
-            guessed={multiplayer?.score ?? 0}
-          />
+          {params.multiplayer == "1" && (
+            <GameInfo
+              lives={multiplayer?.lives ?? 0}
+              guessed={multiplayer?.score ?? 0}
+            />
+          )}
 
           <View className="flex flex-row items-center justify-around w-full">
             {/* Numbers */}

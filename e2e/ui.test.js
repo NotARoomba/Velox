@@ -1,6 +1,8 @@
 describe('UI', () => {
   beforeAll(async () => {
-    await device.launchApp(); 
+    await device.launchApp();
+    await device.disableSynchronization();
+    // await new Promise(resolve => setTimeout(resolve, 8000));
   });
 
   // beforeEach(async () => {
@@ -18,14 +20,15 @@ describe('UI', () => {
   , "ko"];
   for (let i = 0; i < LanguageCodes.length; i++) {
     it(`screenshots_${LanguageCodes[i]}`, async () => {
-      
+      await new Promise(resolve => setTimeout(resolve, 8000));
       if (i !== 0) {
-        await waitFor(element(by.id('settings_button'))).toBeVisible().withTimeout(8000)
+        // await waitFor(element(by.id('settings_button'))).toBeVisible().withTimeout(8000)
         await element(by.id('settings_button')).tap();
-        await element(by.id('language_scrollview')).scroll(250, 'right');
+        await element(by.id('language_scrollview')).scroll(200, 'right');
+        await new Promise(resolve => setTimeout(resolve, 500));
         await element(by.id('back_button')).tap();
       } else {
-        await waitFor(element(by.id('settings_button'))).toBeVisible().withTimeout(8000)
+        // await waitFor(element(by.id('settings_button'))).toBeVisible().withTimeout(8000)
         await element(by.id('settings_button')).tap();
         await element(by.id('slider_button_0')).tap();
         await element(by.id('back_button')).tap();
