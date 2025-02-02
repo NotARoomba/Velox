@@ -5,6 +5,7 @@ import ReAnimated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { theme } from "@/tailwind.config";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import BackButton from "../components/buttons/BackButton";
 
 export default function Secret() {
   const opacity = useFade();
@@ -23,18 +24,7 @@ export default function Secret() {
           Gracias por todo, Mr. Charris
         </Text>
       </ReAnimated.View>
-      <ReAnimated.View
-        entering={FadeIn}
-        exiting={FadeOut}
-        className={
-          "absolute  left-4 " +
-          (Platform.OS === "android" ? " top-4" : "top-16")
-        }
-      >
-        <TouchableOpacity onPress={router.back}>
-          <Ionicons color={"#e8e8e8"} size={40} name="arrow-back" />
-        </TouchableOpacity>
-      </ReAnimated.View>
+      <BackButton />
     </Animated.View>
   );
 }

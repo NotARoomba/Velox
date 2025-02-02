@@ -26,6 +26,7 @@ import { supabase } from "../utils/supabase";
 import { useSession } from "../hooks/useSession";
 import Slider from "../components/buttons/Slider";
 import LanguageButton from "../components/buttons/LanguageButton";
+import BackButton from "../components/buttons/BackButton";
 
 export default function Settings() {
   const opacity = useFade();
@@ -199,22 +200,7 @@ export default function Settings() {
           {t("settings.credits")}
         </Text>
       </Reanimated.View>
-      <Reanimated.View
-        entering={FadeIn}
-        exiting={FadeOut}
-        className={
-          "absolute  left-4 " +
-          (Platform.OS === "android" ? " top-4" : "top-16")
-        }
-      >
-        <TouchableOpacity testID="settings_back_button" onPress={router.back}>
-          <Ionicons
-            color={theme === "dark" ? "#e8e8e8" : "#151515"}
-            size={40}
-            name="arrow-back"
-          />
-        </TouchableOpacity>
-      </Reanimated.View>
+      <BackButton />
     </Animated.View>
   );
 }

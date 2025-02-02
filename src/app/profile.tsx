@@ -27,6 +27,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import { useLoading } from "../hooks/useLoading";
 import { useSettings } from "../hooks/useSettings";
+import BackButton from "../components/buttons/BackButton";
 
 export default function Profile() {
   const { theme } = useSettings();
@@ -358,22 +359,7 @@ export default function Profile() {
             />
           </TouchableOpacity>
         </Animated.View>
-        <Animated.View
-          entering={FadeIn}
-          exiting={FadeOut}
-          className={
-            "absolute  left-4 " +
-            (Platform.OS === "android" ? " top-4" : "top-16")
-          }
-        >
-          <TouchableOpacity onPress={router.back}>
-            <Ionicons
-              color={theme === "dark" ? "#e8e8e8" : "#151515"}
-              size={40}
-              name="arrow-back"
-            />
-          </TouchableOpacity>
-        </Animated.View>
+        <BackButton />
         <Animated.View
           entering={FadeIn}
           exiting={FadeOut}

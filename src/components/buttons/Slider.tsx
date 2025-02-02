@@ -53,6 +53,7 @@ export default function Slider({ options, setOption, selected }: SliderProps) {
       >
         {options.map((v, i) => (
           <TouchableOpacity
+            testID={`slider_button_${i}`}
             activeOpacity={1}
             key={i}
             onLayout={

@@ -1,6 +1,6 @@
-describe('Example', () => {
+describe('UI', () => {
   beforeAll(async () => {
-    await device.launchApp();
+    await device.launchApp(); 
   });
 
   // beforeEach(async () => {
@@ -16,16 +16,33 @@ describe('Example', () => {
   , "ru"
   , "ja"
   , "ko"];
-
   for (let i = 0; i < LanguageCodes.length; i++) {
-    it(`take screenshots in ${LanguageCodes[i]}`, async () => {
+    it(`screenshots_${LanguageCodes[i]}`, async () => {
+      
       if (i !== 0) {
+        await waitFor(element(by.id('settings_button'))).toBeVisible().withTimeout(8000)
         await element(by.id('settings_button')).tap();
-        await element(by.id('language_scrollview')).scroll(50, 'left');
-        await element(by.id('settings_back_button')).tap();
+        await element(by.id('language_scrollview')).scroll(250, 'right');
+        await element(by.id('back_button')).tap();
+      } else {
+        await waitFor(element(by.id('settings_button'))).toBeVisible().withTimeout(8000)
+        await element(by.id('settings_button')).tap();
+        await element(by.id('slider_button_0')).tap();
+        await element(by.id('back_button')).tap();
       }
       // screenshot 1
-      await takeScreenshot(`${LanguageCodes[i]}_home_page`);
+      await device.takeScreenshot(`${LanguageCodes[i]}_home_page`);
+
+      await element(by.id('play_button')).tap();
+
+      await device.takeScreenshot(`${LanguageCodes[i]}_play_page`);
+
+      await element(by.id('match_button')).tap();
+      await element(by.id('start_game_button')).tap();
+
+      await device.takeScreenshot(`${LanguageCodes[i]}_game_page`);
+
+      await device.reloadReactNative()
     });
   }
 });

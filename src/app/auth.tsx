@@ -34,6 +34,7 @@ import { theme } from "@/tailwind.config";
 import HoloText from "../components/effects/HoloText";
 import { useSettings } from "../hooks/useSettings";
 import { useTranslation } from "react-i18next";
+import BackButton from "../components/buttons/BackButton";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -257,24 +258,7 @@ export default function Auth() {
           </View>
         </ReAnimated.View>
       )}
-      {choice && (
-        <ReAnimated.View
-          entering={FadeIn}
-          exiting={FadeOut}
-          className={
-            "absolute  left-4 " +
-            (Platform.OS === "android" ? " top-4" : "top-16")
-          }
-        >
-          <TouchableOpacity onPress={router.back}>
-            <Ionicons
-              color={theme === "dark" ? "#e8e8e8" : "#151515"}
-              size={40}
-              name="arrow-back"
-            />
-          </TouchableOpacity>
-        </ReAnimated.View>
-      )}
+      {choice && <BackButton />}
       <KeyboardAvoidingView
         behavior={undefined}
         className={
