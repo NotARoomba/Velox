@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "velox",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "locales": {
       "en": "./assets/locales/en.json",
       "es": "./assets/locales/es.json",
@@ -69,7 +69,12 @@
       ],
       "expo-localization",
       "expo-secure-store",
-      "@config-plugins/detox"
+      [
+        "@config-plugins/detox",
+        {
+          "subdomains": "*"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
