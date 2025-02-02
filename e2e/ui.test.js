@@ -1,6 +1,6 @@
 describe('UI', () => {
   beforeAll(async () => {
-    // await device.launchApp();
+    await device.launchApp();
     await device.disableSynchronization();
     // await new Promise(resolve => setTimeout(resolve, 8000));
 // adb -s emulator-5554 shell "settings put global window_animation_scale 1.0"
