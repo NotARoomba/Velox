@@ -2,7 +2,7 @@
   "CFBundleDisplayName": "Velox",
   "NSCameraUsageDescription": "Velox需要访问您的相机以拍摄照片来更新您的个人资料图片。",
   "NSPhotoLibraryUsageDescription": "Velox需要访问您的图库以选择照片来更新您的个人资料图片。",
-  "description": "一个帮助您提高心算能力的应用程序",
+  "description": "一款帮助提高你的\\心算能力的应用程序",
   "success": "成功",
   "error": "错误",
   "check": "检查",

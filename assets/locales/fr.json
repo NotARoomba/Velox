@@ -2,7 +2,7 @@
   "CFBundleDisplayName": "Velox",
   "NSCameraUsageDescription": "Velox a besoin d'accéder à votre caméra pour prendre une photo et mettre à jour votre photo de profil.",
   "NSPhotoLibraryUsageDescription": "Velox a besoin d'accéder à votre galerie pour choisir une photo et mettre à jour votre photo de profil.",
-  "description": "Une application qui vous aide à améliorer vos compétences en calcul mental",
+  "description": "Une application qui aide à améliorer vos\\compétences en calcul mental",
   "success": "Succès",
   "error": "Erreur",
   "check": "Vérifier",

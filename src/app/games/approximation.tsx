@@ -143,10 +143,11 @@ export default function Approximation() {
         generateEquation(parseInt(params.difficulty as string) as Difficulty)
       );
     } else {
-      await supabase
-        .from("multiplayer_players")
-        .update({ lives: lives - 1 })
-        .match({ code: params.code, user_id: session?.user.id });
+      if (params.multiplayer == "1")
+        await supabase
+          .from("multiplayer_players")
+          .update({ lives: lives - 1 })
+          .match({ code: params.code, user_id: session?.user.id });
       setLives((lives) => lives - 1);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setEquation(
@@ -154,10 +155,12 @@ export default function Approximation() {
       );
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       if (lives <= 1) {
-        const { error } = await supabase.rpc("finish_multiplayer_game", {
-          game_code: params.code,
-        });
-        if (error) Alert.alert(t("error"), error.message);
+        if (params.multiplayer == "1") {
+          const { error } = await supabase.rpc("finish_multiplayer_game", {
+            game_code: params.code,
+          });
+          if (error) Alert.alert(t("error"), error.message);
+        }
         setGameOver(true);
       }
     }

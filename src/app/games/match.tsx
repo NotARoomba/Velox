@@ -216,15 +216,21 @@ export default function Match() {
         setNumberSelected(0);
         setAnswerSelected(0);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        if (lives === 1)
-          supabase
-            .rpc("finish_multiplayer_game", {
-              game_code: params.code,
-            })
-            .then(({ error }) => {
-              Alert.alert(t("error"), error?.message);
-              setGameOver(true);
-            });
+        if (lives === 1) {
+          if (params.multiplayer == "1") {
+            // Finish the game
+            supabase
+              .rpc("finish_multiplayer_game", {
+                game_code: params.code,
+              })
+              .then(({ error }) => {
+                Alert.alert(t("error"), error?.message);
+                setGameOver(true);
+              });
+          } else {
+            setGameOver(true);
+          }
+        }
       }
     }
   }, [numberSelected, answerSelected]);

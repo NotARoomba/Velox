@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "velox",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "locales": {
       "en": "./assets/locales/en.json",
       "es": "./assets/locales/es.json",

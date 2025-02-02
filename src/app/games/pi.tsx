@@ -173,10 +173,13 @@ export default function PI() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       if (lives === 1) {
         setGameOver(true);
-        const { error } = await supabase.rpc("finish_multiplayer_game", {
-          game_code: params.code,
-        });
-        if (error) Alert.alert(t("error"), error.message);
+        if (params.multiplayer == "1") {
+          const { error } = await supabase.rpc("finish_multiplayer_game", {
+            game_code: params.code,
+          });
+          if (error) Alert.alert(t("error"), error.message);
+        }
+
         // if (hasSession && params.multiplayer == "0") {
         //   const { error } = await supabase.from("games").insert({
         //     type: GameType.PI,

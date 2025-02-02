@@ -2,7 +2,7 @@
   "CFBundleDisplayName": "Velox",
   "NSCameraUsageDescription": "Veloxはプロフィール写真を更新するためにカメラへのアクセスが必要です。",
   "NSPhotoLibraryUsageDescription": "Veloxはプロフィール写真を更新するためにギャラリーへのアクセスが必要です。",
-  "description": "暗算スキルを向上させるアプリ",
+  "description": "暗算スキルを向上させる\\アプリ",
   "success": "成功",
   "error": "エラー",
   "check": "確認",
