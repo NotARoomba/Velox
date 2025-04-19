@@ -35,7 +35,7 @@
         ],
         "CFBundleDevelopmentRegion": "en"
       },
-      "bundleIdentifier": "com.notaroomba.velox"
+      "bundleIdentifier": "com.notaroomba.makinator"
     },
     "android": {
       "adaptiveIcon": {
