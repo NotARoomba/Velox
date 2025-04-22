@@ -35,17 +35,17 @@ export default function App() {
           <AppStoreButton
             width={190}
             theme={isDarkMode ? "dark" : "light"}
-            url="https://testflight.apple.com/join/asvFTt9T"
+            url="https://apps.apple.com/us/app/id6744847060"
           />
           <GooglePlayButton
             width={190}
             theme={isDarkMode ? "dark" : "light"}
-            url="https://drive.google.com/file/d/12LeZa2rkF64xta8LN-kcMzcT9pcMnLwU/view?usp=sharing"
+            url="https://play.google.com/store/apps/details?id=com.notaroomba.makinator"
           />
         </div>
-        <p className="my-4 mx-auto font-bold text-xs">
+        {/* <p className="my-4 mx-auto font-bold text-xs">
           (app store links coming soon)
-        </p>
+        </p> */}
       </div>
       <div className="min-h-screen flex flex-col w-full justify-center">
         <HoloText className="text-9xl font-bold">
