@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { Localizations } from "../utils/Localizations";
 
 type HoloTextProps = {
   children: string; // Ensure children is a string for animation purposes
@@ -26,7 +27,8 @@ export default function HoloText({
 
   let { width, height } = dimensions;
 
-  if (children == "Features" && window.innerWidth < 768) width = width * 1.4;
+  if (children == Localizations.features && window.innerWidth < 768)
+    width = width * 1.4;
   else if (children == "Velox" && window.innerWidth < 768) width = width * 1.1;
 
   return (
