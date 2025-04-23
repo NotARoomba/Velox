@@ -28,7 +28,7 @@ export default function HoloText({
   let { width, height } = dimensions;
 
   if (children == Localizations.features && window.innerWidth < 768)
-    width = width * 1.6;
+    width = width * 1.75;
   else if (children == "Velox" && window.innerWidth < 768) width = width * 1.3;
 
   return (
