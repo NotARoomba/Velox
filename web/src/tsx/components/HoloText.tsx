@@ -29,7 +29,7 @@ export default function HoloText({
 
   if (children == Localizations.features && window.innerWidth < 768)
     width = width * 1.4;
-  else if (children == "Velox" && window.innerWidth < 768) width = width * 1.1;
+  else if (children == "Velox" && window.innerWidth < 768) width = width * 1.3;
 
   return (
     <svg
