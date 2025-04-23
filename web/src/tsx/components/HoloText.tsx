@@ -26,7 +26,8 @@ export default function HoloText({
 
   let { width, height } = dimensions;
 
-  if (children == "Features" && window.innerWidth < 768) width = width * 1.5;
+  if (children == "Features" && window.innerWidth < 768) width = width * 1.4;
+  else if (children == "Velox" && window.innerWidth < 768) width = width * 1.1;
 
   return (
     <svg
